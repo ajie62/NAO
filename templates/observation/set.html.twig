@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
+
+{% block body %}
+    <h1>{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">{{ isNewObservation ? "Ajouter" : "Mettre à jour" }}</button>
+    {{ form_end(form) }}
+{% endblock %}

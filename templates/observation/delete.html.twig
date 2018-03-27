@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression d'observation{% endblock %}
+
+{% block body %}
+    <h1>Confirmation de suppression</h1>
+
+    <p>Souhaitez-vous vraiment supprimer l'observation ?</p>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Supprimer</button>
+    {{ form_end(form) }}
+{% endblock %}
