@@ -9,6 +9,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Observation
@@ -42,6 +43,7 @@ class Observation
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $birdNumber;
 
@@ -71,7 +73,7 @@ class Observation
     private $deathCause;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true)
      */
     private $atlasCode;
 

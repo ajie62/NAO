@@ -5,8 +5,18 @@
 {% block body %}
     <h1>{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}</h1>
 
+    {# Temporary style #}
+    <div id="map" style="width: 350px; height: 350px;"></div>
+    <div id="error"></div>
+
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+    {{ form_rest(form) }}
     <button type="submit">{{ isNewObservation ? "Ajouter" : "Mettre à jour" }}</button>
     {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbgOWLTL1GMSI-RPxxrkuaWr9McbLv3WU&callback=initMap"></script>
+    <script src="{{ asset('js/observation.js') }}"></script>
 {% endblock %}
