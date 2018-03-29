@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Article;
 use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,17 +35,18 @@ class BlogController extends AbstractController
     public function addArticle(Request $request)
     {
         $form = $this->createForm('App\Form\ArticleFormType');
-        $data = null;
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
-            $data = $form->getData();
-            $data = $data['articleField'];
-            dump($data);
+            if ($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $article = new Article();
+                $em->persist($article);
+                $em->flush();
+            }
         }
         return $this->render('blog/addArticle.html.twig', [
-           'form' => $form->createView(),
-           'data' => $data
+           'form' => $form->createView()
         ]);
     }
 

@@ -15,6 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="article")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Article
 {
@@ -26,7 +27,8 @@ class Article
     private $id;
 
     /**
-     * @ORM\OneToOne()
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
 
@@ -116,9 +118,18 @@ class Article
     {
         $this->updateAt = $updateAt;
     }
-
-    public function __construct()
-    {
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist(){
         $this->setCreatedAt(new DateTime());
+        $this->setUpdateAt(new DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate(){
+        $this->setUpdateAt(new DateTime());
     }
 }
