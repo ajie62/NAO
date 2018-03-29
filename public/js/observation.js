@@ -26,9 +26,9 @@ function placeMarker(location) {
 
 // Geolocation
 function startWatch() {
-    var positionOptions = { timeout: 5000, enableHighAccuracy: true, maximumAge: 10000 };
-    if (navigator.geolocation)
-        navigator.geolocation.getCurrentPosition(handleData, handleError, positionOptions);
+    var positionOptions = { timeout: 10000, enableHighAccuracy: true, maximumAge: 10000 };
+    if (window.navigator.geolocation)
+        navigator.geolocation.watchPosition(handleData, handleError, positionOptions);
 }
 
 function handleData(geoData) {
