@@ -39,3 +39,28 @@ function handleData(geoData) {
 function handleError(error) {
     document.getElementById('error').innerHTML = error.message;
 }
+
+// Handle inputs depending on deceased checkbox
+var deathCause = document.getElementById('observation_deathCause');
+var deathCauseParent = deathCause.parentNode;
+var flightDirection = document.getElementById('observation_flightDirection');
+var flightDirectionParent = flightDirection.parentNode;
+var deceasedCheckbox = document.getElementById('observation_deceased');
+
+deathCauseParent.style.display = 'none';
+
+// Click handler
+deceasedCheckbox.addEventListener('change', function() {
+    if (deathCauseParent.style.display === 'none') {
+        deathCauseParent.style.display = 'block';
+    } else {
+        deathCauseParent.style.display = 'none';
+        deathCause.selectedIndex = 0;
+    }
+
+    if (flightDirectionParent.style.display === 'none') {
+        flightDirectionParent.style.display = 'block';
+    } else {
+        flightDirectionParent.style.display = 'none';
+    }
+});

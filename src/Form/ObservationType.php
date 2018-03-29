@@ -26,10 +26,6 @@ class ObservationType extends AbstractType
             ->add('species', TextType::class, ['label' => 'Espèce'])
             ->add('longitude', TextType::class, ['label' => 'Longitude'])
             ->add('latitude', TextType::class, ['label' => 'Latitude'])
-            ->add('birdNumber', IntegerType::class, [
-                'label' => "Nombre d'oiseaux",
-                'attr' => ['min' => 0]
-            ])
             ->add('sex', ChoiceType::class, [
                 'label' => 'Sexe',
                 'choices' => [
@@ -92,6 +88,8 @@ class ObservationType extends AbstractType
     private function getFlightDirections()
     {
         return [
+            'Indéfinie' => null,
+            'Au sol' => 'Au sol',
             'Nord' => 'N',
             'Nord-Nord-Est' => 'N.N.E',
             'Nord-Est' => 'N.E',
@@ -118,6 +116,6 @@ class ObservationType extends AbstractType
      */
     private function getAtlasCodes()
     {
-        return [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
+        return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19];
     }
 }

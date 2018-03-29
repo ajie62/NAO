@@ -10,12 +10,14 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as obsAssert;
 
 /**
  * Class Observation
  * @package App\Entity
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @ORM\Table(name="observation")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Observation
 {
@@ -42,12 +44,6 @@ class Observation
     private $latitude;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $birdNumber;
-
-    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $flightDirection;
@@ -69,6 +65,7 @@ class Observation
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @obsAssert\IsDeceased()
      */
     private $deathCause;
 
@@ -170,24 +167,6 @@ class Observation
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getBirdNumber()
-    {
-        return $this->birdNumber;
-    }
-
-    /**
-     * @param mixed $birdNumber
-     * @return Observation
-     */
-    public function setBirdNumber($birdNumber)
-    {
-        $this->birdNumber = $birdNumber;
         return $this;
     }
 
@@ -351,5 +330,16 @@ class Observation
     {
         $this->updatedAt = $updatedAt;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preObsSubmit()
+    {
+        if ($this->getDeceased()) {
+            $this->setFlightDirection(null);
+        }
     }
 }
