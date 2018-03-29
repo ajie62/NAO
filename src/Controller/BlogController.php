@@ -9,8 +9,10 @@
 namespace App\Controller;
 
 
+use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class BlogController
@@ -29,9 +31,21 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/management/add", name="blog.add_article")
      */
-    public function addArticle()
+    public function addArticle(Request $request)
     {
-
+        $form = $this->createForm('App\Form\ArticleFormType');
+        $data = null;
+        if ($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
+            $data = $form->getData();
+            $data = $data['articleField'];
+            dump($data);
+        }
+        return $this->render('blog/addArticle.html.twig', [
+           'form' => $form->createView(),
+           'data' => $data
+        ]);
     }
 
     /**
