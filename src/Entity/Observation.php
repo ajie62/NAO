@@ -79,6 +79,7 @@ class Observation
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(max="400", maxMessage="{{ limit }} caractères maximum.")
      */
     private $comment;
 
