@@ -69,8 +69,21 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/management/edit/{id}", name="blog.edit_article")
      */
-    public function editArticle()
+    public function editArticle(Article $article, Request $request)
     {
-
+        $form = $this->createForm('App\Form\ArticleFormType', $article);
+        if ($request->isMethod('POST'))
+        {
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($article);
+                $em->flush();
+            }
+        }
+        return $this->render('blog/editArticle.html.twig', [
+            'form' => $form->createView(),
+            'article' => $article
+        ]);
     }
 }
