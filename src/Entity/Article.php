@@ -27,13 +27,18 @@ class Article
     private $id;
 
     /**
+     * @ORM\Column(name="title", type="string", length=50)
+     */
+    private $title;
+
+    /**
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
      */
     private $image;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=10000)
      */
     private $content;
 
@@ -53,6 +58,22 @@ class Article
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
     }
 
     /**

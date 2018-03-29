@@ -34,13 +34,13 @@ class BlogController extends AbstractController
      */
     public function addArticle(Request $request)
     {
-        $form = $this->createForm('App\Form\ArticleFormType');
+        $article = new Article();
+        $form = $this->createForm('App\Form\ArticleFormType', $article);
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){
                 $em = $this->getDoctrine()->getManager();
-                $article = new Article();
                 $em->persist($article);
                 $em->flush();
             }
