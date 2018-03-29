@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+    <div>
+        {{ article.title }}
+    </div>
+    <div>
+        <img src="{{ asset( article.image.webPath ) }}">
+    </div>
+    <div class="fr-view">
+        {{ article.content | raw }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/textEditorBlog.js') }}"></script>
+{% endblock %}

@@ -51,11 +51,13 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/show", name="blog.show_article")
+     * @Route("/blog/show/{id}", name="blog.show_article")
      */
-    public function showArticle()
+    public function showArticle(Article $article)
     {
-
+        return $this->render('blog/showArticle.html.twig', [
+            'article' => $article
+        ]);
     }
 
     /**
