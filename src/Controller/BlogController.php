@@ -26,7 +26,12 @@ class BlogController extends AbstractController
      */
     public function listArticle()
     {
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository('App:Article')->findAll();
 
+        return $this->render('blog/listArticle.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -63,9 +68,21 @@ class BlogController extends AbstractController
     /**
      * @Route("/blog/management/delete/{id}", name="blog.delete_article")
      */
-    public function deleteArticle()
+    public function deleteArticle(Article $article, Request $request)
     {
-
+        $form = $this->get('form.factory')->create();
+        if($request->isMethod('POST')){
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($article);
+                $em->flush();
+                return $this->redirectToRoute('blog.list_article');
+            }
+        }
+        return $this->render('blog/deleteArticle.html.twig', [
+           'article' => $article
+        ]);
     }
 
     /**

@@ -10,9 +10,12 @@
     <div>
         <img src="{{ asset( article.image.webPath ) }}">
     </div>
+    <hr>
     <div class="fr-view">
         {{ article.content | raw }}
     </div>
+    <hr>
+    {#comments#}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
