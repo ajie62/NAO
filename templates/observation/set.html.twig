@@ -3,11 +3,11 @@
 {% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
 
 {% block body %}
+    <div id="error"></div>
     <h1>{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}</h1>
 
     {# Temporary style #}
     <div id="map" style="width: 350px; height: 350px;"></div>
-    <div id="error"></div>
 
     {{ form_start(form) }}
     {{ form_rest(form) }}

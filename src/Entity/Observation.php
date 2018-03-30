@@ -55,6 +55,7 @@ class Observation
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\GreaterThanOrEqual(0)
      */
     private $age;
 
@@ -71,6 +72,7 @@ class Observation
 
     /**
      * @ORM\Column(type="string", nullable=true)
+     * @Assert\Valid()
      */
     private $atlasCode;
 

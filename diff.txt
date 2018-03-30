@@ -1,0 +1,124 @@
+diff --git a/public/js/observation.js b/public/js/observation.js
+index efcc441..8010e6d 100644
+--- a/public/js/observation.js
++++ b/public/js/observation.js
+@@ -1,20 +1,29 @@
+ var map, marker;
+ var center = { lat: 46.53924000000001, lng: 2.4301890000000412 };
++var obsMap = document.getElementById('map');
++var errorElmt = document.getElementById('error');
++
++// latitude & longitude inputs
++var obsLng = document.getElementById('observation_longitude');
++var obsLat = document.getElementById('observation_latitude');
+ 
+ // Initiate a map thanks to Google Maps API. Used as callback in view
+ function initMap() {
+-    map = new google.maps.Map(document.getElementById('map'), { center: center, zoom: 8 });
+-    startWatch();
++    map = new google.maps.Map(obsMap, { center: center, zoom: 8 });
+ 
+-    // latitude & longitude inputs
+-    var obsLongitude = document.getElementById('observation_longitude');
+-    var obsLatitude = document.getElementById('observation_latitude');
++    if (obsLat.value.length === 0 && obsLng.value.length === 0) {
++        startWatch();
++    } else {
++        var latLng = new google.maps.LatLng(obsLat.value, obsLng.value);
++        map.setCenter(latLng);
++        placeMarker(latLng);
++    }
+ 
+     // place a unique marker on the map & add coordinates into inputs
+     google.maps.event.addListener(map, 'click', function(event) {
+         placeMarker(event.latLng);
+-        if (obsLongitude !== null) { obsLongitude.value = event.latLng.lng(); }
+-        if (obsLatitude !== null) { obsLatitude.value = event.latLng.lat(); }
++        if (obsLng !== null) { obsLng.value = event.latLng.lng(); }
++        if (obsLat !== null) { obsLat.value = event.latLng.lat(); }
+     });
+ }
+ 
+@@ -26,18 +35,31 @@ function placeMarker(location) {
+ 
+ // Geolocation
+ function startWatch() {
+-    var positionOptions = { timeout: 10000, enableHighAccuracy: true, maximumAge: 10000 };
++    var positionOptions = { timeout: 10000, enableHighAccuracy: true, maximumAge: 10000, frequency: 3000 };
+     if (window.navigator.geolocation)
+         navigator.geolocation.watchPosition(handleData, handleError, positionOptions);
+ }
+ 
+ function handleData(geoData) {
++    if (errorElmt.innerHTML.length > 0)
++        errorElmt.innerHTML = '';
++
+     var userPosition = { lat: geoData.coords.latitude, lng: geoData.coords.longitude };
+     map.setCenter(userPosition);
+ }
+ 
+ function handleError(error) {
+-    document.getElementById('error').innerHTML = error.message;
++    switch (error.code) {
++        case 1:
++            errorElmt.innerHTML = '<p>Vous n\'avez pas donné la permission d\'utiliser la géolocalisation.</p>';
++            break;
++        case 2:
++            errorElmt.innerHTML = '<p>Impossible de déterminer votre position. Veuillez réessayer s\'il vous plaît.</p>';
++            break;
++        case 3:
++            errorElmt.innerHTML = '<p>La géolocalisation prend plus de temps que prévu...</p>';
++            break;
++    }
+ }
+ 
+ // Handle inputs depending on deceased checkbox
+diff --git a/src/Entity/Observation.php b/src/Entity/Observation.php
+index 557ebeb..a410412 100644
+--- a/src/Entity/Observation.php
++++ b/src/Entity/Observation.php
+@@ -55,6 +55,7 @@ class Observation
+ 
+     /**
+      * @ORM\Column(type="integer", nullable=true)
++     * @Assert\GreaterThanOrEqual(0)
+      */
+     private $age;
+ 
+@@ -71,6 +72,7 @@ class Observation
+ 
+     /**
+      * @ORM\Column(type="string", nullable=true)
++     * @Assert\Valid()
+      */
+     private $atlasCode;
+ 
+diff --git a/src/Form/ObservationType.php b/src/Form/ObservationType.php
+index 8e61192..ce02c23 100644
+--- a/src/Form/ObservationType.php
++++ b/src/Form/ObservationType.php
+@@ -37,6 +37,7 @@ class ObservationType extends AbstractType
+             ->add('age', IntegerType::class, [
+                 'label' => 'Âge',
+                 'required' => false,
++                'attr' => ['min' => 0]
+             ])
+             ->add('atlasCode', ChoiceType::class, [
+                 'label' => 'Code atlas',
+diff --git a/templates/observation/set.html.twig b/templates/observation/set.html.twig
+index 521815b..475caae 100644
+--- a/templates/observation/set.html.twig
++++ b/templates/observation/set.html.twig
+@@ -3,11 +3,11 @@
+ {% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
+ 
+ {% block body %}
++    <div id="error"></div>
+     <h1>{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}</h1>
+ 
+     {# Temporary style #}
+     <div id="map" style="width: 350px; height: 350px;"></div>
+-    <div id="error"></div>
+ 
+     {{ form_start(form) }}
+     {{ form_rest(form) }}

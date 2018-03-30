@@ -37,6 +37,7 @@ class ObservationType extends AbstractType
             ->add('age', IntegerType::class, [
                 'label' => 'Âge',
                 'required' => false,
+                'attr' => ['min' => 0]
             ])
             ->add('atlasCode', ChoiceType::class, [
                 'label' => 'Code atlas',
