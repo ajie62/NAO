@@ -4,13 +4,66 @@
 
 {% block body %}
     <div id="error"></div>
-    <h1>{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}</h1>
+
+    {% if isNewObservation %}
+        <div class="step">
+            <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
+        </div>
+    {% else %}
+        <h1>Édition d'observation</h1>
+    {% endif %}
 
     {# Temporary style #}
     <div id="map" style="width: 350px; height: 350px;"></div>
 
     {{ form_start(form) }}
-    {{ form_rest(form) }}
+
+    <div>
+        {{ form_errors(form.species) }}
+        {{ form_label(form.species) }}
+        {{ form_widget(form.species) }}
+    </div>
+    <div>
+        {{ form_errors(form.latitude) }}
+        {{ form_label(form.latitude) }}
+        {{ form_widget(form.latitude) }}
+    </div>
+    <div>
+        {{ form_errors(form.longitude) }}
+        {{ form_label(form.longitude) }}
+        {{ form_widget(form.longitude) }}
+    </div>
+    <div>
+        {{ form_errors(form.sex) }}
+        {{ form_label(form.sex) }}
+        {{ form_widget(form.sex) }}
+    </div>
+    <div>
+        {{ form_errors(form.atlasCode) }}
+        {{ form_label(form.atlasCode) }}
+        {{ form_widget(form.atlasCode) }}
+    </div>
+    <div>
+        {{ form_errors(form.deceased) }}
+        {{ form_label(form.deceased) }}
+        {{ form_widget(form.deceased) }}
+    </div>
+    <div>
+        {{ form_errors(form.flightDirection) }}
+        {{ form_label(form.flightDirection) }}
+        {{ form_widget(form.flightDirection) }}
+    </div>
+    <div>
+        {{ form_errors(form.deathCause) }}
+        {{ form_label(form.deathCause) }}
+        {{ form_widget(form.deathCause) }}
+    </div>
+    <div>
+        {{ form_errors(form.comment) }}
+        {{ form_label(form.comment) }}
+        {{ form_widget(form.comment) }}
+    </div>
+
     <button type="submit">{{ isNewObservation ? "Ajouter" : "Mettre à jour" }}</button>
     {{ form_end(form) }}
 {% endblock %}

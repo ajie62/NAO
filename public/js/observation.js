@@ -9,7 +9,7 @@ var obsLat = document.getElementById('observation_latitude');
 
 // Initiate a map thanks to Google Maps API. Used as callback in view
 function initMap() {
-    map = new google.maps.Map(obsMap, { center: center, zoom: 8 });
+    map = new google.maps.Map(obsMap, { center: center, zoom: 15, mapTypeId: google.maps.MapTypeId.HYBRID });
 
     if (obsLat.value.length === 0 && obsLng.value.length === 0) {
         startWatch();

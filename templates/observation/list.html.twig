@@ -12,7 +12,9 @@
            <li>Espèce : {{ observation.species }}</li>
            <li>Longitude : {{ observation.longitude }}</li>
            <li>Latitude : {{ observation.latitude }}</li>
-           <li>Direction du vol : {{ observation.flightDirection|default('Inconnue') }}</li>
+           {% if not observation.deceased %}
+               <li>Direction du vol : {{ observation.flightDirection|default('Inconnue') }}</li>
+           {% endif %}
            <li>Sexe : {{ observation.sex|default('Inconnu') }}</li>
            <li>Âge : {{ observation.age|default('Inconnu') }}</li>
            <li>{{ observation.deceased ? 'Animal décédé' : 'Animal vivant' }}</li>
