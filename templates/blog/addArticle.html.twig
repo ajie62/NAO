@@ -11,21 +11,25 @@
 {% block body %}
     {{ form_start(form) }}
     <div>
-        {{ form_widget(form.articleField, {'attr' : {'hidden' : 'hidden'}}) }}
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+        {{ form_errors(form.title) }}
+    </div>
+    <div>
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image) }}
+        {{ form_errors(form.image) }}
+    </div>
+    <div>
+        {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
     </div>
     <button type="submit">Enregistrer</button>
     {{ form_end(form) }}
-
-    {% if data is not null %}
-        <div class="fr-view">
-            {{ data | raw }}
-        </div>
-    {% endif %}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/froala_editor.pkgd.min.js"></script>
-    <script> $(function() { $('textarea').froalaEditor() }); </script>
+    <script type="text/javascript" src="{{ asset('js/textEditorBlog.js') }}"></script>
 {% endblock %}
