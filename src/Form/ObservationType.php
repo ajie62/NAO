@@ -12,6 +12,7 @@ use App\Entity\Observation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -24,8 +25,8 @@ class ObservationType extends AbstractType
     {
         $builder
             ->add('species', TextType::class, ['label' => 'Espèce'])
-            ->add('longitude', TextType::class, ['label' => 'Longitude'])
-            ->add('latitude', TextType::class, ['label' => 'Latitude'])
+            ->add('longitude', HiddenType::class)
+            ->add('latitude', HiddenType::class)
             ->add('sex', ChoiceType::class, [
                 'label' => 'Sexe',
                 'choices' => [

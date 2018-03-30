@@ -35,11 +35,13 @@ class Observation
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Regex("/^(\-?\d+(\.\d+)?)\s*(\-?\d+(\.\d+)?)$/")
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Regex("/^(\-?\d+(\.\d+)?)\s*(\-?\d+(\.\d+)?)$/")
      */
     private $latitude;
 
