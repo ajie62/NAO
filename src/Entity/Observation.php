@@ -95,6 +95,18 @@ class Observation
     private $updatedAt;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    private $image;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entit\Image", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="phone_image_id", referencedColumnName="id")
+     */
+    private $phoneImage;
+
+    /**
      * Observation constructor.
      */
     public function __construct()
@@ -345,5 +357,41 @@ class Observation
         if ($this->getDeceased()) {
             $this->setFlightDirection(null);
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     * @return Observation
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhoneImage()
+    {
+        return $this->phoneImage;
+    }
+
+    /**
+     * @param mixed $phoneImage
+     * @return Observation
+     */
+    public function setPhoneImage($phoneImage)
+    {
+        $this->phoneImage = $phoneImage;
+        return $this;
     }
 }

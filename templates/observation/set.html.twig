@@ -3,20 +3,41 @@
 {% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
 
 {% block body %}
-    <div id="error"></div>
-
     {% if isNewObservation %}
-        <div class="step">
-            <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
+        <div class="step1">
+            <p>Étape 1 : Insérer ou prendre une photographie de l'animal</p>
         </div>
     {% else %}
         <h1>Édition d'observation</h1>
     {% endif %}
 
+    {{ form_start(form) }}
+
+    <div>
+        {{ form_errors(form.image) }}
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image) }}
+    </div>
+
+    <hr>
+
+    {% if isNewObservation %}
+        <div class="step2">
+            <p>Étape 2 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
+        </div>
+    {% endif %}
+
     {# Temporary style #}
+    <div id="error"></div>
     <div id="map" style="width: 350px; height: 350px;"></div>
 
-    {{ form_start(form) }}
+    <hr>
+
+    {% if isNewObservation %}
+        <div class="step3">
+            <p>Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
+        </div>
+    {% endif %}
 
     <div>
         {{ form_errors(form.species) }}
@@ -24,19 +45,14 @@
         {{ form_widget(form.species) }}
     </div>
     <div>
-        {{ form_errors(form.latitude) }}
-        {{ form_label(form.latitude) }}
-        {{ form_widget(form.latitude) }}
-    </div>
-    <div>
-        {{ form_errors(form.longitude) }}
-        {{ form_label(form.longitude) }}
-        {{ form_widget(form.longitude) }}
-    </div>
-    <div>
         {{ form_errors(form.sex) }}
         {{ form_label(form.sex) }}
         {{ form_widget(form.sex) }}
+    </div>
+    <div>
+        {{ form_errors(form.age) }}
+        {{ form_label(form.age) }}
+        {{ form_widget(form.age) }}
     </div>
     <div>
         {{ form_errors(form.atlasCode) }}
