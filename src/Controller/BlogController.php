@@ -26,7 +26,12 @@ class BlogController extends AbstractController
      */
     public function listArticle()
     {
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository('App:Article')->findAll();
 
+        return $this->render('blog/listArticle.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -55,17 +60,38 @@ class BlogController extends AbstractController
      */
     public function showArticle(Article $article)
     {
-        return $this->render('blog/showArticle.html.twig', [
+        $em = $this->getDoctrine()->getManager();
+        $comments = $em->getRepository('App:Comment')->findBy([
             'article' => $article
+        ]);
+        dump($comments);
+        $form = $this->createForm('App\Form\CommentArticleType');
+        return $this->render('blog/showArticle.html.twig', [
+            'article' => $article,
+            'formComment' => $form->createView(),
+            'comments' => $comments
         ]);
     }
 
     /**
      * @Route("/blog/management/delete/{id}", name="blog.delete_article")
      */
-    public function deleteArticle()
+    public function deleteArticle(Article $article, Request $request)
     {
-
+        $form = $this->get('form.factory')->create();
+        if($request->isMethod('POST')){
+            $form->handleRequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($article);
+                $em->flush();
+                return $this->redirectToRoute('blog.list_article');
+            }
+        }
+        return $this->render('blog/deleteArticle.html.twig', [
+           'article' => $article,
+            'form' => $form->createView()
+        ]);
     }
 
     /**

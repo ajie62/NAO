@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% for article in articles %}
+        <div>
+           <a href="{{ path('blog.show_article', {'id' : article.id }) }}">
+               <img src="{{ asset(article.image.webPath) }}" alt="{{ article.image.alt }}">
+           </a>
+            <h3>{{ article.title }}</h3>
+            <p>{{ article.content | striptags }}</p>
+            <span>{{ article.createdAt | date('d M Y') }}</span>
+            <a href="{{ path('blog.delete_article', {'id' : article.id }) }}">Supprimer</a>
+        </div>
+        <hr>
+    {% endfor %}
+{% endblock %}
