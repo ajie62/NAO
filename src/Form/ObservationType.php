@@ -12,11 +12,14 @@ use App\Entity\Observation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObservationType extends AbstractType
@@ -24,7 +27,12 @@ class ObservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', ImageType::class)
+            ->add('image', ImageType::class, [
+                'required' => false,
+            ])
+            ->add('capture', ImageType::class, [
+                'attr' => ['capture' => 'camera'],
+            ])
             ->add('species', TextType::class, ['label' => 'Espèce'])
             ->add('longitude', HiddenType::class)
             ->add('latitude', HiddenType::class)

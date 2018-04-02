@@ -18,6 +18,7 @@ use App\Validator\Constraints as obsAssert;
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @ORM\Table(name="observation")
  * @ORM\HasLifecycleCallbacks()
+ * @obsAssert\HasImageOrCapture()
  */
 class Observation
 {
@@ -100,11 +101,7 @@ class Observation
      */
     private $image;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entit\Image", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(name="phone_image_id", referencedColumnName="id")
-     */
-    private $phoneImage;
+    public $capture;
 
     /**
      * Observation constructor.
@@ -380,18 +377,30 @@ class Observation
     /**
      * @return mixed
      */
-    public function getPhoneImage()
+    public function getCapture()
     {
-        return $this->phoneImage;
+        return $this->capture;
     }
 
     /**
-     * @param mixed $phoneImage
+     * @param mixed $capture
      * @return Observation
      */
-    public function setPhoneImage($phoneImage)
+    public function setCapture(Image $capture)
     {
-        $this->phoneImage = $phoneImage;
+        $this->capture = $capture;
         return $this;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        if (is_null($this->getImage())) {
+            if (!is_null($this->getCapture())) {
+                $this->setImage($this->getCapture());
+            }
+        }
     }
 }
