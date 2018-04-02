@@ -10,6 +10,7 @@ namespace App\Entity;
 
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +52,12 @@ class Article
      * @ORM\Column(type="datetime")
      */
     private $updateAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", cascade={"remove"})
+     * @ORM\OrderBy({"createdAt"="DESC"})
+     */
+    private $comments;
 
     /**
      * @return mixed
@@ -130,6 +137,27 @@ class Article
     public function getUpdateAt()
     {
         return $this->updateAt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param mixed $comments
+     */
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
     }
 
     /**

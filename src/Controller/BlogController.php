@@ -60,8 +60,16 @@ class BlogController extends AbstractController
      */
     public function showArticle(Article $article)
     {
-        return $this->render('blog/showArticle.html.twig', [
+        $em = $this->getDoctrine()->getManager();
+        $comments = $em->getRepository('App:Comment')->findBy([
             'article' => $article
+        ]);
+        dump($comments);
+        $form = $this->createForm('App\Form\CommentArticleType');
+        return $this->render('blog/showArticle.html.twig', [
+            'article' => $article,
+            'formComment' => $form->createView(),
+            'comments' => $comments
         ]);
     }
 
@@ -81,7 +89,8 @@ class BlogController extends AbstractController
             }
         }
         return $this->render('blog/deleteArticle.html.twig', [
-           'article' => $article
+           'article' => $article,
+            'form' => $form->createView()
         ]);
     }
 
