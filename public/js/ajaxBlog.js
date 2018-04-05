@@ -37,7 +37,7 @@ $(function () {
             url: url,
             method: 'DELETE'
         }).done(function () {
-            el.fadeOut();
+            el.fadeOut().remove();
         });
     });
 });
