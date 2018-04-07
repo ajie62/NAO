@@ -57,12 +57,6 @@ class Observation
     private $sex;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     * @Assert\GreaterThanOrEqual(0)
-     */
-    private $age;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $deceased;
@@ -216,24 +210,6 @@ class Observation
     public function setSex($sex)
     {
         $this->sex = $sex;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAge()
-    {
-        return $this->age;
-    }
-
-    /**
-     * @param mixed $age
-     * @return Observation
-     */
-    public function setAge($age)
-    {
-        $this->age = $age;
         return $this;
     }
 

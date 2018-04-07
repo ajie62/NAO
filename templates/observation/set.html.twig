@@ -37,7 +37,7 @@
 
     {# Temporary style #}
     <div id="error"></div>
-    <div id="map" style="width: 350px; height: 350px;"></div>
+    <div id="map" style="width: 100%; height: 450px;"></div>
 
     <hr>
 
@@ -58,14 +58,10 @@
         {{ form_widget(form.sex) }}
     </div>
     <div>
-        {{ form_errors(form.age) }}
-        {{ form_label(form.age) }}
-        {{ form_widget(form.age) }}
-    </div>
-    <div>
         {{ form_errors(form.atlasCode) }}
         {{ form_label(form.atlasCode) }}
         {{ form_widget(form.atlasCode) }}
+        <span id="js-atlasCode-tooltip">?</span> {# TODO #}
     </div>
     <div>
         {{ form_errors(form.deceased) }}
