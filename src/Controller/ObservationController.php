@@ -9,10 +9,14 @@
 namespace App\Controller;
 
 use App\Entity\Observation;
+use App\Entity\Species;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ObservationController extends AbstractController
@@ -100,6 +104,12 @@ class ObservationController extends AbstractController
     {
         # If the observation exists, this method will update it
         $isNewObservation = $observation->getId() === null;
+        $speciesList = $this->em->getRepository(Species::class)->findBy(
+            array(),
+            array('id' => 'desc'),
+            null,
+            null
+        );
 
         $form = $this->createForm(ObservationType::class, $observation);
         $form->handleRequest($request);
@@ -125,6 +135,7 @@ class ObservationController extends AbstractController
             'form' => $form->createView(),
             'isNewObservation' => $isNewObservation,
             'observation' => $observation,
+            'speciesList' => $speciesList,
         ]);
     }
 
@@ -136,5 +147,30 @@ class ObservationController extends AbstractController
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
 
         return $form;
+    }
+
+    /**
+     * @Route("/ajax_get_species", name="observation.ajax.get_species")
+     * @Method({"POST"})
+     * @param Request $request
+     * @return Response
+     */
+    public function ajaxGetSpecies(Request $request)
+    {
+        $data = $request->request->get('input');
+        $results = $this->em->getRepository(Species::class)->findWithData($data);
+
+        # TEMPORARY STYLES FOR TESTS
+        $speciesList = '<ul id="speciesList" style="margin-top: 10px; margin-left: 10px; list-style: none;">';
+        foreach ($results as $result) {
+            $matchStringBold = preg_replace('/^('.$data.')/i', '<strong>$1</strong>', $result->getName());
+            $speciesList .= '<li style="cursor:pointer;">'.$matchStringBold.'</li>';
+        }
+        $speciesList .= '</ul>';
+
+        $response = new JsonResponse();
+        $response->setData(['speciesList' => $speciesList]);
+
+        return $response;
     }
 }

@@ -49,6 +49,7 @@
         {{ form_errors(form.species) }}
         {{ form_label(form.species) }}
         {{ form_widget(form.species) }}
+        <div id="js-match" style="max-height: 200px; overflow: scroll;" ></div>
     </div>
     <div>
         {{ form_errors(form.sex) }}
@@ -90,4 +91,7 @@
     {{ parent() }}
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbgOWLTL1GMSI-RPxxrkuaWr9McbLv3WU&callback=initMap"></script>
     <script src="{{ asset('js/observation.js') }}"></script>
+    <script>
+        const ROOT_URL = "{{ url('observation.ajax.get_species') }}";
+    </script>
 {% endblock %}

@@ -79,3 +79,28 @@ deceasedCheckbox.addEventListener('change', function() {
     styleDeath.display = (styleDeath.display === 'none') ? 'block' : 'none';
     styleFlightDir.display = (styleFlightDir.display === 'none') ? 'block' : 'none';
 });
+
+/** Ajax call for species when adding an observation */
+$(function() {
+    var $speciesInput = $('#observation_species');
+    var $match = $('#js-match');
+
+    $speciesInput.on('keyup', function() {
+        var $input = $(this).val();
+        if ($input.length >= 1) {
+            var data = { input: $input };
+            $.ajax({type: "POST", url: ROOT_URL, data: data, dataType: 'json', timeout: 3000,
+                success: function(response) {
+                    $match.html(response.speciesList);
+                    $('#speciesList li').on('click', function() {
+                        $speciesInput.val($(this).text()); // Update the field with the new element
+                        $match.text(''); // Clear the <div id="match"></div>
+                    });
+                },
+                error: function() {
+                    $('#match').text('Problem!');
+                }
+            });
+        }
+    });
+});
