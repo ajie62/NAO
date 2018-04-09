@@ -6,23 +6,26 @@
     <h1>Liste d'observations</h1>
 
     {% for observation in observationList %}
-       <ul class="observation-obs{{ loop.index }}">
-           <li>ID : {{ observation.id }}</li>
-           <li>Ajoutée le {{ observation.observedAt|date('d/m/Y à H:i') }}</li>
-           <li>Espèce : {{ observation.species }}</li>
-           <li>Longitude : {{ observation.longitude }}</li>
-           <li>Latitude : {{ observation.latitude }}</li>
-           {% if not observation.deceased %}
-               <li>Direction du vol : {{ observation.flightDirection|default('Inconnue') }}</li>
-           {% endif %}
-           <li>Sexe : {{ observation.sex|default('Inconnu') }}</li>
-           <li>Âge : {{ observation.age|default('Inconnu') }}</li>
-           <li>{{ observation.deceased ? 'Animal décédé' : 'Animal vivant' }}</li>
-           <li>Cause de la mort : {{ observation.deceased ? observation.deathCause|default('Inconnue') : '-' }}</li>
-           <li>Code Atlas : {{ observation.atlasCode|default('Inconnu') }}</li>
-           <li>Commentaire : {{ observation.comment|default('Pas de commentaire') }}</li>
-           <li>Actions : <a href="{{ url('observation.update', {id: observation.id}) }}">éditer</a> | <a href="{{ url('observation.delete', {id: observation.id}) }}">supprimer</a></li>
-       </ul>
+       <div class="observation-obs{{ loop.index }}">
+           {# Style temporarily added in view #}
+           <img height="200" width="330" src="{{ asset(observation.image.webPath) }}" alt="{{ observation.species }}" />
+
+           <ul class="info">
+               <li>Ajoutée le {{ observation.observedAt|date('d/m/Y à H:i') }}</li>
+               <li>Espèce : {{ observation.species }}</li>
+               <li>Longitude : {{ observation.longitude }}
+                   Latitude : {{ observation.latitude }}</li>
+               {% if not observation.deceased %}
+                   <li>Direction du vol : {{ observation.flightDirection|default('Inconnue') }}</li>
+               {% endif %}
+               <li>Sexe : {{ observation.sex|default('Inconnu') }}</li>
+               <li>{{ observation.deceased ? 'Animal décédé' : 'Animal vivant' }}</li>
+               <li>Cause de la mort : {{ observation.deceased ? observation.deathCause|default('Inconnue') : '-' }}</li>
+               <li>Code Atlas : {{ observation.atlasCode|default('Inconnu') }}</li>
+               <li>Commentaire : {{ observation.comment|default('Pas de commentaire') }}</li>
+               <li>Actions : <a href="{{ url('observation.update', {id: observation.id}) }}">éditer</a> | <a href="{{ url('observation.delete', {id: observation.id}) }}">supprimer</a></li>
+           </ul>
+       </div>
     {% else %}
         <p>Il n'y a pas encore d'observation</p>
     {% endfor %}

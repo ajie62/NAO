@@ -16,7 +16,7 @@ class HasImageOrCaptureValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         $image = $this->context->getRoot()->getData()->getImage();
-        $capture = $this->context->getRoot()->getData()->getCapture()->getFile();
+        $capture = $this->context->getRoot()->getData()->getCapture();
 
         if (is_null($image) && is_null($capture)) {
             $this->context->buildViolation($constraint->message)->addViolation();

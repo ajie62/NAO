@@ -29,3 +29,7 @@ services:
     App\Controller\ObservationController:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+
+    App\Service\ObsTypeChoices:
+        class: App\Service\ObsTypeChoices
+        autowire: true

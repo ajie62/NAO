@@ -5,10 +5,20 @@
 {% block body %}
     {% if isNewObservation %}
         <div class="step1">
-            <p>Étape 1 : Insérer ou prendre une photographie de l'animal</p>
+            <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
         </div>
-    {% else %}
-        <h1>Édition d'observation</h1>
+    {% endif %}
+
+    {# Temporary style #}
+    <div id="error"></div>
+    <div id="map" style="width: 100%; height: 450px;"></div>
+
+    <hr>
+
+    {% if isNewObservation %}
+        <div class="step2">
+            <p>Étape 2 : Insérer ou prendre une photographie de l'animal</p>
+        </div>
     {% endif %}
 
     {{ form_start(form) }}
@@ -26,18 +36,6 @@
         {{ form_label(form.capture) }}
         {{ form_widget(form.capture) }}
     </div>
-
-    <hr>
-
-    {% if isNewObservation %}
-        <div class="step2">
-            <p>Étape 2 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
-        </div>
-    {% endif %}
-
-    {# Temporary style #}
-    <div id="error"></div>
-    <div id="map" style="width: 100%; height: 450px;"></div>
 
     <hr>
 
