@@ -29,3 +29,6 @@ services:
     App\Controller\ObservationController:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+    App\Controller\BlogController:
+            arguments:
+                $entityManager: '@doctrine.orm.entity_manager'

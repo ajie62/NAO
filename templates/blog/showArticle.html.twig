@@ -4,41 +4,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block body %}
-    <div>
-        {{ article.title }}
-    </div>
-    <div>
-        <img src="{{ asset( article.image.webPath ) }}">
-    </div>
-    <hr>
-    <div class="fr-view">
-        {{ article.content | raw }}
-    </div>
-    <hr>
-    <h2>Commentaires : </h2>
-    <div id="comments" comment-prototype='<div class="comment">
+    <div class="container">
+        <div>
+            {{ article.title }}
+        </div>
+        <div>
+            <img src="{{ asset( article.image.webPath ) }}">
+        </div>
+        <hr>
+        <div class="fr-view">
+            {{ article.content | raw }}
+        </div>
+        <hr>
+        <h2>Commentaires : </h2>
+        <div id="comments" comment-prototype='<div class="comment">
             <h4 class="nameUser">__nameUser__</h4>
             <span class="date">Le __date__ à __hour__</span>
             <p class="contentComment">__comment__</p>
-            <button type="button"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
+            <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
         </div>'>
 
-        {% for comment in comments %}
-            <div class="comment">
-                <h4 class="nameUser">Prénom nom</h4>
-                <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:s') }}</span>
-                <p class="contentComment">{{ comment.content }}</p>
-                <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
-            </div>
-        {% endfor %}
-    </div>
+            {% for comment in comments %}
+                <div class="comment">
+                    <h4 class="nameUser">Prénom nom</h4>
+                    <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:s') }}</span>
+                    <p class="contentComment">{{ comment.content }}</p>
+                    <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
+                </div>
+            {% endfor %}
+        </div>
 
 
-    <h2>Laisser un commentaire : </h2>
-    {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
+        <h2>Laisser un commentaire : </h2>
+        {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
         {{ form_row(formComment.content) }}
         <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}">Ajouter</button>
-    {{ form_end(formComment) }}
+        {{ form_end(formComment) }}
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
