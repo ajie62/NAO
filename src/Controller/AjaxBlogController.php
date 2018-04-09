@@ -34,7 +34,12 @@ class AjaxBlogController extends AbstractController
         $comment->setContent($request->request->get('content'));
         $em->persist($comment);
         $em->flush();
-        return new Response(null, 204);
+        $response = new Response();
+        $data = json_encode(['id' => $comment->getId()]);
+        $response->headers->set('Content-Type', 'application/json');
+        $response->setContent($data);
+
+        return $response;
     }
 
     /**

@@ -10,6 +10,8 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\Entity\Observation;
+use Doctrine\ORM\EntityManagerInterface;
 use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,14 +23,20 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BlogController extends AbstractController
 {
+
+    private $em;
+
+    public function __construct($entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
     /**
      * @Route("/blog/list", name="blog.list_article")
      */
     public function listArticle()
     {
-        $em = $this->getDoctrine()->getManager();
-        $articles = $em->getRepository('App:Article')->findAll();
-
+        $articles = $this->em->getRepository('App:Article')->findAll();
         return $this->render('blog/listArticle.html.twig', [
             'articles' => $articles
         ]);
@@ -39,20 +47,7 @@ class BlogController extends AbstractController
      */
     public function addArticle(Request $request)
     {
-        $article = new Article();
-        $form = $this->createForm('App\Form\ArticleFormType', $article);
-        if ($request->isMethod('POST'))
-        {
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
-            }
-        }
-        return $this->render('blog/addArticle.html.twig', [
-           'form' => $form->createView()
-        ]);
+       return $this->setArticle($request, new Article());
     }
 
     /**
@@ -60,11 +55,9 @@ class BlogController extends AbstractController
      */
     public function showArticle(Article $article)
     {
-        $em = $this->getDoctrine()->getManager();
-        $comments = $em->getRepository('App:Comment')->findBy([
+        $comments = $this->em->getRepository('App:Comment')->findBy([
             'article' => $article
         ]);
-        dump($comments);
         $form = $this->createForm('App\Form\CommentArticleType');
         return $this->render('blog/showArticle.html.twig', [
             'article' => $article,
@@ -78,19 +71,16 @@ class BlogController extends AbstractController
      */
     public function deleteArticle(Article $article, Request $request)
     {
-        $form = $this->get('form.factory')->create();
-        if($request->isMethod('POST')){
-            $form->handleRequest($request);
-            if($form->isSubmitted() && $form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($article);
-                $em->flush();
+        $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid() && $request->isMethod('DELETE')){
+                $this->em->remove($article);
+                $this->em->flush();
                 return $this->redirectToRoute('blog.list_article');
-            }
         }
         return $this->render('blog/deleteArticle.html.twig', [
            'article' => $article,
-            'form' => $form->createView()
+           'form' => $form->createView()
         ]);
     }
 
@@ -99,19 +89,22 @@ class BlogController extends AbstractController
      */
     public function editArticle(Article $article, Request $request)
     {
+        return $this->setArticle($request, $article);
+    }
+
+    private function setArticle(Request $request, Article $article){
         $form = $this->createForm('App\Form\ArticleFormType', $article);
         if ($request->isMethod('POST'))
         {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($article);
-                $em->flush();
+                $this->em->persist($article);
+                $this->em->flush();
+                return $this->redirectToRoute('blog.list_article');
             }
         }
-        return $this->render('blog/editArticle.html.twig', [
-            'form' => $form->createView(),
-            'article' => $article
+        return $this->render('blog/setArticle.html.twig', [
+           'form' => $form->createView()
         ]);
     }
 }

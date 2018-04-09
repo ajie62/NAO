@@ -9,23 +9,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block body %}
-    {{ form_start(form) }}
-    <div>
-        {{ form_label(form.title) }}
-        {{ form_widget(form.title) }}
-        {{ form_errors(form.title) }}
+    <div class="container">
+        {{ form_start(form) }}
+        <div>
+            {{ form_label(form.title) }}
+            {{ form_widget(form.title) }}
+            {{ form_errors(form.title) }}
+        </div>
+        <div>
+            <img src="{{ asset(article.image.webPath) }}" alt="{{ asset(article.image.alt) }}" id="img">
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image) }}
+            {{ form_errors(form.image) }}
+        </div>
+        <div>
+            {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
+        </div>
+        <button type="submit">Enregistrer</button>
+        {{ form_end(form) }}
     </div>
-    <div>
-        <img src="{{ asset(article.image.webPath) }}" alt="{{ asset(article.image.alt) }}" id="img">
-        {{ form_label(form.image) }}
-        {{ form_widget(form.image) }}
-        {{ form_errors(form.image) }}
-    </div>
-    <div>
-        {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
-    </div>
-    <button type="submit">Enregistrer</button>
-    {{ form_end(form) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
