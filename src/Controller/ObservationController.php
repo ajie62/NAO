@@ -23,10 +23,12 @@ class ObservationController extends AbstractController
 {
     /** @var EntityManagerInterface $entityManager */
     private $em;
+    private $choices;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $choices)
     {
         $this->em = $entityManager;
+        $this->choices = $choices;
     }
 
     /**
@@ -111,7 +113,9 @@ class ObservationController extends AbstractController
             null
         );
 
-        $form = $this->createForm(ObservationType::class, $observation);
+        $form = $this->createForm(ObservationType::class, $observation, [
+            'choices_data' => $this->choices
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

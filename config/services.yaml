@@ -1,3 +1,6 @@
+imports:
+    - { resource: choices.yaml }
+
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
@@ -29,11 +32,8 @@ services:
     App\Controller\ObservationController:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
+            $choices:  '%choices%'
 
     App\Controller\BlogController:
             arguments:
                 $entityManager: '@doctrine.orm.entity_manager'
-
-    App\Service\ObsTypeChoices:
-            class: App\Service\ObsTypeChoices
-            autowire: true

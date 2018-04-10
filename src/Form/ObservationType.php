@@ -18,15 +18,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class ObservationType extends AbstractType
 {
     private $choices;
-
-    public function __construct(ObsTypeChoices $choices)
-    {
-        $this->choices = $choices;
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -41,11 +37,14 @@ class ObservationType extends AbstractType
             ->add('latitude', HiddenType::class)
             ->add('sex', ChoiceType::class, [
                 'label' => 'Sexe',
-                'choices' => $this->choices->getGenders()
+                'choices' => $options['choices_data']['genders'],
+                'constraints' => [
+                    new Choice(array_keys($options['choices_data']['genders']))
+                ]
             ])
             ->add('atlasCode', ChoiceType::class, [
                 'label' => 'Code atlas',
-                'choices' => $this->choices->getAtlasCodes(),
+                'choices' => range(0,19)
             ])
             ->add('deceased', CheckboxType::class, [
                 'label' => 'Animal décédé',
@@ -53,11 +52,11 @@ class ObservationType extends AbstractType
             ])
             ->add('deathCause', ChoiceType::class, [
                 'label' => 'Cause de la mort',
-                'choices' => $this->choices->getDeathCauses(),
+                'choices' => $options['choices_data']['deathCauses']
             ])
             ->add('flightDirection', ChoiceType::class, [
                 'label' => 'Direction du vol',
-                'choices' => $this->choices->getFlightDirections(),
+                'choices' => $options['choices_data']['flightDirections']
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',
@@ -69,5 +68,6 @@ class ObservationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefault('data_class', Observation::class);
+        $resolver->setRequired('choices_data');
     }
 }
