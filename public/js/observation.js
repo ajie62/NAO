@@ -101,6 +101,8 @@ $(function() {
                     $('#match').text('Problem!');
                 }
             });
+        } else if ($input.length === 0) {
+            $match.text('');
         }
     });
 });

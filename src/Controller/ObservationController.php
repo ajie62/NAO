@@ -159,14 +159,18 @@ class ObservationController extends AbstractController
     {
         $data = $request->request->get('input');
         $results = $this->em->getRepository(Species::class)->findWithData($data);
+        $speciesList = null;
 
-        # TEMPORARY STYLES FOR TESTS
-        $speciesList = '<ul id="speciesList" style="margin-top: 10px; margin-left: 10px; list-style: none;">';
-        foreach ($results as $result) {
-            $matchStringBold = preg_replace('/^('.$data.')/i', '<strong>$1</strong>', $result->getName());
-            $speciesList .= '<li style="cursor:pointer;">'.$matchStringBold.'</li>';
+        # If there are results, display a list. Otherwise, display nothing.
+        if ($results) {
+            # TEMPORARY STYLES FOR TESTS
+            $speciesList = '<ul id="speciesList" style="margin-bottom: 0; padding: 5px; list-style: none;">';
+            foreach ($results as $result) {
+                $matchStringBold = preg_replace('/^('.$data.')/i', '<strong>$1</strong>', $result->getName());
+                $speciesList .= '<li style="cursor:pointer;">'.$matchStringBold.'</li>';
+            }
+            $speciesList .= '</ul>';
         }
-        $speciesList .= '</ul>';
 
         $response = new JsonResponse();
         $response->setData(['speciesList' => $speciesList]);

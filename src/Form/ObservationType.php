@@ -21,9 +21,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ObservationType extends AbstractType
 {
-    /**
-     * @var ObsTypeChoices
-     */
     private $choices;
 
     public function __construct(ObsTypeChoices $choices)
@@ -35,11 +32,11 @@ class ObservationType extends AbstractType
     {
         $builder
             ->add('image', ImageType::class, ['required' => false])
-            ->add('capture', ImageType::class, [
-                'attr' => ['capture' => 'camera'],
-                'required' => false,
+            ->add('capture', ImageType::class, ['required' => false,])
+            ->add('species', TextType::class, [
+                'label' => 'Espèce',
+                'attr' => ['autocomplete' => 'off']
             ])
-            ->add('species', TextType::class, ['label' => 'Espèce'])
             ->add('longitude', HiddenType::class)
             ->add('latitude', HiddenType::class)
             ->add('sex', ChoiceType::class, [

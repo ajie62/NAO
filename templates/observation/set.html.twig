@@ -22,7 +22,6 @@
     {% endif %}
 
     {{ form_start(form) }}
-
     {{ form_errors(form) }}
 
     <div>
@@ -30,7 +29,6 @@
         {{ form_label(form.image) }}
         {{ form_widget(form.image) }}
     </div>
-
     <div>
         {{ form_errors(form.capture) }}
         {{ form_label(form.capture) }}
@@ -49,7 +47,9 @@
         {{ form_errors(form.species) }}
         {{ form_label(form.species) }}
         {{ form_widget(form.species) }}
-        <div id="js-match" style="max-height: 200px; overflow: scroll;" ></div>
+        <div style="position:relative;">
+            <div id="js-match" style="background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" ></div>
+        </div>
     </div>
     <div>
         {{ form_errors(form.sex) }}
