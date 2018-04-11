@@ -33,13 +33,13 @@ class ObservationController extends AbstractController
 
     /**
      * List of observations
-     * @Route("/observation", name="observation.list")
+     * @Route("/observation", name="observation.search")
      */
-    public function observationList()
+    public function searchObservation()
     {
         $observationList = $this->em->getRepository(Observation::class)->findAll();
 
-        return $this->render('observation/list.html.twig', [
+        return $this->render('observation/search.html.twig', [
             'observationList' => $observationList,
         ]);
     }
@@ -116,6 +116,7 @@ class ObservationController extends AbstractController
         $form = $this->createForm(ObservationType::class, $observation, [
             'choices_data' => $this->choices
         ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -163,22 +164,23 @@ class ObservationController extends AbstractController
     {
         $data = $request->request->get('input');
         $results = $this->em->getRepository(Species::class)->findWithData($data);
-        $speciesList = null;
 
         # If there are results, display a list. Otherwise, display nothing.
         if ($results) {
-            # TEMPORARY STYLES FOR TESTS
-            $speciesList = '<ul id="speciesList" style="margin-bottom: 0; padding: 5px; list-style: none;">';
+            $output = [];
+            /** @var Species $result */
             foreach ($results as $result) {
-                $matchStringBold = preg_replace('/^('.$data.')/i', '<strong>$1</strong>', $result->getName());
-                $speciesList .= '<li style="cursor:pointer;">'.$matchStringBold.'</li>';
+                $output[] = [
+                    'id' => $result->getId(),
+                    'name' => $result->getName()
+                ];
             }
-            $speciesList .= '</ul>';
+
+            $output = ['count' => count($output), 'items' => $output];
+
+            return $this->json($output);
         }
 
-        $response = new JsonResponse();
-        $response->setData(['speciesList' => $speciesList]);
-
-        return $response;
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 }
