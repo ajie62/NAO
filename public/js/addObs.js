@@ -82,27 +82,83 @@ deceasedCheckbox.addEventListener('change', function() {
 
 /** Ajax call for species when adding an observation */
 $(function() {
-    var $speciesInput = $('#observation_species');
-    var $match = $('#js-match');
+    const ROOT_URL = $('#ajax-espece-url').attr('data-url');
 
-    $speciesInput.on('keyup', function() {
-        var $input = $(this).val();
-        if ($input.length >= 1) {
-            var data = { input: $input };
+    var isObject = false;
+    var $chosenSpieces = $('#observation_espece');
+    var $matchDiv = $('#js-match');
+
+    $(document).on('click', '#speciesList li', function() {
+        var speciesId = $(this).attr('id') || null;
+
+        if(!!speciesId) {
+            $('.js-species').val(speciesId); // Give species HiddenType the id of the chosen species
+            isObject = true;
+        }
+
+        $chosenSpieces.val($(this).text()); // Update the field with the new element
+
+        var initialChoice = $chosenSpieces.val();
+        $matchDiv.text(''); // Clear the <div id="match"></div>
+
+        $chosenSpieces.on('input', function() {
+            var currentValue = $chosenSpieces.val();
+            var identicalValues = currentValue === initialChoice;
+            if (!identicalValues) {
+                $('.js-species').val('');
+                isObject = false;
+            } else {
+                $('.js-species').val(speciesId);
+            }
+        });
+    });
+
+    $chosenSpieces.on('change', function() {
+        if (!isObject) {
+            var $inputValue = $(this).val();
+            var data = { input: $inputValue };
             $.ajax({type: "POST", url: ROOT_URL, data: data, dataType: 'json', timeout: 3000,
                 success: function(response) {
-                    $match.html(response.speciesList);
-                    $('#speciesList li').on('click', function() {
-                        $speciesInput.val($(this).text()); // Update the field with the new element
-                        $match.text(''); // Clear the <div id="match"></div>
-                    });
-                },
-                error: function() {
-                    $('#match').text('Problem!');
+                    if (response) {
+                        var item = response.items[0];
+                        if (response.count === 1 && item.name.toUpperCase() === $inputValue.toUpperCase()) {
+                            var speciesId = response.items[0].id;
+                            $matchDiv.text('');
+                            $('.js-species').val(speciesId);
+                        } else {
+                            $('.js-species').val('');
+                            isObject = false;
+                        }
+                    }
                 }
             });
-        } else if ($input.length === 0) {
-            $match.text('');
+        }
+    });
+
+    $chosenSpieces.on('keyup', function() {
+        var userInput = $(this).val();
+
+        if (userInput.length >= 1) {
+            var data = { input: userInput };
+            $.ajax({type: "POST", url: ROOT_URL, data: data, dataType: 'json', timeout: 3000,
+                success: function(response) {
+                    var list = [];
+                    if (response) {
+                        for (var i = 0; i < response.count; i++) {
+                            var name = response.items[i].name;
+                            var reg = new RegExp(userInput, 'i');
+                            name = name.replace(reg, '<b>' + userInput + '</b>');
+                            list.push('<li style="cursor: pointer;" id="' + response.items[i].id + '">' + name + '</li>');
+                        }
+                        var speciesList = '<ul id="speciesList" style="margin-bottom: 0; padding: 5px; list-style: none;">'+ list.join('') +'</ul>';
+                        $matchDiv.html(speciesList);
+                    } else {
+                        $matchDiv.text('');
+                    }
+                }
+            });
+        } else if (userInput.length === 0) {
+            $matchDiv.text('');
         }
     });
 });
