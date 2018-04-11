@@ -39,6 +39,11 @@ class Species
     private $name;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="species", cascade={"remove"})
+     */
+    private $observation;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -92,5 +97,23 @@ class Species
     public function setOrder($order)
     {
         $this->order = $order;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservation()
+    {
+        return $this->observation;
+    }
+
+    /**
+     * @param mixed $observation
+     * @return Species
+     */
+    public function setObservation($observation)
+    {
+        $this->observation = $observation;
+        return $this;
     }
 }
