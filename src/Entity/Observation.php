@@ -31,7 +31,7 @@ class Observation
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Species", inversedBy="observation", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Species", inversedBy="observations", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @obsAssert\IsValidSpecies()
      */

@@ -18,7 +18,14 @@ var styleFlightDir = flightDirection.style;
 
 /** Initiate a map with Google Maps API. Used as callback in view */
 function initMap() {
-    map = new google.maps.Map(obsMap, { center: center, zoom: 15, mapTypeId: google.maps.MapTypeId.HYBRID });
+    map = new google.maps.Map(obsMap, {
+        center: center,
+        zoom: 15,
+        streetViewControl: false,
+        mapTypeControl: false,
+        gestureHandling: 'cooperative',
+        scrollwheel: false
+    });
 
     // Only if the user creates an observation
     if (obsLatEmpty && obsLngEmpty) {
@@ -126,7 +133,6 @@ $(function() {
                             $matchDiv.text('');
                             $('.js-species').val(speciesId);
                         } else {
-                            $('.js-species').val('');
                             isObject = false;
                         }
                     }

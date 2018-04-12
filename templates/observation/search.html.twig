@@ -3,12 +3,14 @@
 {% block title %}Recherche d'observation{% endblock %}
 
 {% block body %}
-    <div class="map-container">
+    <div class="map-container" style="position: relative;">
         <div id="js-search-map" style="position: relative; width: 100%; min-height: 100vh;"></div>
-        <div class="search-species" style="position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%)">
-            <div class="search-field">
+        <div class="search-species">
+            {# Icône de loupe #}
+            <div class="search-field" id="input-container" data-get-url="{{ url('observation.ajax.get_species') }}" data-search-url="{{ url('observation.ajax.search_species') }}">
                 <button type="submit" hidden></button>
-                <input type="text" name="search" id="search" placeholder="Rechercher une espèce">
+                <input type="text" name="search" id="input" placeholder="Recherche">
+                <div id="results"></div>
             </div>
         </div>
     </div>
