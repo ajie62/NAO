@@ -1,6 +1,87 @@
-var map, marker;
+var map, marker, observations;
 var center = { lat: 46.53924000000001, lng: 2.4301890000000412 };
 var obsMap = document.getElementById('js-search-map');
+var markers = [];
+var speciesObj = null;
+
+$(function() {
+    var $inputContainer = $('#input-container');
+    const GET_URL = $inputContainer.attr('data-get-url');
+    const SEARCH_URL = $inputContainer.attr('data-search-url');
+    var $input = $('#input');
+    var $results = $('#results');
+    var listOfSpecies = [];
+
+    // When user types a letter in input
+    $input.on('keyup', function() {
+        var userInput = $(this).val();
+
+        if (userInput.length >= 1) {
+            $.ajax({type: "POST", url: GET_URL, data: { input: userInput }, dataType: 'json', timeout: 3000,
+                success: function(response) {
+                    var listOfChoices = [];
+                    if (response) {
+                        for (var i = 0; i < response.count; i++) {
+                            var species = createAndHydrateSpeciesWithAjax(response, i);
+                            listOfSpecies.push(species);
+                            listOfChoices.push('<li id="'+ species.id +'">' + species.name + '</li>');
+                        }
+
+                        var speciesList = '<ul id="speciesList">'+ listOfChoices.join('') +'</ul>';
+                        $results.html(speciesList);
+                    } else {
+                        $results.empty();
+                    }
+                }
+            });
+        } else if (userInput.length === 0) {
+            $results.empty();
+        }
+    });
+
+    $(document).on('click', '#speciesList li', function() {
+        var selectedSpeciesId = $(this).attr('id') || null;
+
+        if (!!selectedSpeciesId) {
+            $input.val($(this).text());
+            $results.empty();
+            speciesObj = listOfSpecies.find(function (element) {
+                if (element.id == selectedSpeciesId;) return element;
+            });
+        }
+
+        $.ajax({type: "POST", url: SEARCH_URL, data: { id: selectedSpeciesId }, dataType: 'json', timeout: 3000,
+            success: function(response) {
+                if (response) {
+                    observations = response;
+
+                    for (var i = 0; i < observations.length; i++) {
+                        var location = { lat: observations[i].latitude, lng: observations[i].longitude };
+                        addMarker(location, observations[i], speciesObj);
+                    }
+                }
+            }
+        });
+        $results.empty();
+    });
+});
+
+var Species = {
+    id: 0,
+    name: '',
+    family: '',
+    order: ''
+};
+
+function createAndHydrateSpeciesWithAjax(ajaxResponse, iterator) {
+    var species = Object.create(Species);
+    species.id = ajaxResponse.items[iterator].id;
+    species.name = ajaxResponse.items[iterator].name;
+    species.family = ajaxResponse.items[iterator].family;
+    species.order = ajaxResponse.items[iterator].order;
+
+    return species;
+}
 
 /** Initiate a map with Google Maps API. Used as callback in view */
 function searchMap() {
@@ -14,98 +95,15 @@ function searchMap() {
     });
 }
 
-var markers = [];
-
-$(function() {
-    var $inputContainer = $('#input-container');
-    const GET_URL = $inputContainer.attr('data-get-url');
-    const SEARCH_URL = $inputContainer.attr('data-search-url');
-    var $input = $('#input');
-    var $results = $('#results');
-    var arrayOfSpecies = [];
-    var observations;
-
-    // When user types a letter in input
-    $input.on('keyup', function() {
-        var userInput = $(this).val();
-
-        if (userInput.length >= 1) {
-            $.ajax({type: "POST", url: GET_URL, data: { input: userInput }, dataType: 'json', timeout: 3000,
-                success: function(response) {
-                    var listOfChoices = [];
-                    var listOfSpecies = [];
-                    if (response) {
-                        for (var i = 0; i < response.count; i++) {
-                            var species = Object.create(Species);
-                            species.id = response.items[i].id;
-                            species.name = response.items[i].name;
-                            species.family = response.items[i].family;
-                            species.order = response.items[i].order;
-                            listOfSpecies.push(species);
-                            listOfChoices.push('<li id="'+ species.id +'">' + species.name + '</li>');
-                        }
-
-                        arrayOfSpecies = listOfSpecies;
-
-                        var speciesList = '<ul id="speciesList">'+ listOfChoices.join('') +'</ul>';
-                        $results.html(speciesList);
-                    } else {
-                        $results.text('');
-                    }
-                }
-            });
-        } else if (userInput.length === 0) {
-            $results.text('');
-        }
-    });
-
-    $(document).on('click', '#speciesList li', function() {
-        var speciesId = $(this).attr('id') || null;
-        var speciesObj = null;
-        deleteMarkers();
-
-        if(!!speciesId) {
-            $input.val($(this).text());
-            $results.text('');
-            speciesObj = arrayOfSpecies.find(function (element) {
-                if (element.id == speciesId)
-                    return element;
-            });
-        }
-
-        $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
-            success: function(response) {
-                if (response) {
-                    observations = response;
-                    // Markers
-                    for (var i = 0; i < observations.length; i++) {
-                        var location = { lat: observations[i].latitude, lng: observations[i].longitude };
-                        addMarker(location, observations[i], speciesObj);
-                    }
-                }
-            }
-        });
-
-        $results.text('');
-    });
-});
-
-var Species = {
-    id: 0,
-    name: '',
-    family: '',
-    order: ''
-};
-
 // Adds a marker to the map and push to the array
 function addMarker(location, observation, species) {
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map
-    });
+    var animation = google.maps.Animation.DROP;
+    var marker = new google.maps.Marker({ position: location, map: map, animation: animation });
+
     marker.addListener('click', function() {
         createInfoWindow(marker, observation, species)
     });
+
     markers.push(marker);
 }
 
@@ -132,14 +130,9 @@ function deleteMarkers() {
     markers = [];
 }
 
+// Creates all info windows for the markers
 function createInfoWindow(marker, observation, species) {
-    var image = '<img src=" images/'+ observation.image.id + '.' + observation.image.url + '" alt="'+ observation.image.alt +'" style="height: 200px; width: auto;" />';
-    var speciesFamily = species.family;
-    var speciesOrder = species.order;
-
-    var entireContent = '<div>' +
-        '<figure>' + image + '</figure>' + speciesFamily +
-        speciesOrder + '</div>';
-    var infoWindow = new google.maps.InfoWindow({ content: entireContent });
+    var content = '<div><h3>' + species.name + '</h3><img src="images/'+ observation.image.id + '.' + observation.image.url +'" /></div>';
+    var infoWindow = new google.maps.InfoWindow({ content: content });
     infoWindow.open(map, marker);
 }
