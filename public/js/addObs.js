@@ -94,6 +94,7 @@ $(function() {
     var isObject = false;
     var $chosenSpieces = $('#observation_espece');
     var $matchDiv = $('#js-match');
+    $matchDiv.hide();
 
     $(document).on('click', '#speciesList li', function() {
         var speciesId = $(this).attr('id') || null;
@@ -130,7 +131,7 @@ $(function() {
                         var item = response.items[0];
                         if (response.count === 1 && item.name.toUpperCase() === $inputValue.toUpperCase()) {
                             var speciesId = response.items[0].id;
-                            $matchDiv.text('');
+                            $matchDiv.hide();
                             $('.js-species').val(speciesId);
                         } else {
                             isObject = false;
@@ -154,17 +155,20 @@ $(function() {
                             var name = response.items[i].name;
                             var reg = new RegExp(userInput, 'i');
                             name = name.replace(reg, '<b>' + userInput + '</b>');
+                            if (list.length > 0) {
+                                $matchDiv.show();
+                            }
                             list.push('<li style="cursor: pointer;" id="' + response.items[i].id + '">' + name + '</li>');
                         }
                         var speciesList = '<ul id="speciesList" style="margin-bottom: 0; padding: 5px; list-style: none;">'+ list.join('') +'</ul>';
                         $matchDiv.html(speciesList);
                     } else {
-                        $matchDiv.text('');
+                        $matchDiv.hide();
                     }
                 }
             });
         } else if (userInput.length === 0) {
-            $matchDiv.text('');
+            $matchDiv.hide();
         }
     });
 });
