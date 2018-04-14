@@ -7,8 +7,7 @@
         <div id="js-search-map" style="position: relative; width: 100%; min-height: 100vh;"></div>
         <div class="search-species">
             {# Icône de loupe #}
-            <div class="search-field" id="input-container" data-get-url="{{ url('observation.ajax.get_species') }}" data-search-url="{{ url('observation.ajax.search_species') }}">
-                <button type="submit" hidden></button>
+            <div class="search-field" id="input-container" data-get-url="{{ url('observation.ajax.get_species') }}" data-search-url="{{ url('observation.ajax.search_observation') }}">
                 <input type="text" name="search" id="input" placeholder="Recherche">
                 <div id="results"></div>
             </div>

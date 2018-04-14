@@ -12,7 +12,6 @@ $(function() {
     var $results = $('#results');
     var listOfSpecies = [];
 
-    // When user types a letter in input
     $input.on('keyup', function() {
         var userInput = $(this).val();
 
@@ -22,7 +21,7 @@ $(function() {
                     var listOfChoices = [];
                     if (response) {
                         for (var i = 0; i < response.count; i++) {
-                            var species = createAndHydrateSpeciesWithAjax(response, i);
+                            var species = createAndHydrateSpecies(response, i);
                             listOfSpecies.push(species);
                             listOfChoices.push('<li id="'+ species.id +'">' + species.name + '</li>');
                         }
@@ -40,17 +39,17 @@ $(function() {
     });
 
     $(document).on('click', '#speciesList li', function() {
-        var selectedSpeciesId = $(this).attr('id') || null;
+        var speciesId = $(this).attr('id') || null;
 
-        if (!!selectedSpeciesId) {
+        if (!!speciesId) {
             $input.val($(this).text());
             $results.empty();
-            speciesObj = listOfSpecies.find(function (element) {
-                if (element.id == selectedSpeciesId;) return element;
-            });
+            speciesObj = findSpeciesObjectFromTheListWithId(listOfSpecies, speciesId);
         }
 
-        $.ajax({type: "POST", url: SEARCH_URL, data: { id: selectedSpeciesId }, dataType: 'json', timeout: 3000,
+        if (markers.length > 0) deleteMarkers();
+
+        $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
             success: function(response) {
                 if (response) {
                     observations = response;
@@ -62,7 +61,42 @@ $(function() {
                 }
             }
         });
+
         $results.empty();
+    });
+
+    $input.on('change', function() {
+        var $inputValue = $(this).val();
+        $.ajax({ type:"POST", url: GET_URL, data: { input: $inputValue }, dataType: 'json', timeout: 3000,
+            success: function(response) {
+                if (response.count === 1) {
+                    var speciesId = response.items[0].id;
+                    var speciesObj = findSpeciesObjectFromTheListWithId(listOfSpecies, speciesId);
+
+                    $.ajax({type: "POST", url: SEARCH_URL, data: { id: response.items[0].id }, dataType: 'json', timeout: 3000,
+                        success: function(response) {
+                            if (response) {
+                                observations = response;
+
+                                if (markers.length > 0) clearMarkers();
+
+                                for (var i = 0; i < observations.length; i++) {
+                                    var location = { lat: observations[i].latitude, lng: observations[i].longitude };
+                                    addMarker(location, observations[i], speciesObj);
+                                }
+                            }
+                        }
+                    });
+
+                    $input.val(response.items[0].name);
+                    $results.empty();
+                }
+            }
+        });
+    });
+
+    $input.on('keypress', function(e) {
+        if (e.keyCode === 13) $(this).blur();
     });
 });
 
@@ -73,7 +107,7 @@ var Species = {
     order: ''
 };
 
-function createAndHydrateSpeciesWithAjax(ajaxResponse, iterator) {
+function createAndHydrateSpecies(ajaxResponse, iterator) {
     var species = Object.create(Species);
     species.id = ajaxResponse.items[iterator].id;
     species.name = ajaxResponse.items[iterator].name;
@@ -132,7 +166,17 @@ function deleteMarkers() {
 
 // Creates all info windows for the markers
 function createInfoWindow(marker, observation, species) {
-    var content = '<div><h3>' + species.name + '</h3><img src="images/'+ observation.image.id + '.' + observation.image.url +'" /></div>';
+    var content = '<div>' +
+        '<h3>' + species.name + '</h3>' +
+        '<img src="images/' + observation.image.id + '.' + observation.image.url +'" />' +
+        '</div>';
+
     var infoWindow = new google.maps.InfoWindow({ content: content });
     infoWindow.open(map, marker);
+}
+
+function findSpeciesObjectFromTheListWithId(listOfSpecies, speciesId) {
+    return listOfSpecies.find(function (element) {
+        if (element.id == speciesId) return element;
+    });
 }
