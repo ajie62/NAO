@@ -22,7 +22,6 @@
     {% endif %}
 
     {{ form_start(form) }}
-
     {{ form_errors(form) }}
 
     <div>
@@ -30,7 +29,6 @@
         {{ form_label(form.image) }}
         {{ form_widget(form.image) }}
     </div>
-
     <div>
         {{ form_errors(form.capture) }}
         {{ form_label(form.capture) }}
@@ -45,11 +43,13 @@
         </div>
     {% endif %}
 
-    <div>
-        {{ form_errors(form.species) }}
-        {{ form_label(form.species) }}
-        {{ form_widget(form.species) }}
-        <div id="js-match" style="max-height: 200px; overflow: scroll;" ></div>
+    <div id="ajax-espece-url" data-url="{{ url('observation.ajax.get_species') }}">
+        {{ form_errors(form.espece) }}
+        {{ form_label(form.espece) }}
+        {{ form_widget(form.espece) }}
+        <div style="position:relative;">
+            <div id="js-match" style="background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" ></div>
+        </div>
     </div>
     <div>
         {{ form_errors(form.sex) }}
@@ -90,8 +90,5 @@
 {% block javascripts %}
     {{ parent() }}
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbgOWLTL1GMSI-RPxxrkuaWr9McbLv3WU&callback=initMap"></script>
-    <script src="{{ asset('js/observation.js') }}"></script>
-    <script>
-        const ROOT_URL = "{{ url('observation.ajax.get_species') }}";
-    </script>
+    <script src="{{ asset('js/addObs.js') }}"></script>
 {% endblock %}

@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% form_theme form 'formThemes/_FormThemes.html.twig' %}
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -14,15 +15,22 @@
         <div>
             {{ form_label(form.title) }}
             {{ form_widget(form.title) }}
-            {{ form_errors(form.title) }}
+            <div class="containerErrors" style="height: 20px">
+                {{ form_errors(form.title) }}
+            </div>
         </div>
         <div>
             {{ form_label(form.image) }}
             {{ form_widget(form.image) }}
-            {{ form_errors(form.image) }}
+            <div class="containerErrors" style="height: 20px">
+                {{ form_errors(form.image) }}
+            </div>
         </div>
         <div>
             {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
+            <div class="containerErrors" style="height: 20px">
+                {{ form_errors(form.content) }}
+            </div>
         </div>
             {{ form_row(form.published)}}
         <button type="submit" id="publish">Enregistrer</button>

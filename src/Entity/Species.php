@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +38,16 @@ class Species
      * @ORM\Column(type="string")
      */
     private $name;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="species", cascade={"remove"})
+     */
+    private $observations;
+
+    public function __construct()
+    {
+        $this->observations = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -92,5 +103,23 @@ class Species
     public function setOrder($order)
     {
         $this->order = $order;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getObservations()
+    {
+        return $this->observations;
+    }
+
+    /**
+     * @param mixed $observations
+     * @return Species
+     */
+    public function setObservations($observations)
+    {
+        $this->observations = $observations;
+        return $this;
     }
 }

@@ -8,6 +8,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use App\Validator\Constraints as obsAssert;
@@ -18,7 +19,7 @@ use App\Validator\Constraints as obsAssert;
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @ORM\Table(name="observation")
  * @ORM\HasLifecycleCallbacks()
- * @obsAssert\HasImageOrCapture()
+ * @obsAssert\HasImage()
  */
 class Observation
 {
@@ -30,12 +31,15 @@ class Observation
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Species", inversedBy="observations", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     * @obsAssert\IsValidSpecies()
      */
     private $species;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank(message="Aucune position n'a été fournie.")
      * @Assert\Regex("/^(\-?\d+(\.\d+)?)\s*(\-?\d+(\.\d+)?)$/")
      */
     private $longitude;
@@ -103,6 +107,7 @@ class Observation
     public function __construct()
     {
         $this->observedAt = new \DateTime();
+        $this->species = new ArrayCollection();
     }
 
     /**

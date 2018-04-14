@@ -26,7 +26,10 @@ class ArticleFormType extends AbstractType
     {
         $builder
             ->add('title', TextType::class)
-            ->add('image', ImageType::class)
+            ->add('image', ImageType::class, [
+                'required' => false,
+                'error_bubbling' => false
+            ])
             ->add('content', FroalaEditorType::class, [
                'language' => 'fr',
                'toolbarInline' => false,

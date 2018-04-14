@@ -1,0 +1,31 @@
+parameters:
+    choices:
+        genders:
+            indefini: ~
+            mâle: Mâle
+            femelle: Femelle
+        deathCauses:
+            Indéfinie: ~
+            Abattu: Abattu
+            Percuté par un véhicule: Percuté
+            Empoisonné: Empoisonné
+            Tué par un autre animal: Tué
+        flightDirections:
+            Indéfinie: ~
+            Au sol:  Au sol
+            Nord:  N
+            Nord-Nord-Est:  N.N.E
+            Nord-Est:  N.E
+            Est-Nord-Est:  E.N.E
+            Est:  E
+            Est-Sud-Est:  E.S.E
+            Sud-Est:  S.E
+            Sud-Sud-Est:  S.S.E
+            Sud:  S
+            Sud-Sud-Ouest:  S.S.O
+            Sud-Ouest:  S.O
+            Ouest-Sud-Ouest:  O.S.O
+            Ouest:  O
+            Ouest-Nord-Ouest:  O.N.O
+            Nord-Ouest:  N.O
+            Nord-Nord-Ouest:  N.N.O

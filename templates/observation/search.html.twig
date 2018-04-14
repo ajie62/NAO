@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche d'observation{% endblock %}
+
+{% block body %}
+    <div class="map-container" style="position: relative;">
+        <div id="js-search-map" style="position: relative; width: 100%; min-height: 100vh;"></div>
+        <div class="search-species">
+            {# Icône de loupe #}
+            <div class="search-field" id="input-container" data-get-url="{{ url('observation.ajax.get_species') }}" data-search-url="{{ url('observation.ajax.search_species') }}">
+                <button type="submit" hidden></button>
+                <input type="text" name="search" id="input" placeholder="Recherche">
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbgOWLTL1GMSI-RPxxrkuaWr9McbLv3WU&callback=searchMap"></script>
+    <script src="{{ asset('js/searchObs.js') }}"></script>
+{% endblock %}

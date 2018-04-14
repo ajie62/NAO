@@ -11,16 +11,16 @@ namespace App\Validator\Constraints;
 use Symfony\Component\Validator\Constraint;
 
 /**
- * Class HasImageOrCapture
+ * Class HasImage
  * @Annotation
  * @package App\Validator\Constraints
  */
-class HasImageOrCapture extends Constraint
+class HasImage extends Constraint
 {
     public $message = "Vous devez obligatoirement ajouter une photo.";
 
     public function getTargets()
     {
-        return self::CLASS_CONSTRAINT;
+        return self::PROPERTY_CONSTRAINT;
     }
 }

@@ -18,26 +18,34 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class ObservationController extends AbstractController
 {
     /** @var EntityManagerInterface $entityManager */
     private $em;
+    private $choices;
 
-    public function __construct($entityManager)
+    public function __construct($entityManager, $choices)
     {
         $this->em = $entityManager;
+        $this->choices = $choices;
     }
 
     /**
      * List of observations
-     * @Route("/observation", name="observation.list")
+     * @Route("/observation", name="observation.search")
      */
-    public function observationList()
+    public function searchObservation()
     {
         $observationList = $this->em->getRepository(Observation::class)->findAll();
 
-        return $this->render('observation/list.html.twig', [
+        return $this->render('observation/search.html.twig', [
             'observationList' => $observationList,
         ]);
     }
@@ -111,7 +119,10 @@ class ObservationController extends AbstractController
             null
         );
 
-        $form = $this->createForm(ObservationType::class, $observation);
+        $form = $this->createForm(ObservationType::class, $observation, [
+            'choices_data' => $this->choices
+        ]);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -128,7 +139,7 @@ class ObservationController extends AbstractController
                 $this->addFlash('notice', 'L\'observation a bien été mise à jour !');
             }
 
-            return $this->redirectToRoute('observation.list');
+            return $this->redirectToRoute('observation.search');
         }
 
         return $this->render('observation/set.html.twig', [
@@ -160,17 +171,58 @@ class ObservationController extends AbstractController
         $data = $request->request->get('input');
         $results = $this->em->getRepository(Species::class)->findWithData($data);
 
-        # TEMPORARY STYLES FOR TESTS
-        $speciesList = '<ul id="speciesList" style="margin-top: 10px; margin-left: 10px; list-style: none;">';
-        foreach ($results as $result) {
-            $matchStringBold = preg_replace('/^('.$data.')/i', '<strong>$1</strong>', $result->getName());
-            $speciesList .= '<li style="cursor:pointer;">'.$matchStringBold.'</li>';
+        # If there are results, display a list. Otherwise, display nothing.
+        if ($results) {
+            $output = [];
+            /** @var Species $result */
+            foreach ($results as $result) {
+                $output[] = [
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'family' => $result->getFamily(),
+                    'order' => $result->getOrder()
+                ];
+            }
+
+            $output = ['count' => count($output), 'items' => $output];
+
+            return $this->json($output);
         }
-        $speciesList .= '</ul>';
 
-        $response = new JsonResponse();
-        $response->setData(['speciesList' => $speciesList]);
+        return new Response('', Response::HTTP_NO_CONTENT);
+    }
 
-        return $response;
+    /**
+     * @Route("/ajax_search_species", name="observation.ajax.search_species")
+     * @param Request $request
+     * @return JsonResponse|Response
+     */
+    public function ajaxGetObservation(Request $request) {
+        $data = $request->request->get('id');
+        $results = $this->em->getRepository(Species::class)->findOneBy(["id" => $data]);
+
+        $observations = [];
+        foreach ($results->getObservations() as $observation) {
+            $observations[] = [
+                'id' => $observation->getId(),
+                'longitude' => $observation->getLongitude(),
+                'latitude' => $observation->getLatitude(),
+                'flightDirection' => $observation->getFlightDirection(),
+                'sex' => $observation->getSex(),
+                'deceased' => $observation->getDeceased(),
+                'deathCause' => $observation->getDeathCause(),
+                'atlasCode' => $observation->getAtlasCode(),
+                'comment' => $observation->getComment(),
+                'observedAt' => $observation->getObservedAt(),
+                'updatedAt' => $observation->getUpdatedAt(),
+                'image' => $observation->getImage()
+            ];
+        }
+
+        if ($observations) {
+            return $this->json($observations);
+        }
+
+        return new Response('', Response::HTTP_NO_CONTENT);
     }
 }
