@@ -38,8 +38,10 @@ class ObservationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('image', ImageType::class, ['required' => false])
-            ->add('capture', ImageType::class, ['required' => false,])
+            ->add('image', ImageType::class, [
+                'required' => false,
+                'label' => false,
+            ])
             ->add('espece', TextType::class, [
                 'label' => 'Espèce',
                 'mapped' => false,
