@@ -193,7 +193,7 @@ class ObservationController extends AbstractController
     }
 
     /**
-     * @Route("/ajax_search_species", name="observation.ajax.search_species")
+     * @Route("/ajax_search_observation", name="observation.ajax.search_observation")
      * @param Request $request
      * @return JsonResponse|Response
      */
@@ -202,6 +202,7 @@ class ObservationController extends AbstractController
         $results = $this->em->getRepository(Species::class)->findOneBy(["id" => $data]);
 
         $observations = [];
+        /** @var Observation $observation */
         foreach ($results->getObservations() as $observation) {
             $observations[] = [
                 'id' => $observation->getId(),
