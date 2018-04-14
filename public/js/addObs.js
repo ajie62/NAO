@@ -107,7 +107,7 @@ $(function() {
         $chosenSpieces.val($(this).text()); // Update the field with the new element
 
         var initialChoice = $chosenSpieces.val();
-        $matchDiv.text(''); // Clear the <div id="match"></div>
+        $matchDiv.hide();
 
         $chosenSpieces.on('input', function() {
             var currentValue = $chosenSpieces.val();

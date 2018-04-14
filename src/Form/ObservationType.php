@@ -11,6 +11,7 @@ namespace App\Form;
 use App\Entity\Observation;
 use App\Entity\Species;
 use App\Service\ObsTypeChoices;
+use App\Validator\Constraints\HasImage;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -41,6 +42,10 @@ class ObservationType extends AbstractType
             ->add('image', ImageType::class, [
                 'required' => false,
                 'label' => false,
+                'error_bubbling' => false,
+                'constraints' => [
+                    new HasImage()
+                ]
             ])
             ->add('espece', TextType::class, [
                 'label' => 'Espèce',
