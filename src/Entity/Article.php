@@ -53,6 +53,11 @@ class Article
     private $updateAt;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", cascade={"remove"})
      * @ORM\OrderBy({"createdAt"="DESC"})
      */
@@ -152,6 +157,22 @@ class Article
     public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param mixed $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
     }
 
     public function __construct()

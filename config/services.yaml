@@ -30,9 +30,9 @@ services:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
 
-    App\Controller\BlogController:
-            arguments:
-                $entityManager: '@doctrine.orm.entity_manager'
+#    App\Controller\BlogController:
+#            arguments:
+#                $entityManager: '@doctrine.orm.entity_manager'
 
     App\Service\ObsTypeChoices:
             class: App\Service\ObsTypeChoices

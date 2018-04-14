@@ -11,3 +11,10 @@ var $img = $('#img');
 $img.click(function () {
     $form.click();
 });
+// $('#article_form_published').prop('checked', true);
+$('#draft').on('click', function () {
+    $('#article_form_published').prop('checked',false);
+});
+$('#publish').on('click', function () {
+    $('#article_form_published').prop('checked',true);
+});

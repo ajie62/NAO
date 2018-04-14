@@ -15,6 +15,10 @@
         <div class="fr-view">
             {{ article.content | raw }}
         </div>
+        {{ article.createdAt | date('d/m/Y') }}
+        <a href="{{ path('blog.delete_article', {'id' : article.id }) }}">Supprimer</a>
+        <a href="{{ path('blog.edit_article', {'id' : article.id }) }}">Editer</a>
+        <h4>Par Gérard Loiseau</h4>
         <hr>
         <h2>Commentaires : </h2>
         <div id="comments" comment-prototype='<div class="comment">
