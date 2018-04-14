@@ -19,7 +19,7 @@ use App\Validator\Constraints as obsAssert;
  * @ORM\Entity(repositoryClass="App\Repository\ObservationRepository")
  * @ORM\Table(name="observation")
  * @ORM\HasLifecycleCallbacks()
- * @obsAssert\HasImageOrCapture()
+ * @obsAssert\HasImage()
  */
 class Observation
 {

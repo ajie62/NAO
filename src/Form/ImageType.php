@@ -20,7 +20,9 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file', FileType::class)
+            ->add('file', FileType::class, [
+                'error_bubbling' => true
+            ])
         ;
     }
 

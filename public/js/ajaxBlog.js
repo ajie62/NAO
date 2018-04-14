@@ -13,11 +13,27 @@ $(function () {
             data : data
             ,
             success: function (response) {
-                console.log('modification effectuée avec succès '+ response.id);
+                $('.containerErrors').empty();
                 idnewComment = response.id;
             },
-            error: function () {
-                console.log('erreur lors de la requête')
+            error: function (response) {
+                if (content.val().length === 0){
+                    $('.containerErrors').empty();
+                    $('.containerErrors')
+                        .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
+                            'Votre message ne peut pas être vide</p>');
+                } else if (content.val().length === 1) {
+                    $('.containerErrors').empty();
+                    $('.containerErrors')
+                        .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
+                            'Votre message doit contenir  au moins 2 caractères</p>');
+                } else if (content.val().length > 300){
+                    $('.containerErrors').empty();
+                    $('.containerErrors')
+                        .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
+                            'Votre message ne peut pas contenir plus de 300 caractères</p>');
+                }
+
             }
         }).done(function () {
             var $containerComments = $('#comments');

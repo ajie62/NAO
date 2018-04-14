@@ -12,4 +12,11 @@ use Doctrine\ORM\EntityRepository;
 
 class ArticleRepository extends EntityRepository
 {
+    public function findAllPublishedArticlesOrderByMoreRecentDate(){
+        return $this->createQueryBuilder('article')
+            ->andWhere('article.published = true')
+            ->orderBy('article.createdAt', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
 }

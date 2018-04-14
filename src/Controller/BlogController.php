@@ -13,6 +13,8 @@ use App\Entity\Article;
 use App\Entity\Observation;
 use Doctrine\ORM\EntityManagerInterface;
 use function dump;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +28,7 @@ class BlogController extends AbstractController
 
     private $em;
 
-    public function __construct($entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
         $this->em = $entityManager;
     }
@@ -36,7 +38,7 @@ class BlogController extends AbstractController
      */
     public function listArticle()
     {
-        $articles = $this->em->getRepository('App:Article')->findAll();
+        $articles = $this->em->getRepository('App:Article')->findAllPublishedArticlesOrderByMoreRecentDate();
         return $this->render('blog/listArticle.html.twig', [
             'articles' => $articles
         ]);
@@ -47,7 +49,7 @@ class BlogController extends AbstractController
      */
     public function addArticle(Request $request)
     {
-       return $this->setArticle($request, new Article());
+        return $this->setArticle($request, new Article());
     }
 
     /**
@@ -74,13 +76,13 @@ class BlogController extends AbstractController
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid() && $request->isMethod('DELETE')){
-                $this->em->remove($article);
-                $this->em->flush();
-                return $this->redirectToRoute('blog.list_article');
+            $this->em->remove($article);
+            $this->em->flush();
+            return $this->redirectToRoute('blog.list_article');
         }
         return $this->render('blog/deleteArticle.html.twig', [
-           'article' => $article,
-           'form' => $form->createView()
+            'article' => $article,
+            'form' => $form->createView()
         ]);
     }
 
@@ -103,8 +105,10 @@ class BlogController extends AbstractController
                 return $this->redirectToRoute('blog.list_article');
             }
         }
-        return $this->render('blog/setArticle.html.twig', [
-           'form' => $form->createView()
+        return $this->render('blog/setArticle.twig', [
+            'form' => $form->createView()
         ]);
     }
+
+
 }

@@ -11,6 +11,8 @@ namespace App\Entity;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use App\Validator\Constraints as blogAssert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
@@ -28,17 +30,32 @@ class Article
 
     /**
      * @ORM\Column(name="title", type="string", length=50)
+     * @Assert\NotBlank(
+     *     message="Un titre est obligatoire."
+     * )
+     * @Assert\Length(
+     *     max="50",
+     *     maxMessage="Votre titre ne doit pas dépasser les 50 caractères."
+     * )
      */
     private $title;
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     * @blogAssert\HasImage()
      */
     private $image;
 
     /**
      * @ORM\Column(type="string", length=10000)
+     * @Assert\NotBlank(message="Vous ne pouvez pas envoyer un article vide.")
+     * @Assert\Length(
+     *     min="100",
+     *     minMessage="Votre article doit contenir au moins {{ limit }} caractères",
+     *     max="10000",
+     *     maxMessage="Votre article ne peut pas contenir plus de {{ limit }} caractères."
+     * )
      */
     private $content;
 
@@ -51,6 +68,11 @@ class Article
      * @ORM\Column(type="datetime")
      */
     private $updateAt;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $published;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", cascade={"remove"})
@@ -152,6 +174,22 @@ class Article
     public function setComments($comments)
     {
         $this->comments = $comments;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * @param mixed $published
+     */
+    public function setPublished($published)
+    {
+        $this->published = $published;
     }
 
     public function __construct()
