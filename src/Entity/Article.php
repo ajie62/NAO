@@ -81,6 +81,12 @@ class Article
     private $comments;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -190,6 +196,24 @@ class Article
     public function setPublished($published)
     {
         $this->published = $published;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Article
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
     }
 
     public function __construct()

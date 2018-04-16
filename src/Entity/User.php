@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @UniqueEntity(fields={"mail"}, message="Cette adresse mail est déjà utilisée.")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements AdvancedUserInterface
 {
@@ -57,12 +58,12 @@ class User implements AdvancedUserInterface
     private $roles;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="user", cascade={"persist"})
      */
     private $observations;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user" ,cascade={"persist"})
      */
     private $articles;
 
@@ -86,6 +87,7 @@ class User implements AdvancedUserInterface
         $this->roles = [self::PARTICULIER];
         $this->observations = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->isActive = true;
     }
 
     /**
