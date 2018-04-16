@@ -110,7 +110,6 @@ class ObservationController extends AbstractController
      */
     private function setObservation(Request $request, Observation $observation)
     {
-        # If the observation exists, this method will update it
         $isNewObservation = $observation->getId() === null;
         $speciesList = $this->em->getRepository(Species::class)->findBy(
             array(),
@@ -118,26 +117,22 @@ class ObservationController extends AbstractController
             null,
             null
         );
-
-        $form = $this->createForm(ObservationType::class, $observation, [
-            'choices_data' => $this->choices
-        ]);
+        $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$isNewObservation) {
+            if (!$isNewObservation)
                 $observation->setUpdatedAt(new \DateTime());
-            }
 
+            $observation->setUser($this->getUser());
             $this->em->persist($observation);
             $this->em->flush();
 
-            if ($isNewObservation) {
+            if ($isNewObservation)
                 $this->addFlash('notice', 'L\'observation a bien été ajoutée !');
-            } else {
+            else
                 $this->addFlash('notice', 'L\'observation a bien été mise à jour !');
-            }
 
             return $this->redirectToRoute('observation.search');
         }
