@@ -7,7 +7,7 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    {{ form_start(form, { attr: { action: path('app.login') }}) }}
+    {{ form_start(form, { attr: { action: path('security.login') }}) }}
     <div>
         {{ form_errors(form.mail) }}
         {{ form_label(form.mail) }}
@@ -22,6 +22,8 @@
     <button type="submit">Se connecter</button>
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     {{ form_end(form) }}
+    <p><a href="#">Mot de passe oublié ?</a></p>
 
-    <p>Pas encore inscrit ?</p> {# ADD REGISTER BUTTON HERE #}
+    <p>Pas encore inscrit ?<br><a href="{{ url('security.register') }}">Inscrivez-vous</a></p>
+
 {% endblock %}

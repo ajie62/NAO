@@ -8,5 +8,5 @@
 
     {% include 'includes/registration.html.twig' %}
 
-    <p>Vous avez déjà un compte ?</p> {# ADD LOGIN BUTTON HERE #}
+    <p>Vous avez déjà un compte ?<br><a href="{{ url('security.login') }}">Identifiez-vous</a></p>
 {% endblock %}

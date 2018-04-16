@@ -21,8 +21,8 @@ security:
             provider: db
             security: true
             form_login:
-                login_path: app.login
-                check_path: app.login
+                login_path: security.login
+                check_path: security.login
                 username_parameter: login[mail]
                 password_parameter: login[password]
                 csrf_token_generator: security.csrf.token_manager
