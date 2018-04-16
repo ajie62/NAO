@@ -9,12 +9,14 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AppController extends AbstractController
 {
@@ -71,5 +73,37 @@ class AppController extends AbstractController
         return $this->render('app/registration.html.twig', [
             'registration_form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * Login page
+     * @Route("/login", name="app.login")
+     *
+     * @param AuthenticationUtils $utils
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function login(AuthenticationUtils $utils)
+    {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app.homepage');
+        }
+
+        $lastUsername = $utils->getLastUsername();
+        $lastError = $utils->getLastAuthenticationError();
+
+        $form = $this->createForm(LoginType::class, ['username' => $lastUsername]);
+
+        return $this->render('app/login.html.twig', [
+            'form' => $form->createView(),
+            'error' => $lastError
+        ]);
+    }
+
+    /**
+     * Logout
+     * @Route("/logout", name="app.logout")
+     */
+    public function logout()
+    {
     }
 }

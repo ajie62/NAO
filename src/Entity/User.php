@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  * @UniqueEntity(fields={"mail"}, message="Cette adresse mail est déjà utilisée.")
  * @ORM\HasLifecycleCallbacks()
  */
-class User implements AdvancedUserInterface
+class User implements AdvancedUserInterface, \Serializable
 {
     const PARTICULIER = "ROLE_PARTICULIER";
     const NATURALISTE = "ROLE_NATURALISTE";
@@ -328,5 +328,32 @@ class User implements AdvancedUserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * String representation of object
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->mail,
+            $this->password,
+            $this->isActive
+        ]);
+    }
+
+    /**
+     * Constructs the object
+     * @param $serialized
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->mail,
+            $this->password,
+            $this->isActive
+            ) = unserialize($serialized);
     }
 }

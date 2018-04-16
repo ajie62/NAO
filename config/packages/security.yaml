@@ -4,7 +4,7 @@ security:
         db:
             entity:
                 class: App\Entity\User
-                property: email
+                property: mail
 
     encoders:
         App\Entity\User:
@@ -16,7 +16,20 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
+            pattern: /
+            anonymous: ~
+            provider: db
+            security: true
+            form_login:
+                login_path: app.login
+                check_path: app.login
+                username_parameter: login[mail]
+                password_parameter: login[password]
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: /
+            logout:
+                path: /logout
+                target: /
 
             # activate different ways to authenticate
 
@@ -28,6 +41,10 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
-    access_control:
+    # access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_NATURALISTE: [ROLE_PARTICULIER]
+        ROLE_ADMIN: [ROLE_NATURALISTE]
