@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -34,21 +35,29 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\Email(message="Veuillez entrer une adresse e-mail valide.")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Regex(
+     *     pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})",
+     *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules et minuscules, un chiffre et un caractère spécial.",
+     *     match=true
+     * )
      */
     private $password;
 
