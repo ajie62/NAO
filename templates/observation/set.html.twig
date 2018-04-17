@@ -2,94 +2,127 @@
 
 {% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
+{% endblock %}
+
 {% block body %}
-    {% if isNewObservation %}
-        <div class="step1">
-            <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
-        </div>
-    {% endif %}
+    <div class="main-container">
+        <div class="tab-content">
+            <div id="menu0" class="tab-pane fade in active step-1">
+                {% if isNewObservation %}
+                    <div class="step">
+                        <div class="visible-xs-block mobile-step">
+                            <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
+                        </div>
+                        <div class="hidden-xs">
+                            <h2>Localisation de l'observation</h2>
+                            <p>Placer le marqueur sur la position de l'animal.</p>
+                        </div>
+                    </div>
+                {% endif %}
 
-    <style>
-        #species {
-            padding: 0;
-            list-style: none;
-        }
-    </style>
+                {# Temporary style #}
+                <div class="map-container">
+                    <div id="map" style="width: 100%; height: 450px;"></div>
+                    <div id="error"></div>
+                    <a data-toggle="tab" href="#menu1" class="step-link step-link-map"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                </div>
+            </div>
 
-    {# Temporary style #}
-    <div id="error"></div>
-    <div id="map" style="width: 100%; height: 450px;"></div>
+            <div id="menu1" class="tab-pane fade step-2">
+                {% if isNewObservation %}
+                    <div class="step">
+                        <div class="visible-xs-block mobile-step">
+                            <p>Étape 2 : Insérer ou prendre une photographie de l'animal</p>
+                        </div>
+                        <div class="hidden-xs">
+                            <h2>Insérer une photo</h2>
+                            <p>Sélectionner et insérer une photo de l'animal.</p>
+                        </div>
+                    </div>
+                {% endif %}
 
-    <hr>
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
 
-    {% if isNewObservation %}
-        <div class="step2">
-            <p>Étape 2 : Insérer ou prendre une photographie de l'animal</p>
-        </div>
-    {% endif %}
+                <div>
+                    {{ form_errors(form.image) }}
+                    {{ form_label(form.image) }}
+                    {{ form_widget(form.image) }}
+                </div>
 
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
+                <div class="nav-buttons">
+                    <a data-toggle="tab" href="#menu0" class="step-link"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+                    <a data-toggle="tab" href="#menu2" class="step-link"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                </div>
+            </div>
 
-    <div>
-        {{ form_errors(form.image) }}
-        {{ form_label(form.image) }}
-        {{ form_widget(form.image) }}
-    </div>
 
-    <hr>
+            <div id="menu2" class="tab-pane fade step-3">
+                {% if isNewObservation %}
+                    <div class="step">
+                        <div class="visible-xs-block mobile-step">
+                            <p>Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
+                        </div>
+                        <div class="hidden-xs">
+                            <h3>Informations sur l'oiseau observé</h3>
+                        </div>
+                    </div>
+                {% endif %}
 
-    {% if isNewObservation %}
-        <div class="step3">
-            <p>Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
-        </div>
-    {% endif %}
+                <div id="get-species-url" data-url="{{ url('observation.get_species') }}">
+                    {{ form_errors(form.espece) }}
+                    {{ form_label(form.espece) }}
+                    {{ form_widget(form.espece) }}
+                    <span class="loader">Chargement...</span>
+                    <div style="position:relative;">
+                        <div id="js-match" style="display:none; background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" >
+                            <ul id="species"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    {{ form_errors(form.sex) }}
+                    {{ form_label(form.sex) }}
+                    {{ form_widget(form.sex) }}
+                </div>
+                <div>
+                    {{ form_errors(form.atlasCode) }}
+                    {{ form_label(form.atlasCode) }}
+                    {{ form_widget(form.atlasCode) }}
+                    <span id="js-atlasCode-tooltip">?</span> {# TODO #}
+                </div>
+                <div>
+                    {{ form_errors(form.deceased) }}
+                    {{ form_label(form.deceased) }}
+                    {{ form_widget(form.deceased) }}
+                </div>
+                <div>
+                    {{ form_errors(form.flightDirection) }}
+                    {{ form_label(form.flightDirection) }}
+                    {{ form_widget(form.flightDirection) }}
+                </div>
+                <div>
+                    {{ form_errors(form.deathCause) }}
+                    {{ form_label(form.deathCause) }}
+                    {{ form_widget(form.deathCause) }}
+                </div>
+                <div>
+                    {{ form_errors(form.comment) }}
+                    {{ form_label(form.comment) }}
+                    {{ form_widget(form.comment) }}
+                </div>
 
-    <div id="get-species-url" data-url="{{ url('observation.get_species') }}">
-        {{ form_errors(form.espece) }}
-        {{ form_label(form.espece) }}
-        {{ form_widget(form.espece) }}
-        <span class="loader">Chargement...</span>
-        <div style="position:relative;">
-            <div id="js-match" style="display:none; background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" >
-                <ul id="species"></ul>
+                <button type="submit">{{ isNewObservation ? "Ajouter" : "Mettre à jour" }}</button>
+                <div class="nav-buttons">
+                    <a data-toggle="tab" href="#menu1" class="step-link"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
-    <div>
-        {{ form_errors(form.sex) }}
-        {{ form_label(form.sex) }}
-        {{ form_widget(form.sex) }}
-    </div>
-    <div>
-        {{ form_errors(form.atlasCode) }}
-        {{ form_label(form.atlasCode) }}
-        {{ form_widget(form.atlasCode) }}
-        <span id="js-atlasCode-tooltip">?</span> {# TODO #}
-    </div>
-    <div>
-        {{ form_errors(form.deceased) }}
-        {{ form_label(form.deceased) }}
-        {{ form_widget(form.deceased) }}
-    </div>
-    <div>
-        {{ form_errors(form.flightDirection) }}
-        {{ form_label(form.flightDirection) }}
-        {{ form_widget(form.flightDirection) }}
-    </div>
-    <div>
-        {{ form_errors(form.deathCause) }}
-        {{ form_label(form.deathCause) }}
-        {{ form_widget(form.deathCause) }}
-    </div>
-    <div>
-        {{ form_errors(form.comment) }}
-        {{ form_label(form.comment) }}
-        {{ form_widget(form.comment) }}
-    </div>
-
-    <button type="submit">{{ isNewObservation ? "Ajouter" : "Mettre à jour" }}</button>
-    {{ form_end(form) }}
 {% endblock %}
 
 {% block javascripts %}

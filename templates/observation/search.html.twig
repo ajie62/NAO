@@ -3,6 +3,10 @@
 {% block title %}Recherche d'observation{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <div class="map-container">
         <div id="js-search-map" style="width: 100%; min-height: 100vh;"></div>
         <div class="search-species">
@@ -12,8 +16,10 @@
                     <ul id="search-species-results" style="padding: 0; list-style: none;"></ul>
                 </div>
                 <span class="loader">Chargement...</span>
+                <span class="no-result"></span>
             </div>
         </div>
+        <a href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
     </div>
 {% endblock %}
 

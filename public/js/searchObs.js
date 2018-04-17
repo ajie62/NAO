@@ -11,7 +11,7 @@ $(function() {
 
     var $searchInput = $('#input');
     var $matchDiv = $('#js-search-match');
-    var $speciesContainer = $('#js-search-match > #search-species-results');
+    var $speciesContainer = $matchDiv.find('ul');
     var listOfSpecies = [];
 
     $.getJSON(GET_SPECIES_URL, function(response) {
@@ -47,7 +47,6 @@ $(function() {
                     }
                 });
             }
-
             ($speciesContainer.find('.visible').length === 0) ? $matchDiv.hide(0) : $matchDiv.show(0);
         }
     });
@@ -65,10 +64,15 @@ $(function() {
             $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
                 success: function(response) {
                     if (response) {
-                        observations = response;
-                        for (var i=0; i<observations.length; ++i) {
-                            var location = { lat: observations[i].latitude, lng: observations[i].longitude };
-                            addMarker(location, observations[i], speciesObj);
+                        if (response.length === 0) {
+                            $('.no-result').text('Aucun résultat pour cette espèce.');
+                        } else {
+                            $('.no-result').text('');
+                            observations = response;
+                            for (var i=0; i<observations.length; ++i) {
+                                var location = { lat: observations[i].latitude, lng: observations[i].longitude };
+                                addMarker(location, observations[i], speciesObj);
+                            }
                         }
                     }
                 }

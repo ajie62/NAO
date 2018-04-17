@@ -113,6 +113,7 @@ class ObservationController extends AbstractController
      */
     private function setObservation(Request $request, Observation $observation)
     {
+        $user = $this->getUser();
         $isNewObservation = $observation->getId() === null;
         $speciesList = $this->em->getRepository(Species::class)->findBy(
             array(),
@@ -120,26 +121,32 @@ class ObservationController extends AbstractController
             null,
             null
         );
-        $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
 
+        $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$isNewObservation)
-                $observation->setUpdatedAt(new \DateTime());
+            $observation->setUser($user);
 
-            $observation->setUser($this->getUser());
+            if (!$isNewObservation) {
+                $observation->setUpdatedAt(new \DateTime());
+            }
+
+            if (User::ADMIN === $user->getRoles()[0] ||
+                User::NATURALISTE === $user->getRoles()[0]) {
+                $observation->setValidated(true);
+            }
+
             $this->em->persist($observation);
             $this->em->flush();
 
-            if ($isNewObservation)
-                $this->addFlash('notice', 'L\'observation a bien été ajoutée !');
-            else
-                $this->addFlash('notice', 'L\'observation a bien été mise à jour !');
+            $notice = "L'observation a bien été ";
+            $notice .= $isNewObservation ? "ajoutée !" : "mise à jour !";
+
+            $this->addFlash('notice', $notice);
 
             return $this->redirectToRoute('observation.search');
         }
-
         return $this->render('observation/set.html.twig', [
             'form' => $form->createView(),
             'isNewObservation' => $isNewObservation,
@@ -181,28 +188,27 @@ class ObservationController extends AbstractController
             if ($observation->getUpdatedAt())
                 $updatedAt = date_format($observation->getUpdatedAt(), $dateFormat);
 
-            $observations[] = [
-                'id' => $observation->getId(),
-                'longitude' => $observation->getLongitude(),
-                'latitude' => $observation->getLatitude(),
-                'flightDirection' => $observation->getFlightDirection(),
-                'sex' => $observation->getSex(),
-                'deceased' => $observation->getDeceased(),
-                'deathCause' => $observation->getDeathCause(),
-                'atlasCode' => $observation->getAtlasCode(),
-                'comment' => $observation->getComment(),
-                'observedAt' => $observedAt,
-                'updatedAt' => $updatedAt,
-                'image' => $observation->getImage(),
-                'userFirstname' => $userFirstname,
-                'userLastname' => $userLastname
-            ];
+            if ($observation->isValidated()) {
+                $observations[] = [
+                    'id' => $observation->getId(),
+                    'longitude' => $observation->getLongitude(),
+                    'latitude' => $observation->getLatitude(),
+                    'flightDirection' => $observation->getFlightDirection(),
+                    'sex' => $observation->getSex(),
+                    'deceased' => $observation->getDeceased(),
+                    'deathCause' => $observation->getDeathCause(),
+                    'atlasCode' => $observation->getAtlasCode(),
+                    'comment' => $observation->getComment(),
+                    'observedAt' => $observedAt,
+                    'updatedAt' => $updatedAt,
+                    'image' => $observation->getImage(),
+                    'userFirstname' => $userFirstname,
+                    'userLastname' => $userLastname
+                ];
+            }
         }
 
-        if ($observations)
-            return $this->json($observations);
-
-        return new Response('', Response::HTTP_NO_CONTENT);
+        return $this->json($observations);
     }
 
     /**

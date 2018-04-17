@@ -105,11 +105,17 @@ class Observation
     private $user;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $validated;
+
+    /**
      * Observation constructor.
      */
     public function __construct()
     {
         $this->species = new ArrayCollection();
+        $this->validated = false;
     }
 
     /**
@@ -372,6 +378,24 @@ class Observation
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValidated(): bool
+    {
+        return $this->validated;
+    }
+
+    /**
+     * @param bool $validated
+     * @return Observation
+     */
+    public function setValidated(bool $validated): Observation
+    {
+        $this->validated = $validated;
         return $this;
     }
 

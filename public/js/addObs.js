@@ -24,7 +24,11 @@ function initMap() {
         streetViewControl: false,
         mapTypeControl: false,
         gestureHandling: 'cooperative',
-        scrollwheel: false
+        scrollwheel: false,
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+        }
     });
 
     // Only if the user creates an observation
@@ -58,7 +62,7 @@ function startWatch() {
 
 function handleData(geoData) {
     if (errorDiv.innerHTML.length > 0)
-        errorDiv.innerHTML = '';
+        errorDiv.style.display = "none";
     var userPosition = { lat: geoData.coords.latitude, lng: geoData.coords.longitude };
     map.setCenter(userPosition);
 }
@@ -73,6 +77,7 @@ function handleError(error) {
             break;
         case 3:
             errorDiv.innerHTML = '<p>La géolocalisation prend plus de temps que prévu...</p>';
+            errorDiv.style.display = "block";
             break;
         case 4:
             errorDiv.innerHTML = '<p>Une erreur inconnue est survenue.</p>';
