@@ -9,6 +9,19 @@
         {% endblock %}
     </head>
     <body>
+        <nav class="navbar-header">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ path('app.homepage') }}"><img src="{{ asset('images/nao.png') }}" height="50" width="50"></a> </li>
+                    <li><strong>Nos amis les oiseaux</strong><br>En route vers un monde meilleur</li>
+                    <li><a href="{{ path('app.homepage') }}">Accueil</a></li>
+                    <li><a href="{{ path('observation.search') }}">Observations</a></li>
+                    <li><a href="{{ path('blog.list_article') }}">Blog</a></li>
+                    <li><a href="{{ path('app.homepage') }}">Contact</a></li>
+                    <li><a href="{{ path('app.homepage') }}">Connexion</a></li>
+                </ul>
+            </div>
+        </nav>
         {% block body %}
         {% endblock %}
         {% block javascripts %}
