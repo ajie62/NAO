@@ -42,10 +42,7 @@ class ObservationType extends AbstractType
             ->add('image', ImageType::class, [
                 'required' => false,
                 'label' => false,
-                'error_bubbling' => false,
-                'constraints' => [
-                    new HasImage()
-                ]
+                'constraints' => [new HasImage()]
             ])
             ->add('espece', TextType::class, [
                 'label' => 'Espèce',
@@ -102,7 +99,10 @@ class ObservationType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class', Observation::class);
+        $resolver->setDefaults([
+            'data_class' => Observation::class,
+            'error_bubbling' => false,
+        ]);
         $resolver->setRequired('choices_data');
     }
 }

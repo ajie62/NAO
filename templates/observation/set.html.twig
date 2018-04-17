@@ -9,6 +9,13 @@
         </div>
     {% endif %}
 
+    <style>
+        #species {
+            padding: 0;
+            list-style: none;
+        }
+    </style>
+
     {# Temporary style #}
     <div id="error"></div>
     <div id="map" style="width: 100%; height: 450px;"></div>
@@ -38,12 +45,15 @@
         </div>
     {% endif %}
 
-    <div id="ajax-espece-url" data-url="{{ url('observation.ajax.get_species') }}">
+    <div id="ajax-espece-url" data-url="{{ url('observation.get_species') }}">
         {{ form_errors(form.espece) }}
         {{ form_label(form.espece) }}
         {{ form_widget(form.espece) }}
+        <span class="loader">Chargement...</span>
         <div style="position:relative;">
-            <div id="js-match" style="background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" ></div>
+            <div id="js-match" style="display:none; background: #fff; border: 1px solid #d8d8d8; position: absolute; margin-left: 50px; max-height: 100px; overflow: scroll;" >
+                <ul id="species"></ul>
+            </div>
         </div>
     </div>
     <div>

@@ -87,88 +87,55 @@ deceasedCheckbox.addEventListener('change', function() {
     styleFlightDir.display = (styleFlightDir.display === 'none') ? 'block' : 'none';
 });
 
-/** Ajax call for species when adding an observation */
+/** Autocomplete */
 $(function() {
-    const ROOT_URL = $('#ajax-espece-url').attr('data-url');
-
-    var isObject = false;
-    var $chosenSpieces = $('#observation_espece');
+    var $especeInput = $('#observation_espece');
+    var $hiddenInput = $('#observation_species');
     var $matchDiv = $('#js-match');
-    $matchDiv.hide();
+    var url = $('#ajax-espece-url').data('url');
+    var $speciesContainer = $('#js-match > #species');
 
-    $(document).on('click', '#speciesList li', function() {
-        var speciesId = $(this).attr('id') || null;
-
-        if(!!speciesId) {
-            $('.js-species').val(speciesId); // Give species HiddenType the id of the chosen species
-            isObject = true;
-        }
-
-        $chosenSpieces.val($(this).text()); // Update the field with the new element
-
-        var initialChoice = $chosenSpieces.val();
-        $matchDiv.hide();
-
-        $chosenSpieces.on('input', function() {
-            var currentValue = $chosenSpieces.val();
-            var identicalValues = currentValue === initialChoice;
-            if (!identicalValues) {
-                $('.js-species').val('');
-                isObject = false;
-            } else {
-                $('.js-species').val(speciesId);
-            }
+    $.getJSON(url, function(response){
+        $('.loader').hide(0);
+        response.items.forEach(function(species){
+            $speciesContainer.append('<li style="cursor: pointer;" class="species visible" data-species-id="'+species.id+'" data-value="'+ $.trim(species.name.toLowerCase()) +'">'+ $.trim(species.name.toLowerCase()) +'</li>');
         });
     });
 
-    $chosenSpieces.on('change', function() {
-        if (!isObject) {
-            var $inputValue = $(this).val();
-            var data = { input: $inputValue };
-            $.ajax({type: "POST", url: ROOT_URL, data: data, dataType: 'json', timeout: 3000,
-                success: function(response) {
-                    if (response) {
-                        var item = response.items[0];
-                        if (response.count === 1 && item.name.toUpperCase() === $inputValue.toUpperCase()) {
-                            var speciesId = response.items[0].id;
-                            $matchDiv.hide();
-                            $('.js-species').val(speciesId);
+    // When the user types something in the input
+    $especeInput.on('input', function() {
+        $matchDiv.hide(0);
+        $hiddenInput.val('');
+
+        var input = $(this).val() || false;
+
+        if (input) {
+            if (input.length > 0) {
+                $speciesContainer.find('li').each(function(){
+                    var species = $(this).data('value');
+
+                    if (species.toLowerCase() === input.toLowerCase() || species.toUpperCase() === input.toUpperCase()) {
+                        $(this).trigger('click');
+                        $(this).removeClass('visible').addClass('hidden');
+                    } else {
+                        if(species.startsWith(input)) {
+                            $(this).addClass('visible').removeClass('hidden');
                         } else {
-                            isObject = false;
+                            $(this).removeClass('visible').addClass('hidden');
                         }
                     }
-                }
-            });
+                });
+            }
+
+            ($speciesContainer.find('.visible').length === 0) ? $matchDiv.hide(0) : $matchDiv.show(0);
         }
     });
 
-    $chosenSpieces.on('keyup', function() {
-        var userInput = $(this).val();
-
-        if (userInput.length >= 1) {
-            var data = { input: userInput };
-            $.ajax({type: "POST", url: ROOT_URL, data: data, dataType: 'json', timeout: 3000,
-                success: function(response) {
-                    var list = [];
-                    if (response) {
-                        for (var i = 0; i < response.count; i++) {
-                            var name = response.items[i].name;
-                            var reg = new RegExp(userInput, 'i');
-                            name = name.replace(reg, '<b>' + userInput + '</b>');
-                            if (list.length > 0) {
-                                $matchDiv.show();
-                            }
-                            list.push('<li style="cursor: pointer;" id="' + response.items[i].id + '">' + name + '</li>');
-                        }
-                        var speciesList = '<ul id="speciesList" style="margin-bottom: 0; padding: 5px; list-style: none;">'+ list.join('') +'</ul>';
-                        $matchDiv.html(speciesList);
-                    } else {
-                        $matchDiv.hide();
-                    }
-                }
-            });
-        } else if (userInput.length === 0) {
-            $matchDiv.hide();
-        }
+    // When the user clicks on a species in the list
+    $(document).on('click', '.species', function(){
+        var speciesId = $(this).data('species-id'); // Get the species ID
+        $especeInput.val($(this).text()); // Fill the input with the species name
+        $hiddenInput.val(speciesId); // Transmit the species ID to the hidden input
+        $matchDiv.hide(0); // Hide the match div
     });
 });
