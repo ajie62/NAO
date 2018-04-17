@@ -14,9 +14,11 @@ use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
@@ -110,7 +112,6 @@ class ObservationController extends AbstractController
      */
     private function setObservation(Request $request, Observation $observation)
     {
-        # If the observation exists, this method will update it
         $isNewObservation = $observation->getId() === null;
         $speciesList = $this->em->getRepository(Species::class)->findBy(
             array(),
@@ -118,26 +119,22 @@ class ObservationController extends AbstractController
             null,
             null
         );
-
-        $form = $this->createForm(ObservationType::class, $observation, [
-            'choices_data' => $this->choices
-        ]);
+        $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$isNewObservation) {
+            if (!$isNewObservation)
                 $observation->setUpdatedAt(new \DateTime());
-            }
 
+            $observation->setUser($this->getUser());
             $this->em->persist($observation);
             $this->em->flush();
 
-            if ($isNewObservation) {
+            if ($isNewObservation)
                 $this->addFlash('notice', 'L\'observation a bien été ajoutée !');
-            } else {
+            else
                 $this->addFlash('notice', 'L\'observation a bien été mise à jour !');
-            }
 
             return $this->redirectToRoute('observation.search');
         }
@@ -170,7 +167,6 @@ class ObservationController extends AbstractController
     {
         $data = $request->request->get('input');
         $results = $this->em->getRepository(Species::class)->findWithData($data);
-
         # If there are results, display a list. Otherwise, display nothing.
         if ($results) {
             $output = [];
@@ -183,12 +179,9 @@ class ObservationController extends AbstractController
                     'order' => $result->getOrder()
                 ];
             }
-
             $output = ['count' => count($output), 'items' => $output];
-
             return $this->json($output);
         }
-
         return new Response('', Response::HTTP_NO_CONTENT);
     }
 
@@ -225,5 +218,31 @@ class ObservationController extends AbstractController
         }
 
         return new Response('', Response::HTTP_NO_CONTENT);
+    }
+
+    /**
+     * @Route("/species", name="observation.get_species", methods={"GET"})
+     * Get species (async request)
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getSpecies(Request $request)
+    {
+        if ($request->isXmlHttpRequest()) {
+            $results = $this->em->getRepository(Species::class)->findAll();
+            $output = [];
+            /** @var Species $result */
+            foreach ($results as $result) {
+                $output[] = [
+                    'id' => $result->getId(),
+                    'name' => $result->getName(),
+                    'family' => $result->getFamily(),
+                    'order' => $result->getOrder()
+                ];
+            }
+            $output = ['count' => count($output), 'items' => $output];
+            return $this->json($output);
+        }
+        throw new NotFoundHttpException();
     }
 }

@@ -8,9 +8,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\LoginType;
+use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AppController extends AbstractController
 {
@@ -24,10 +30,19 @@ class AppController extends AbstractController
     /**
      * App homepage
      * @Route("/", name="app.homepage")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function homepage()
     {
         return $this->render('app/index.html.twig');
+    }
+
+    /**
+     * Logout
+     * @Route("/logout", name="app.logout")
+     */
+    public function logout()
+    {
     }
 }

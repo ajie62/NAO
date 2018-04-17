@@ -12,13 +12,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  * @UniqueEntity(fields={"mail"}, message="Cette adresse mail est déjà utilisée.")
+ * @ORM\HasLifecycleCallbacks()
  */
-class User implements AdvancedUserInterface
+class User implements AdvancedUserInterface, \Serializable
 {
     const PARTICULIER = "ROLE_PARTICULIER";
     const NATURALISTE = "ROLE_NATURALISTE";
@@ -33,21 +35,29 @@ class User implements AdvancedUserInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="string")
+     * @Assert\Email(message="Veuillez entrer une adresse e-mail valide.")
      */
     private $mail;
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Regex(
+     *     pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})",
+     *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules et minuscules, un chiffre et un caractère spécial.",
+     *     match=true
+     * )
      */
     private $password;
 
@@ -57,12 +67,12 @@ class User implements AdvancedUserInterface
     private $roles;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="user", cascade={"persist"})
      */
     private $observations;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user" ,cascade={"persist"})
      */
     private $articles;
 
@@ -86,6 +96,7 @@ class User implements AdvancedUserInterface
         $this->roles = [self::PARTICULIER];
         $this->observations = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->isActive = true;
     }
 
     /**
@@ -326,5 +337,32 @@ class User implements AdvancedUserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * String representation of object
+     */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->mail,
+            $this->password,
+            $this->isActive
+        ]);
+    }
+
+    /**
+     * Constructs the object
+     * @param $serialized
+     */
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->mail,
+            $this->password,
+            $this->isActive
+            ) = unserialize($serialized);
     }
 }

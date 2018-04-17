@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {{ form_start(form, { attr: { action: path('security.login') }}) }}
+    <div>
+        {{ form_errors(form.mail) }}
+        {{ form_label(form.mail) }}
+        {{ form_widget(form.mail) }}
+    </div>
+    <div>
+        {{ form_errors(form.password) }}
+        {{ form_label(form.password) }}
+        {{ form_widget(form.password) }}
+    </div>
+
+    <button type="submit">Se connecter</button>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    {{ form_end(form) }}
+    <p><a href="#">Mot de passe oublié ?</a></p>
+
+    <p>Pas encore inscrit ?<br><a href="{{ url('security.register') }}">Inscrivez-vous</a></p>
+
+{% endblock %}

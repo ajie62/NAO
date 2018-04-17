@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block body %}
+    {# ADD LOGO HERE #}
+    <h1>Inscrivez-vous gratuitement</h1>
+
+    {% include 'includes/registration.html.twig' %}
+
+    <p>Vous avez déjà un compte ?<br><a href="{{ url('security.login') }}">Identifiez-vous</a></p>
+{% endblock %}

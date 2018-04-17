@@ -1,0 +1,29 @@
+{{ form_start(registration_form) }}
+<div>
+    {{ form_errors(registration_form.firstname) }}
+    {{ form_label(registration_form.firstname) }}
+    {{ form_widget(registration_form.firstname) }}
+</div>
+<div>
+    {{ form_errors(registration_form.lastname) }}
+    {{ form_label(registration_form.lastname) }}
+    {{ form_widget(registration_form.lastname) }}
+</div>
+<div>
+    {{ form_errors(registration_form.mail) }}
+    {{ form_label(registration_form.mail) }}
+    {{ form_widget(registration_form.mail) }}
+</div>
+<div>
+    {{ form_errors(registration_form.password) }}
+    {{ form_label(registration_form.password) }}
+    {{ form_widget(registration_form.password) }}
+</div>
+
+<div>
+    <input type="checkbox" id="accept-terms-of-use" name="accept-terms-of-use">
+    <label for="accept-terms-of-use">J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a></label>
+</div>
+
+<button type="submit">S'inscrire gratuitement</button>
+{{ form_end(registration_form) }}

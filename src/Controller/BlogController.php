@@ -100,6 +100,7 @@ class BlogController extends AbstractController
         {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){
+                $article->setUser($this->getUser());
                 $this->em->persist($article);
                 $this->em->flush();
                 return $this->redirectToRoute('blog.list_article');

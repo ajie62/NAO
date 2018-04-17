@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+    {% set role = user.roles[0] %}
+
+    <h1>{{ user.firstname ~ ' ' ~ user.lastname }}</h1>
+    <p>{{ user.mail }}</p>
+    <p>
+        {% if role == 'ROLE_NATURALISTE' %}Naturaliste{% elseif role == 'ROLE_ADMIN' %}Administrateur{% else %}Particulier{% endif %}
+    </p>
+
+    {% if role == 'ROLE_NATURALISTE' %}
+        <h3>Mes articles</h3>
+        <div>Brouillons</div>
+        <div>Publiés</div>
+    {% endif %}
+
+    <div>
+        <h3>Observations en attente</h3>
+        <p>0</p>
+    </div>
+    <div>
+        <h3>Observations validées</h3>
+        <p>{{ observations|length }}</p>
+    </div>
+
+    {# TODO: HANDLE OBSERVATION RESEARCH #}
+    <div>
+        <input type="text" placeholder="Recherche">
+    </div>
+
+    {% for obs in observations %}
+        <div>
+            {# TODO: ADD OBS PICTURE HERE #}
+            {{ obs.observedAt|date('d/m/Y') }} {# Observation date #}
+            {{ obs.species.name }} {# Species name #}
+        </div>
+    {% else %}
+        <p>Vous n'avez pas encore publié d'observations.</p>
+    {% endfor %}
+
+{% endblock %}

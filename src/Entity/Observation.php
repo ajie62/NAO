@@ -100,6 +100,11 @@ class Observation
     private $image;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="observations")
+     */
+    private $user;
+
+    /**
      * Observation constructor.
      */
     public function __construct()
@@ -349,6 +354,24 @@ class Observation
     public function setImage($image)
     {
         $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     * @return Observation
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
         return $this;
     }
 
