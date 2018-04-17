@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="css/stylesLandingPage.css">
+{% endblock %}
 
 {% block title %}Nos Amis les Oiseaux{% endblock %}
 
 {% block body %}
     <div class="firstBloc">
         <video src="{{ asset('videos/introNao.mp4') }}" autoplay="true" loop></video>
-        <h1>Je recherche un <span class="type"></span></h1>
-        <p>rejoingez une communauté qui <br>
-            vous ressemble</p>
-        <p>participez à la sauvegarde des oiseaux et des lieux dont ils ont besoin</p>
-        <p>Mettez à profit le talent de scientifique citoyen qui se cache en vous <span class="glyphicon glyphicon-heart"></span></p>
+        <div class="containerHeader">
+            <div class="left-content">
+                <h1>Je recherche un <span class="type"></span></h1>
+                <h3>rejoingez une communauté qui <span class="green">vous ressemble</span></h3>
+                <h4><span class="green">participez à la sauvegarde des oiseaux</span> et des lieux dont ils ont besoin</h4>
+                <h4>Mettez à profit le talent de <span class="green">scientifique citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
+            </div>
+            <div class="right-content">
+                <img src="{{ asset('images/nao2.png') }}">
+                <h4>Inscrivez vous gratuitement</h4>
+
+            </div>
+        </div>
     </div>
 
     <div class="secondBloc">
