@@ -1,0 +1,95 @@
+body{
+    font-family: "Roboto Th", sans-serif;
+}
+
+/* NAV MENU */
+nav{
+    margin-bottom: 0 !important;
+}
+
+nav img{
+    width: 50px;
+    height: 50px;
+    float: left;
+}
+.logo{
+    padding-bottom: 20px;
+}
+
+nav a{
+    font-size: 20px;
+    color: black;
+}
+.navbar-right li{
+    padding-right: 30px;
+}
+nav a:hover{
+    color: #8CC63F !important;
+}
+
+.navbar-default{
+    background-color: white !important;
+    border: none !important;
+}
+
+
+.current{
+    color: #8CC63F;
+}
+
+/* LANDING PAGE */
+
+.type{
+    color: #8CC63F;
+    font-weight: bold;
+    font-size: 60px;
+}
+
+.green{
+    color: #8CC63F;
+}
+
+.glyphicon-heart{
+    color: red;
+}
+
+video{
+    height: 70%;
+}
+
+.firstBloc{
+    position: relative;
+}
+.containerHeader{
+    color: white;
+    background-color: rgba(0,0,0, 0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 3px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-content{
+    margin-top: 200px;
+    margin-left: 200px;
+}
+
+.left-content h3, h4{
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.right-content{
+    margin-right: 150px;
+    margin-top: 100px;
+    background-color: #d4d4d4;
+    border-radius: 5px;
+}
+
+.right-content img{
+    height: 100px;
+    width: 100px;
+}
