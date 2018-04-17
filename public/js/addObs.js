@@ -92,12 +92,12 @@ $(function() {
     var $especeInput = $('#observation_espece');
     var $hiddenInput = $('#observation_species');
     var $matchDiv = $('#js-match');
-    var url = $('#ajax-espece-url').data('url');
+    const GET_SPECIES_URL = $('#get-species-url').data('url');
     var $speciesContainer = $('#js-match > #species');
 
-    $.getJSON(url, function(response){
+    $.getJSON(GET_SPECIES_URL, function(response) {
         $('.loader').hide(0);
-        response.items.forEach(function(species){
+        response.items.forEach(function(species) {
             $speciesContainer.append('<li style="cursor: pointer;" class="species visible" data-species-id="'+species.id+'" data-value="'+ $.trim(species.name.toLowerCase()) +'">'+ $.trim(species.name.toLowerCase()) +'</li>');
         });
     });
@@ -111,31 +111,28 @@ $(function() {
 
         if (input) {
             if (input.length > 0) {
-                $speciesContainer.find('li').each(function(){
+                $speciesContainer.find('li').each(function() {
                     var species = $(this).data('value');
 
                     if (species.toLowerCase() === input.toLowerCase() || species.toUpperCase() === input.toUpperCase()) {
                         $(this).trigger('click');
                         $(this).removeClass('visible').addClass('hidden');
                     } else {
-                        if(species.startsWith(input)) {
+                        if(species.startsWith(input))
                             $(this).addClass('visible').removeClass('hidden');
-                        } else {
+                        else
                             $(this).removeClass('visible').addClass('hidden');
-                        }
                     }
                 });
             }
-
             ($speciesContainer.find('.visible').length === 0) ? $matchDiv.hide(0) : $matchDiv.show(0);
         }
     });
 
-    // When the user clicks on a species in the list
     $(document).on('click', '.species', function(){
-        var speciesId = $(this).data('species-id'); // Get the species ID
-        $especeInput.val($(this).text()); // Fill the input with the species name
-        $hiddenInput.val(speciesId); // Transmit the species ID to the hidden input
-        $matchDiv.hide(0); // Hide the match div
+        var speciesId = $(this).data('species-id');
+        $especeInput.val($(this).text());
+        $hiddenInput.val(speciesId);
+        $matchDiv.hide(0);
     });
 });

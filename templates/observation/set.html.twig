@@ -45,7 +45,7 @@
         </div>
     {% endif %}
 
-    <div id="ajax-espece-url" data-url="{{ url('observation.get_species') }}">
+    <div id="get-species-url" data-url="{{ url('observation.get_species') }}">
         {{ form_errors(form.espece) }}
         {{ form_label(form.espece) }}
         {{ form_widget(form.espece) }}

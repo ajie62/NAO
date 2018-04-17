@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Observation;
 use App\Entity\Species;
+use App\Entity\User;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -158,34 +159,6 @@ class ObservationController extends AbstractController
     }
 
     /**
-     * @Route("/ajax_get_species", name="observation.ajax.get_species")
-     * @Method({"POST"})
-     * @param Request $request
-     * @return Response
-     */
-    public function ajaxGetSpecies(Request $request)
-    {
-        $data = $request->request->get('input');
-        $results = $this->em->getRepository(Species::class)->findWithData($data);
-        # If there are results, display a list. Otherwise, display nothing.
-        if ($results) {
-            $output = [];
-            /** @var Species $result */
-            foreach ($results as $result) {
-                $output[] = [
-                    'id' => $result->getId(),
-                    'name' => $result->getName(),
-                    'family' => $result->getFamily(),
-                    'order' => $result->getOrder()
-                ];
-            }
-            $output = ['count' => count($output), 'items' => $output];
-            return $this->json($output);
-        }
-        return new Response('', Response::HTTP_NO_CONTENT);
-    }
-
-    /**
      * @Route("/ajax_search_observation", name="observation.ajax.search_observation")
      * @param Request $request
      * @return JsonResponse|Response
@@ -197,6 +170,17 @@ class ObservationController extends AbstractController
         $observations = [];
         /** @var Observation $observation */
         foreach ($results->getObservations() as $observation) {
+            /** @var User $user */
+            $user = $observation->getUser();
+            $userFirstname = ucfirst($user->getFirstname());
+            $userLastname = ucfirst($user->getLastname());
+            $dateFormat = 'd/m/Y';
+            $observedAt = date_format($observation->getObservedAt(), $dateFormat);
+            $updatedAt = null;
+
+            if ($observation->getUpdatedAt())
+                $updatedAt = date_format($observation->getUpdatedAt(), $dateFormat);
+
             $observations[] = [
                 'id' => $observation->getId(),
                 'longitude' => $observation->getLongitude(),
@@ -207,15 +191,16 @@ class ObservationController extends AbstractController
                 'deathCause' => $observation->getDeathCause(),
                 'atlasCode' => $observation->getAtlasCode(),
                 'comment' => $observation->getComment(),
-                'observedAt' => $observation->getObservedAt(),
-                'updatedAt' => $observation->getUpdatedAt(),
-                'image' => $observation->getImage()
+                'observedAt' => $observedAt,
+                'updatedAt' => $updatedAt,
+                'image' => $observation->getImage(),
+                'userFirstname' => $userFirstname,
+                'userLastname' => $userLastname
             ];
         }
 
-        if ($observations) {
+        if ($observations)
             return $this->json($observations);
-        }
 
         return new Response('', Response::HTTP_NO_CONTENT);
     }
