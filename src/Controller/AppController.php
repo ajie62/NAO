@@ -35,7 +35,10 @@ class AppController extends AbstractController
      */
     public function homepage()
     {
-        return $this->render('app/index.html.twig');
+        $form = $this->createForm('App\Form\RegistrationType');
+        return $this->render('app/index.html.twig', [
+            'registration_form' => $form->createView()
+        ]);
     }
 
     /**

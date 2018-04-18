@@ -37,7 +37,7 @@ class AjaxBlogController extends AbstractController
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
         dump($errors);
-        if (count($errors) > 0){
+        if (count($errors) > 0 || $this->is_html($request->request->get('content'))){
             $response->setStatusCode('403');
         } else {
             $em->persist($comment);
@@ -57,5 +57,10 @@ class AjaxBlogController extends AbstractController
         $em->remove($comment);
         $em->flush();
         return new Response(null, 204);
+    }
+
+    function is_html($string)
+    {
+        return preg_match("/<[^<]+>/",$string,$m) != 0;
     }
 }

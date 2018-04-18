@@ -1,23 +1,33 @@
-{{ form_start(registration_form) }}
-<div>
-    {{ form_errors(registration_form.firstname) }}
-    {{ form_label(registration_form.firstname) }}
-    {{ form_widget(registration_form.firstname) }}
+{% form_theme registration_form 'formThemes/_formRegistrationsThemes.html.twig' %}
+
+{{ form_start(registration_form, {'action' : path('security.register'), 'method' : 'POST'}) }}
+
+<div class="col-md-6">
+    {{ form_widget(registration_form.firstname, {'attr' : {'class' : 'form-control'}}) }}
+    <div class="errors">
+        {{ form_errors(registration_form.firstname) }}
+    </div>
+</div>
+<div class="col-md-6">
+    {{ form_widget(registration_form.lastname, {'attr' : {'class' : 'form-control'}}) }}
+    <div class="errors">
+        {{ form_errors(registration_form.lastname) }}
+    </div>
 </div>
 <div>
-    {{ form_errors(registration_form.lastname) }}
-    {{ form_label(registration_form.lastname) }}
-    {{ form_widget(registration_form.lastname) }}
+    <p>et</p>
 </div>
-<div>
-    {{ form_errors(registration_form.mail) }}
-    {{ form_label(registration_form.mail) }}
-    {{ form_widget(registration_form.mail) }}
+<div class="col-md-12">
+    {{ form_widget(registration_form.mail, {'attr' : {'class' : ' form-control'}}) }}
+    <div class="errors">
+        {{ form_errors(registration_form.mail) }}
+    </div>
 </div>
-<div>
-    {{ form_errors(registration_form.password) }}
-    {{ form_label(registration_form.password) }}
+<div class="col-md-12">
     {{ form_widget(registration_form.password) }}
+    <div class="errors">
+        {{ form_errors(registration_form.password) }}
+    </div>
 </div>
 
 <div>

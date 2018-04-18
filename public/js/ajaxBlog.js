@@ -21,17 +21,22 @@ $(function () {
                     $('.containerErrors').empty();
                     $('.containerErrors')
                         .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
-                            'Votre message ne peut pas être vide</p>');
+                            'Votre message ne peut pas être vide.</p>');
                 } else if (content.val().length === 1) {
                     $('.containerErrors').empty();
                     $('.containerErrors')
                         .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
-                            'Votre message doit contenir  au moins 2 caractères</p>');
+                            'Votre message doit contenir  au moins 2 caractères.</p>');
                 } else if (content.val().length > 300){
                     $('.containerErrors').empty();
                     $('.containerErrors')
                         .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
-                            'Votre message ne peut pas contenir plus de 300 caractères</p>');
+                            'Votre message ne peut pas contenir plus de 300 caractères.</p>');
+                } else{
+                    $('.containerErrors').empty();
+                    $('.containerErrors')
+                        .append('<p><span class="glyphicon glyphicon-exclamation-sign"></span>' +
+                            'Votre message est incorrecte.</p>');
                 }
 
             }
