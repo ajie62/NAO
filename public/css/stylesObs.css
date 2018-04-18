@@ -39,6 +39,7 @@ a[class^='step-link'] {
     background: #fbb03b;
     border-radius: 50%;
     color: #fff;
+    outline: none;
     padding: 12px 14px;
     text-decoration: none; }
 
@@ -73,25 +74,38 @@ a[class^='step-link']:hover { color: #fff; }
     padding: 15px;
     font-weight: bold; }
 
+.upload-btn-wrapper .btn:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
 .upload-btn-wrapper .btn span { font-size: 100px; }
 
 .upload-btn-wrapper input[type="file"] {
     font-size: 100px;
     position: absolute;
     left: 0; top: 0;
-    opacity: 0; }
+    opacity: 0;
+    z-index: -1; }
 
 #observation_comment {
     min-height: 100px;
     max-width: 100%;
-    min-width: 100%;
-}
+    min-width: 100%; }
+
+.species-match {
+    background: #fff;
+    border: 1px solid #d8d8d8;
+    display:none;
+    margin-left: 50px;
+    max-height: 100px;
+    overflow: scroll;
+    position: absolute; }
 
 @media screen and (max-width: 768px) {
     .container {
         margin: 0;
-        padding: 0;
-    }
+        padding: 0; }
 }
 
 @media screen and (min-width: 768px) {

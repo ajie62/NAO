@@ -7,21 +7,28 @@
 {% block title %}Nos Amis les Oiseaux{% endblock %}
 
 {% block body %}
-    <div class="headerHome">
-        <video src="{{ asset('videos/introNao.mp4') }}" autoplay="true" loop></video>
-        <div class="containerHeader">
+    <div class="header-home">
+        <video poster="{{ asset('images/aigle-extrait-video.jpg') }}" id="bgvid" playsinline autoplay muted loop>
+            <source src="{{ asset('videos/introNao.mp4') }}">
+        </video>
+        <div class="container-header">
             <div class="left-content">
-                <h1>Je recherche un <span class="type"></span></h1>
-                <h3>rejoignez une communauté qui <span class="green">vous ressemble</span></h3>
-                <h4><span class="green">participez à la sauvegarde des oiseaux</span> et des lieux dont ils ont besoin</h4>
-                <h4>Mettez à profit le talent de <span class="green">scientifique citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
+                <div class="typed">
+                    <h1>Je recherche un <span class="type"></span></h1>
+                    <h3>Rejoignez une communauté qui <span class="green">vous ressemble</span>.</h3>
+                    <h4><span class="green">Participez à la sauvegarde des oiseaux</span> et des lieux dont ils ont besoin.</h4>
+                    <h4>Mettez à profit le talent de <span class="green">scientifique citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
+                </div>
             </div>
-            <div class="right-content">
-                <img src="{{ asset('images/nao2.png') }}">
-                <h4>Inscrivez vous gratuitement</h4>
-                {{ include('includes/registration.html.twig') }}
 
-                <p>Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
+            <div class="right-content">
+                <div class="subscribe-form">
+                    <img src="{{ asset('images/nao2.png') }}">
+                    <h4>Inscrivez vous gratuitement</h4>
+                    {{ include('includes/registration.html.twig') }}
+
+                    <p>Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
+                </div>
             </div>
         </div>
     </div>
