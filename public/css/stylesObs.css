@@ -1,0 +1,45 @@
+body { background: #fff9f1; }
+
+.tab-content > div { min-height: 100vh; }
+
+.step {
+    background: #fff;
+    text-align: justify; }
+
+.step p {
+    margin: 0;
+    max-width: 90%; }
+
+.mobile-step { padding: 10px; }
+
+.map-container { position: relative; }
+
+#map {
+    width: 100%;
+    min-height: calc(100vh - 60px); }
+
+#error {
+    display: none;
+    padding: 10px;
+    position: absolute;
+    text-align: justify;
+    top: 0;
+    left: 0; }
+
+.step-link {
+    background: #fbb03b;
+    border-radius: 50%;
+    color: #fff;
+    padding: 10px 12px;
+    text-decoration: none; }
+
+.step-link:hover { color: #fff; }
+
+.step-link-map {
+    position: absolute;
+    bottom: 30px;
+    right: 30px; }
+
+@media screen and (min-width: 768px) {
+    .step-link { display: none; }
+}
