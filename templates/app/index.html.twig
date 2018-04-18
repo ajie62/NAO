@@ -7,84 +7,90 @@
 {% block title %}Nos Amis les Oiseaux{% endblock %}
 
 {% block body %}
-    <div class="firstBloc">
+    <div class="headerHome">
         <video src="{{ asset('videos/introNao.mp4') }}" autoplay="true" loop></video>
         <div class="containerHeader">
             <div class="left-content">
                 <h1>Je recherche un <span class="type"></span></h1>
-                <h3>rejoingez une communauté qui <span class="green">vous ressemble</span></h3>
+                <h3>rejoignez une communauté qui <span class="green">vous ressemble</span></h3>
                 <h4><span class="green">participez à la sauvegarde des oiseaux</span> et des lieux dont ils ont besoin</h4>
                 <h4>Mettez à profit le talent de <span class="green">scientifique citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
             </div>
             <div class="right-content">
                 <img src="{{ asset('images/nao2.png') }}">
                 <h4>Inscrivez vous gratuitement</h4>
+                {{ include('includes/registration.html.twig') }}
 
+                <p>Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
             </div>
         </div>
     </div>
 
-    <div class="secondBloc">
+    <div class="operation">
         <h2>Comment cela fonctionne</h2>
-        <div>
-            <img src="{{ asset('images/slider1.png') }}">
-            <h3>Partagez vos observations</h3>
-            <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
-            <a href="#">En savoir plus</a>
-        </div>
+        <div class="sliders">
+            <div class="slider">
+                <img src="{{ asset('images/slider1.png') | imagine_filter('card_image') }}">
+                <h3>Partagez vos observations</h3>
+                <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
+                <a href="#">En savoir plus</a>
+            </div>
 
-        <div>
-            <img src="{{ asset('images/slider2.png') }}">
-            <h3>En apprendre sur les oiseaux</h3>
-            <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
-            <a href="#">Explorer</a>
-        </div>
+            <div class="slider">
+                <img src="{{ asset('images/slider2.png') | imagine_filter('card_image') }}">
+                <h3>En apprendre sur les oiseaux</h3>
+                <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
+                <a href="#">Explorer</a>
+            </div>
 
-        <div>
-            <img src="{{ asset('images/slider3.png') }}">
-            <h3>Contribuez à la sience</h3>
-            <p>Aidez-nous à collecter des données sur le réchauffement climatique, analyser les effets de l'agriculture sur les oiseaux, etc.</p>
-            <a href="#">En savoir plus</a>
+            <div class="slider">
+                <img src="{{ asset('images/slider3.png') | imagine_filter('card_image') }}">
+                <h3>Contribuez à la sience</h3>
+                <p>Aidez-nous à collecter des données sur le réchauffement climatique, analyser les effets de l'agriculture sur les oiseaux, etc.</p>
+                <a href="#">En savoir plus</a>
+            </div>
         </div>
     </div>
-    <div class="secondBloc">
+    <div class="users">
         <h2>Qui utilise l'application NAO</h2>
-        <div>
-            <img src="{{ asset('images/gerard.jpeg') }}">
-            <p>"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eopksio laborum."</p>
-            <h3>Gérard L., naturaliste</h3>
-        </div>
+        <div class="usersContent">
+            <div class="userType">
+                <img class="img-circle" src="{{ asset('images/gerard.jpeg') | imagine_filter('gerard') }}">
+                <p>"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eopksio laborum."</p>
+                <h3><span class="green">Gérard L.</span>, naturaliste</h3>
+            </div>
 
-        <div>
-            <h3>Nos partenaires</h3>
-            <img src="{{ asset('images/LPO.png') }}">
-            <img src="{{ asset('images/images.jpg') }}">
-            <img src="{{ asset('images/logo.png') }}">
+            <div class="partners">
+                <h3>Nos partenaires</h3>
+                <img src="{{ asset('images/LPO.png') }}" height="300" width="700">
+                <img src="{{ asset('images/images.jpg') }}">
+                <img src="{{ asset('images/logo.png') }}">
+            </div>
         </div>
     </div>
-    <div>
-        <h3>Aidez-nous à préserver la nature et faire avancer la science <a href="#">rejoignez-nous</a></h3>
+    <div class="join-us">
+        <h3>Aidez-nous à <span class="green">préserver la nature</span> et <span class="green">faire avancer la science</span> <a href="#" class="greenLink">rejoignez-nous</a></h3>
     </div>
     <footer>
         <div class="explorer">
             <h5>Explorer</h5>
-            <a>Observations</a>
-            <a>Le blog NAO</a>
-            <a>Connexion</a>
+            <a href="#">Observations</a>
+            <a href="#">Le blog NAO</a>
+            <a href="#">Connexion</a>
         </div>
-        <div class="explorer">
+        <div class="about">
             <h5>A propos</h5>
-            <a>Pour nous joindre</a>
-            <a>Mentions légales</a>
+            <a href="#">Pour nous joindre</a>
+            <a href="#">Mentions légales</a>
         </div>
         <div class="don">
             <a href="#">Faites un don</a>
         </div>
         <div class="newsletter">
             <h4>Recevoir la newsletter NAO</h4>
-            <input type="text">
+            <input type="text" class="form-control" placeholder="Inscrivez votre e-mail">
             <a href="#">Consultez notre politique de protection des données personnelles.</a>
-            <button type="button">Envoyer</button>
+            <button type="button" class="greenLink">Envoyer</button>
         </div>
     </footer>
 {% endblock %}
