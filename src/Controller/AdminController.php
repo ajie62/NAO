@@ -12,8 +12,9 @@ namespace App\Controller;
 use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class AdminController extends AbstractController
+class AdminController extends Controller
 {
     /**
      * @Route("/administration/stats", name="admin.stats")
@@ -37,7 +38,7 @@ class AdminController extends AbstractController
     public function users(){
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
-        dump($em);die;
+//        dump($em);die;
         return $this->render('admin/users.html.twig', [
             'users' => $users
         ]);
