@@ -1,0 +1,87 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="stats">
+        <h4>Observations en attente</h4>
+        <p>{{ statsObs['awaiting'] }}</p>
+    </div>
+    <div class="stats">
+        <h4>Observations validées</h4>
+        <p>{{ statsObs['validated'] }}</p>
+    </div>
+    <div class="stats">
+        <h4>Nombre d'inscrits</h4>
+        <p>{{ statsUsers['total'] }}</p>
+    </div>
+    <div class="stats">
+        <h4>Naturalistes professionnels</h4>
+        <p>{{ statsUsers['naturaliste'] }}</p>
+    </div>
+    <div class="stats">
+        <h4>Particuliers</h4>
+        <p>{{ statsUsers['particulier'] }}</p>
+    </div>
+    <div class="stats">
+        <h4>Nombre d'articles</h4>
+        <p>{{ statsArticles }}</p>
+    </div>
+    <div class="usersSubscribed">
+        <h4>Nombre d'utilisateurs inscrits {{ statsUsers['total'] }}</h4>
+        <div class="progress">
+            <h5 style="text-align: right; float: right; margin: 0">{{ statsUsers['particulier'] }}</h5>
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsUsers['naturalistePourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsUsers['naturalistePourcentage'] }}%">
+                <h5 style="text-align: left; margin: 0">{{ statsUsers['naturaliste'] }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="obs">
+        <h4>Observations soumises - total {{ statsObs['total'] }}</h4>
+        <div class="progress">
+            <h5 style="text-align: right; float: right; margin: 0">{{ statsObs['awaiting'] }}</h5>
+            <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsObs['obsPourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsObs['obsPourcentage'] }}%">
+                <h5 style="text-align: left; margin: 0">{{ statsObs['validated'] }}</h5>
+            </div>
+        </div>
+    </div>
+
+    {#<style>#}
+        {#.statsCircle{#}
+            {#position: relative;#}
+        {#}#}
+        {#.ring{#}
+            {#position: absolute;#}
+            {#top: 50%;#}
+            {#left: 50%;#}
+            {#transform: translate(-50%,-50%);#}
+            {#width: 150px;#}
+            {#height: 150px;#}
+            {#background: transparent;#}
+            {#border: 3px solid #3c3;#}
+            {#border-radius: 50%;#}
+            {#text-align: center;#}
+            {#line-height: 150px;#}
+        {#}#}
+        {#.secondRing{#}
+            {#content: '';#}
+            {#position: absolute;#}
+            {#top: 0;#}
+            {#left: 0;#}
+            {#width: 100%;#}
+            {#height: 100%;#}
+            {#border-top: 3px solid black;#}
+            {#border-right: 3px solid black;#}
+            {#border-radius: 50%;#}
+        {#}#}
+    {#</style>#}
+    {#<div class="statsCircle">#}
+        {#<div class="ring">#}
+            {#<span>33%</span>#}
+            {#<div class="secondRing">#}
+
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{% endblock %}
+{#{% block javascripts %}#}
+
+    {#<script src="scripts/plugin.js"></script>#}
+{#{% endblock %}#}
