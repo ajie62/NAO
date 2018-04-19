@@ -1,6 +1,6 @@
 {% form_theme registration_form 'formThemes/_formRegistrationsThemes.html.twig' %}
 
-{{ form_start(registration_form, {'action' : path('security.register'), 'method' : 'POST'}) }}
+{{ form_start(registration_form) }}
 
 <div class="col-md-6">
     {{ form_widget(registration_form.firstname, {'attr' : {'class' : 'form-control'}}) }}

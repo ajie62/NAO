@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\LoginType;
 use App\Form\RegistrationType;
+use App\Service\SecurityInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use ReCaptcha\ReCaptcha;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,11 +35,19 @@ class AppController extends AbstractController
      * App homepage
      * @Route("/", name="app.homepage")
      *
+     * @param SecurityInterface $securityHandler
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homepage()
+    public function homepage(SecurityInterface $securityHandler, Request $request)
     {
         $form = $this->createForm('App\Form\RegistrationType');
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            return $securityHandler->handleSubmittedRegistrationForm($form);
+        }
+
         return $this->render('app/index.html.twig', [
             'registration_form' => $form->createView()
         ]);
