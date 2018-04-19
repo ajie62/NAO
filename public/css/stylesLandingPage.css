@@ -67,7 +67,7 @@
     border-radius: 10px 10px 0 0; }
 
 .operation h2 {
-    font-family: 'Roboto', Arial, sans-serif;
+    font-family: 'FranklinDC', Arial, sans-serif;
     font-size: 25px;
     text-align: center;
     margin-top: 0;
@@ -222,7 +222,6 @@ footer{
     text-decoration: underline;
 }
 
-
 /*******************************************\
          -->  MEDIA QUERIES <--
 \*******************************************/
@@ -307,8 +306,8 @@ footer{
         text-decoration: underline; }
 
     .subscribe-form h4 {
-        font-family: 'Roboto', Arial, sans-serif;
-        font-size: 1.3em;
+        font-family: 'FranklinDC', Arial, sans-serif;
+        font-size: 1.4em;
         margin-top: 5px;
         padding: 0 10px; }
 
@@ -319,6 +318,7 @@ footer{
 
     .and-word {
         display: inline-block;
+        font-family: 'FranklinDC', Arial, sans-serif;
         margin-top: 5px;
         margin-bottom: -10px;
         position: relative;
@@ -353,17 +353,17 @@ footer{
     /* SECOND BLOCK */
     .operation {
         background: url("../images/fondDektop.png") no-repeat 0 50%;
-        background-size: cover; }
+        background-size: cover;
+        padding-top: 60px;
+        padding-bottom: 80px; }
 
     .operation h2 { font-size: 30px; }
 
     .sliders {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr); }
+        display: flex;
+        justify-content: space-around; }
 
-    .slider {
-        width: 295px;
-    }
+    .slider { max-width: 220px; }
 }
 
 /* Responsive for devices from 992 to 1199px */
@@ -376,7 +376,9 @@ footer{
     .typed h2, .typed h3 { font-size: 35px; }
     .typed h4 { font-size: 25px;}
 
-    .subscribe-form h4 { font-size: 1.5em; }
+    .subscribe-form h4 { font-size: 1.7em; }
+
+    .slider { max-width: 295px; }
 }
 
 /* Responsive for devices from 1200px to higher */

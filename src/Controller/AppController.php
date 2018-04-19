@@ -83,4 +83,12 @@ class AppController extends AbstractController
             'captchaError' => $message,
         ]);
     }
+
+    /**
+     * @Route("/terms-of-use", name="app.terms_of_use")
+     */
+    public function termsOfUse()
+    {
+        return $this->render('app/termsOfUse.html.twig');
+    }
 }

@@ -38,7 +38,7 @@
                     <h4 class="text-center">Inscrivez vous gratuitement</h4>
                     {{ include('includes/registration.html.twig') }}
 
-                    <p class="text-center">Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
+                    <p class="text-center">Vous avez déjà un compte ? <a href="{{ url('security.login') }}">Identifiez-vous</a> </p>
                 </div>
             </div>
         </div>
@@ -51,14 +51,14 @@
                 <img src="{{ asset('images/slider1.png') | imagine_filter('card_image') }}">
                 <h3>Partagez vos observations</h3>
                 <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
-                <a href="#">Commencer</a>
+                <a href="{{ url('observation.add') }}">Commencer</a>
             </div>
 
             <div id="target2" class="slider">
                 <img src="{{ asset('images/slider2.png') | imagine_filter('card_image') }}">
                 <h3>En apprendre sur les oiseaux</h3>
                 <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
-                <a href="#">Explorer</a>
+                <a href="{{ url('observation.search') }}">Explorer</a>
             </div>
 
             <div id="target3" class="slider">

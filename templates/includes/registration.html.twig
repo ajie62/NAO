@@ -34,8 +34,8 @@
     <span class="pwd-details">8 caractères minimum dont au moins 1 majuscule et 1 chiffre</span>
     {{ form_widget(registration_form.password.second) }}
     <p class="terms-and-conditions">
-        En cliquant sur &laquo; S'inscrire &raquo;, j'accepte les <a href="#">Conditions Générales d'Utilisations</a>
-        et la <a href="#">politique de confidentialité</a>.<br>
+        En cliquant sur &laquo; S'inscrire &raquo;, j'accepte les <a href="{{ url('app.terms_of_use') }}">Conditions Générales d'Utilisations</a>
+        et la <a href="{{ url('app.terms_of_use')~"#privacy-policy" }}">politique de confidentialité</a>.<br>
         <span class="mandatory">* Champs obligatoires</span>
     </p>
 
