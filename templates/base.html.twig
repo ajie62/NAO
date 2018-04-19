@@ -22,7 +22,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="logo-container navbar-brand ">
-                    <a href="{{ path('app.homepage') }}" class="logo-link">
+                    <a href="{{ url('app.homepage') }}" class="logo-link">
                         <img src="{{ asset('images/LogoNAO_white.png') }}">
                     </a>
                     <div>
@@ -35,11 +35,11 @@
             </div>
             <div class="collapse navbar-collapse" id="menu">
                 <ul class="nav navbar-nav navbar-text navbar-right">
-                    <li><a class="current" href="{{ path('app.homepage') }}">Accueil</a></li>
-                    <li><a href="{{ path('observation.search') }}">Observations</a></li>
-                    <li><a href="{{ path('blog.list_article') }}">Blog</a></li>
-                    <li><a href="{{ path('app.homepage') }}">Contact</a></li>
-                    <li><a href="{{ path('app.homepage') }}">Connexion</a></li>
+                    <li><a class="current" href="{{ url('app.homepage') }}">Accueil</a></li>
+                    <li><a href="{{ url('observation.search') }}">Observations</a></li>
+                    <li><a href="{{ url('blog.list_article') }}">Blog</a></li>
+                    <li><a href="{{ url('app.contact') }}">Contact</a></li>
+                    <li><a href="{{ url('app.homepage') }}">Connexion</a></li>
                 </ul>
             </div>
         </nav>
