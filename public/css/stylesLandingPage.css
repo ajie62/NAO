@@ -18,18 +18,23 @@
 .typed h1 {
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 30px;
-    font-weight: bold; }
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #333; }
 
 .type {
     color: #8CC63F;
-    font-size: 30px; }
+    font-size: 30px;
+    text-shadow: 2px 2px 4px #333; }
 
 .typed-container h3, h4 {
     line-height: 1.4;
     margin-top: 20px;
     font-size: 20px; }
 
-.typed h2, .typed h3 { font-size: 23px; }
+.typed h2, .typed h3 {
+    font-size: 23px;
+    text-shadow: 2px 2px 4px #333;
+}
 
 .green { color: #8CC63F; }
 .glyphicon-heart { color: red; }
@@ -55,6 +60,7 @@
 
 /* SECOND BLOC */
 .operation {
+    background: #fff9f1;
     padding-top: 40px;
     padding-bottom: 60px; }
 
@@ -76,6 +82,7 @@
 
 .slider {
     background-color: white;
+    box-shadow: 0 3px 6px -2px #333;
     height: inherit;
     border-radius: 10px;
     text-align: center; }

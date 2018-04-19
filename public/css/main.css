@@ -2,16 +2,23 @@
 nav { margin-bottom: 0 !important; }
 
 .navbar-default {
+    background: #8CC63F;
     border: none;
+    border-radius: 0;
     font-size: 17px;
     margin: 0;
     padding: 0; }
+
+.navbar-brand { color: #fff!important; }
 
 .navbar-text {
     height: 100%;
     margin: 0; }
 
 .navbar-toggle { margin-top: 15px; }
+.navbar-toggle .icon-bar { background: #fff!important; }
+
+.hamburger-button { border: none; }
 
 .logo-container{
     align-items: center;
@@ -30,13 +37,32 @@ nav { margin-bottom: 0 !important; }
 #menu { padding: 0; }
 
 #menu a {
-    color: #3b3b3b;
+    color: #fff;
     display: inline-block;
     line-height: 2em;
     text-align: center;
     width: 100%; }
 
-nav a:hover, .current { color: #8CC63F !important; }
+/* Add observation "previous step" & "next step" buttons*/
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%; }
+
+.nav-buttons > :first-child { margin-left: 15px; }
+.nav-buttons > :last-child { margin-right: 15px; }
+
+.submit-button {
+    background: #8CC63F;
+    border-radius: 50%;
+    color: #fff;
+    padding: 11px 13px;
+    text-decoration: none; }
+
+.submit-button-contact {
+    background: #FBB03B;
+    border: none; }
 
 @media screen and (min-width: 768px) {
     .menu { padding: 0 15px; }

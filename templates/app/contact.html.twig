@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10">
+                <h1>Besoin de nous contacter ?</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, molestiae,
+                    sequi! A aliquid assumenda aut eos id incidunt iste nam saepe unde voluptas.
+                    A eligendi explicabo facere harum maiores nihil quo soluta? Omnis perspiciatis
+                    quam quasi voluptatem voluptatum? A accusamus accusantium architecto asperiores,
+                    aspernatur corporis culpa cum eius eligendi error eveniet ex fugiat fugit illum
+                    inventore iure, iusto laudantium maxime mollitia nam necessitatibus numquam
+                    optio perferendis quaerat quasi quo ratione sapiente sed sequi tenetur unde,
+                    velit veritatis voluptas? Architecto, dolores, tempora!
+                </p>
+
+                {{ form_start(form) }}
+
+                <div>
+                    {{ form_errors(form.mail) }}
+                    {{ form_label(form.mail) }}
+                    {{ form_widget(form.mail) }}
+                </div>
+
+                <div>
+                    {{ form_errors(form.subject) }}
+                    {{ form_label(form.subject) }}
+                    {{ form_widget(form.subject) }}
+                </div>
+
+                <div>
+                    {{ form_errors(form.message) }}
+                    {{ form_label(form.message) }}
+                    {{ form_widget(form.message) }}
+                </div>
+
+                <div class="g-recaptcha" data-sitekey="6LekM1QUAAAAAAcR6juxN2o7S9MHo_9cJmLsJ5wa"></div>
+                {% if captchaError %}
+                    <p class="text-danger">{{ captchaError }}</p>
+                {% endif %}
+
+                <div class="nav-buttons">
+                    <button type="submit" class="submit-button submit-button-contact"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+

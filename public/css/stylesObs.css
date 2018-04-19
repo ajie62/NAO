@@ -25,16 +25,6 @@ body { background: #fff9f1; }
     top: 0;
     left: 0; }
 
-/* Add observation "previous step" & "next step" buttons*/
-.nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    width: 100%; }
-
-.nav-buttons > :first-child { margin-left: 15px; }
-.nav-buttons > :last-child { margin-right: 15px; }
-
 a[class^='step-link'] {
     background: #fbb03b;
     border-radius: 50%;
@@ -50,13 +40,6 @@ a[class^='step-link']:hover { color: #fff; }
     position: absolute;
     bottom: 0;
     right: 15px; }
-
-.add-obs-submit {
-    background: #8CC63F;
-    border-radius: 50%;
-    color: #fff;
-    padding: 11px 13px;
-    text-decoration: none; }
 
 .fields { margin: 0 15px; }
 
