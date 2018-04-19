@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <input placeholder="Rechercher un utilisateur" type="text">
+    {% for user in users %}
+        {#<a href="{{ path('observation.update', {'id' : user.id }) }}">#}
+            <div class="user">
+                <span>{{ user.firstname }}</span>
+                <span>{{ user.lastname }}</span>
+                <span>{{ user.roles }}</span>
+                <span>Inscrit depuis le {{ user.subscribedAt | date('d/m/Y') }}</span>
+            </div>
+        {#</a>#}
+        <hr>
+    {% endfor %}
+{% endblock %}
