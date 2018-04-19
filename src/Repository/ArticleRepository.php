@@ -19,4 +19,11 @@ class ArticleRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+
+    public function totalArticles(){
+        return $this->createQueryBuilder('article')
+                ->select('COUNT(article)')
+                ->getQuery()
+                ->getSingleScalarResult();
+    }
 }
