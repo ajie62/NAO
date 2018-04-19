@@ -7,21 +7,39 @@
 {% block title %}Nos Amis les Oiseaux{% endblock %}
 
 {% block body %}
-    <div class="headerHome">
-        <video src="{{ asset('videos/introNao.mp4') }}" autoplay="true" loop></video>
-        <div class="containerHeader">
-            <div class="left-content">
-                <h1>Je recherche un <span class="type"></span></h1>
-                <h3>rejoignez une communauté qui <span class="green">vous ressemble</span></h3>
-                <h4><span class="green">participez à la sauvegarde des oiseaux</span> et des lieux dont ils ont besoin</h4>
-                <h4>Mettez à profit le talent de <span class="green">scientifique citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
-            </div>
-            <div class="right-content">
-                <img src="{{ asset('images/nao2.png') }}">
-                <h4>Inscrivez vous gratuitement</h4>
-                {{ include('includes/registration.html.twig') }}
+    <div class="header-home">
+        <video class="hidden-xs" id="bgvid" playsinline autoplay loop muted>
+            <source src="{{ asset('videos/introNao.mp4') }}">
+        </video>
 
-                <p>Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
+        <div class="container-header">
+            <div class="typed-container">
+                <div class="typed">
+                    <div class="visible-xs">
+                        <h2 class="text-center motto"><strong>Nos amis les oiseaux</strong><br>En route vers un monde meilleur</h2>
+                    </div>
+                    <div>
+                        <h1>Je recherche <span class="type"></span></h1>
+                    </div>
+                    <div>
+                        <h3>Rejoignez une communauté qui <br><strong><span class="green">vous ressemble</span></strong>.</h3>
+                        <a href="{{ url('security.register') }}" class="visible-xs register-xs">S'inscrire gratuitement</a>
+                    </div>
+                    <h4 class="hidden-xs"><span class="green">Participez à la sauvegarde des oiseaux</span> <br>et des lieux dont ils ont besoin.</h4>
+                    <h4 class="hidden-xs">Mettez à profit le talent de <span class="green">scientifique <br>citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
+                </div>
+            </div>
+
+            <div class="subscribe-form-container hidden-xs">
+                <div class="subscribe-form">
+                    <div class="text-center">
+                        <img src="{{ asset('images/nao2.png') }}" alt="Logo Nos Amis les Oiseaux">
+                    </div>
+                    <h4 class="text-center">Inscrivez vous gratuitement</h4>
+                    {{ include('includes/registration.html.twig') }}
+
+                    <p class="text-center">Vous avez déjà un compte ? <a href="#">Identifiez-vous</a> </p>
+                </div>
             </div>
         </div>
     </div>
@@ -29,25 +47,31 @@
     <div class="operation">
         <h2>Comment cela fonctionne</h2>
         <div class="sliders">
-            <div class="slider">
+            <div id="target1" class="slider">
                 <img src="{{ asset('images/slider1.png') | imagine_filter('card_image') }}">
                 <h3>Partagez vos observations</h3>
                 <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
-                <a href="#">En savoir plus</a>
+                <a href="#">Commencer</a>
             </div>
 
-            <div class="slider">
+            <div id="target2" class="slider">
                 <img src="{{ asset('images/slider2.png') | imagine_filter('card_image') }}">
                 <h3>En apprendre sur les oiseaux</h3>
                 <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
                 <a href="#">Explorer</a>
             </div>
 
-            <div class="slider">
+            <div id="target3" class="slider">
                 <img src="{{ asset('images/slider3.png') | imagine_filter('card_image') }}">
                 <h3>Contribuez à la sience</h3>
                 <p>Aidez-nous à collecter des données sur le réchauffement climatique, analyser les effets de l'agriculture sur les oiseaux, etc.</p>
                 <a href="#">En savoir plus</a>
+            </div>
+
+            <div class="visible-xs target-links">
+                <a class="js-get-first-card" href="#"></a>
+                <a class="js-get-second-card" href="#"></a>
+                <a class="js-get-third-card" href="#"></a>
             </div>
         </div>
     </div>
@@ -98,10 +122,11 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://cdn.rawgit.com/mattboldt/typed.js/master/lib/typed.min.js" type="text/javascript"></script>
+    <script src="{{ asset('js/landing.js') }}"></script>
     <script type="text/javascript">
         $(function () {
             var typed = new Typed('.type', {
-                strings: ["Faucon Emerillon", "Aigle Royal"],
+                strings: ["un Vautour Fauve", "un Aigle Royal", "un Ibis Blanc"],
                 typeSpeed: 100,
                 loop: true,
                 backSpeed: 50

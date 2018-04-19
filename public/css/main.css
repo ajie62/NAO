@@ -1,0 +1,101 @@
+/* Intégration des polices */
+@font-face {
+    font-family: 'FranklinDC';
+    src: url('/fonts/FranklinGothic-DemiCond.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/FranklinGothic-DemiCond.woff') format('woff'),
+    url('/fonts/FranklinGothic-DemiCond.ttf')  format('truetype'),
+    url('/fonts/FranklinGothic-DemiCond.svg#FranklinGothic-DemiCond') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'FranklinMI';
+    src: url('/fonts/FranklinGothic-MediumItalic.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/FranklinGothic-MediumItalic.woff') format('woff'),
+    url('/fonts/FranklinGothic-MediumItalic.ttf')  format('truetype'),
+    url('/fonts/FranklinGothic-MediumItalic.svg#FranklinGothic-MediumItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* GENERAL */
+body {
+    background : fixed url(../images/fondDesktop.png);
+    background-size : cover;
+    font-family: 'Roboto', sans-serif;
+    color: #3b3b3b;}
+
+.content { background-color : #FFF9F1; }
+
+
+/* NAVBAR */
+nav { margin-bottom: 0 !important; }
+
+.navbar-default {
+    background: #8CC63F;
+    border: none;
+    border-radius: 0;
+    font-size: 17px;
+    margin: 0;
+    padding: 0; }
+
+.navbar-brand { color: #fff!important; }
+
+.navbar-text {
+    height: 100%;
+    margin: 0; }
+
+.navbar-toggle { margin-top: 15px; }
+.navbar-toggle .icon-bar { background: #fff!important; }
+
+.hamburger-button { border: none; }
+
+.logo-container{
+    align-items: center;
+    display: flex;
+    padding: 7px 0;
+    height: 100%;
+    flex-direction: row; }
+
+.logo-container img {
+    width: 50px;
+    height: 50px;
+    margin: 0 20px 0 15px; }
+
+.logo-container p { margin: 0; }
+
+#menu { padding: 0; }
+
+#menu a {
+    color: #fff;
+    display: inline-block;
+    line-height: 2em;
+    text-align: center;
+    width: 100%; }
+
+/* Add observation "previous step" & "next step" buttons*/
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%; }
+
+.nav-buttons > :first-child { margin-left: 15px; }
+.nav-buttons > :last-child { margin-right: 15px; }
+
+.submit-button {
+    background: #8CC63F;
+    border-radius: 50%;
+    color: #fff;
+    padding: 11px 13px;
+    text-decoration: none; }
+
+.submit-button-contact {
+    background: #FBB03B;
+    border: none; }
+
+@media screen and (min-width: 768px) {
+    .menu { padding: 0 15px; }
+}

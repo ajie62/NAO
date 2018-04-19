@@ -37,3 +37,7 @@ services:
     App\Controller\BlogController:
             arguments:
                 $entityManager: '@doctrine.orm.entity_manager'
+
+    App\Service\EmailManager:
+        class: App\Service\EmailManager
+        arguments: ["@mailer", "@twig"]

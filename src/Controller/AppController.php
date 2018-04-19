@@ -8,10 +8,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Entity\User;
+use App\Form\ContactType;
 use App\Form\LoginType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
+use ReCaptcha\ReCaptcha;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -47,5 +50,37 @@ class AppController extends AbstractController
      */
     public function logout()
     {
+    }
+
+    /**
+     * Contact page
+     * @Route("/contact", name="app.contact")
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function contact(Request $request)
+    {
+        $contact = new Contact();
+        $recaptcha = new ReCaptcha('6LekM1QUAAAAALGZ9zQG8Wx4akJvDHGE8zXUEk4q');
+        $response = $recaptcha->verify($request->request->get('g-recaptcha-response'), $request->getClientIp());
+
+        $form = $this->createForm(ContactType::class, $contact);
+
+        $form->handleRequest($request);
+        $message = null;
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$response->isSuccess()) {
+                $message = "Le reCAPTCHA n'a pas été correctement entré. Veuillez réessayer.";
+            } else {
+                dump($form->getData()); die;
+            }
+        }
+
+        return $this->render('app/contact.html.twig', [
+            'form' => $form->createView(),
+            'captchaError' => $message,
+        ]);
     }
 }

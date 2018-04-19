@@ -140,4 +140,8 @@ $(function() {
         $hiddenInput.val(speciesId);
         $matchDiv.hide(0);
     });
+
+    $('.upload-btn-wrapper .btn').on('click', function() {
+        $('.upload-btn-wrapper input[type="file"]').trigger('click');
+    });
 });

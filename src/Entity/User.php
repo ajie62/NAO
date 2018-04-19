@@ -54,8 +54,8 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string", length=64)
      * @Assert\Regex(
-     *     pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})",
-     *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules et minuscules, un chiffre et un caractère spécial.",
+     *     pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,64}/",
+     *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules de minuscules et un chiffre.",
      *     match=true
      * )
      */

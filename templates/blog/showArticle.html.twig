@@ -2,52 +2,135 @@
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="container">
-        <div>
-            {{ article.title }}
+    <div class="container content">
+        <button class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></button>
+        <div class="row article-heading">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                <div>
+                    <h1 class="article-title">{{ article.title }}</h1>
+                </div>
+                <div class="article-image">
+                    <img src="{{ asset( article.image.webPath ) }}">
+                </div>
+            </div>
         </div>
-        <div>
-            <img src="{{ asset( article.image.webPath ) }}">
+        
+        <div class="row">
+            <hr class="hr">
+            
+            <div class="fr-view article-content">
+                {{ article.content | raw }}
+            </div>
+            
+            <div class="article-meta">
+                <p class="article-date"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</p>
+                <h4 class="article-author">Par Gérard Loiseau</h4>
+            </div>
         </div>
-        <hr>
-        <div class="fr-view">
-            {{ article.content | raw }}
+        <div class="row">
+        <div class="article-admin">
+                <a class="article-edit" href="{{ path('blog.edit_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Editer</a>
+                <a class="article-remove" href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Supprimer</a>
+            </div>
         </div>
-        {{ article.createdAt | date('d/m/Y') }}
-        <a href="{{ path('blog.delete_article', {'id' : article.id }) }}">Supprimer</a>
-        <a href="{{ path('blog.edit_article', {'id' : article.id }) }}">Editer</a>
-        <h4>Par Gérard Loiseau</h4>
-        <hr>
-        <h2>Commentaires : </h2>
-        <div id="comments" comment-prototype='<div class="comment">
+            
+        <hr class="hr">
+        <div class="row">
+        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 article-pagination">
+            <div class="button-article-pagination">
+                <button name="previous-article">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                </button><br/>
+                <label for="previous-article">Article précédent</label>
+            </div>
+            
+            <div class="button-article-pagination">
+                <button name="next-article">
+                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                </button><br/>
+                <label for="next-article">Article suivant</label>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
+            <h2><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>Commentaires : </h2>
+            </div></div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
+                
+<!-- Attention : j'ai rajouté des choses dans la div class=comment !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+        <!-- <div id="comments" comment-prototype='<div class="comment">
             <h4 class="nameUser">__nameUser__</h4>
             <span class="date">Le __date__ à __hour__</span>
             <p class="contentComment">__comment__</p>
             <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
-        </div>'>
+        </div>'> -->
+            <div id="comments" comment-prototype='<div class="comment">
+            <article>
+                        <div class="article-comment-heading">
 
+                            <div class="article-comment-profile">
+                                <img class="article-comment-profile-picture" src="/images/8.jpeg">
+                            </div>
+
+                            <div class="article-comment-info">
+                                <h4 class="nameUser">__nameUser__</h4>
+                                <span class="date">Le __date__ à __hour__</span>
+                            </div>
+                            </div>
+
+                        <p class="contentComment">__comment__</p>
+                    </article>
+            <div class="article-comment-admin">
+                        <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
+                    </div>'>
+                
             {% for comment in comments %}
                 <div class="comment">
-                    <h4 class="nameUser">Prénom nom</h4>
-                    <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:s') }}</span>
-                    <p class="contentComment">{{ comment.content }}</p>
-                    <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
+                    <article>
+                        <div class="article-comment-heading">
+
+                            <div class="article-comment-profile">
+                                <img class="article-comment-profile-picture" src="/images/8.jpeg">
+                            </div>
+
+                            <div class="article-comment-info">
+                                <h4 class="nameUser">Prénom nom</h4>
+                                <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:m') }}</span>
+                            </div>
+                            </div>
+
+                        <p class="contentComment">{{ comment.content }}</p>
+                    </article>
+                    <div class="article-comment-admin">
+                        <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
+                    </div>
+                    
                 </div>
             {% endfor %}
         </div>
-
-
-        <h2>Laisser un commentaire : </h2>
-        {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
-        {{ form_label(formComment.content) }}
-        {{ form_widget(formComment.content) }}
-        <div class="containerErrors" style="height: 20px">
-
+            </div>
         </div>
-        <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}">Ajouter</button>
-        {{ form_end(formComment) }}
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 article-write-comment">  
+              <h2><span class="glyphicon glyphicon-pencil icon-write"></span>Laisser un commentaire : </h2>
+              <div class="article-write-comment-form">
+                {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
+                {{ form_label(formComment.content) }}
+                {{ form_widget(formComment.content) }}
+                
+                <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}"><span class="glyphicon glyphicon-ok"></span>Ajouter</button>
+                  <div class="containerErrors" style="height: 20px">
+
+                </div>
+                {{ form_end(formComment) }}
+              </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}
