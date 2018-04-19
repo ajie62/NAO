@@ -1,4 +1,10 @@
 {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
+{% endblock %}
+
 {% block body %}
     <div class="container content">
         <button class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></button>

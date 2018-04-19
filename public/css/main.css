@@ -1,3 +1,35 @@
+/* Intégration des polices */
+@font-face {
+    font-family: 'FranklinDC';
+    src: url('/fonts/FranklinGothic-DemiCond.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/FranklinGothic-DemiCond.woff') format('woff'),
+    url('/fonts/FranklinGothic-DemiCond.ttf')  format('truetype'),
+    url('/fonts/FranklinGothic-DemiCond.svg#FranklinGothic-DemiCond') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'FranklinMI';
+    src: url('/fonts/FranklinGothic-MediumItalic.eot?#iefix') format('embedded-opentype'),
+    url('/fonts/FranklinGothic-MediumItalic.woff') format('woff'),
+    url('/fonts/FranklinGothic-MediumItalic.ttf')  format('truetype'),
+    url('/fonts/FranklinGothic-MediumItalic.svg#FranklinGothic-MediumItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* GENERAL */
+body {
+    background : fixed url(../images/fondDesktop.png);
+    background-size : cover;
+    font-family: 'Roboto', sans-serif;
+    color: #3b3b3b;}
+
+.content { background-color : #FFF9F1; }
+
+
 /* NAVBAR */
 nav { margin-bottom: 0 !important; }
 
