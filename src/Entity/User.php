@@ -36,12 +36,14 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(max="60", maxMessage="Ce champ ne peut contenir que {{ limit }} caractères maximum.")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(max="60", maxMessage="Ce champ ne peut contenir que {{ limit }} caractères maximum.")
      */
     private $lastname;
 
@@ -53,6 +55,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Length(max="64", maxMessage="Le mot de passe ne peut contenir que {{ limit }} caractères maximum.")
      * @Assert\Regex(
      *     pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,64}/",
      *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules de minuscules et un chiffre.",
