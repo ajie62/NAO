@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\Observation;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,6 +29,7 @@ class UserController extends AbstractController
     /**
      * User profile
      * @Route("/profile", name="user.profile")
+     * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
      */
     public function profile()
     {

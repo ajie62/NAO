@@ -8,22 +8,45 @@
 
 namespace App\Controller;
 
-
-use function dump;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Class AdminController
+ * @Route("/admin")
+ * @Security("is_granted('ROLE_ADMIN')")
+ * @package App\Controller
+ */
 class AdminController extends Controller
 {
     /**
-     * @Route("/administration/stats", name="admin.stats")
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->em = $entityManager;
+    }
+
+    /**
+     * @Route("/", name="admin.index")
+     */
+    public function users(){
+        $users = $this->em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
+
+        return $this->render('admin/users.html.twig', ['users' => $users]);
+    }
+
+    /**
+     * @Route("/stats", name="admin.stats")
      */
     public function stats(){
-        $em = $this->getDoctrine()->getManager();
-        $statsObs = $em->getRepository('App:Observation')->findNumberOfObservationsAndStats();
-        $statsUsers = $em->getRepository('App:User')->findStatsUser();
-        $statsArticles = $em->getRepository('App:Article')->totalArticles();
+        $statsObs = $this->em->getRepository('App:Observation')->findNumberOfObservationsAndStats();
+        $statsUsers = $this->em->getRepository('App:User')->findStatsUser();
+        $statsArticles = $this->em->getRepository('App:Article')->totalArticles();
 
         return $this->render('admin/stats.html.twig', [
            'statsObs' => $statsObs,
@@ -33,26 +56,12 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/administration/users", name="admin.users")
-     */
-    public function users(){
-        $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
-//        dump($em);die;
-        return $this->render('admin/users.html.twig', [
-            'users' => $users
-        ]);
-    }
-
-    /**
-     * @Route("/administration/observations", name="admin.observations")
+     * @Route("/observations", name="admin.observations")
      */
     public function observations(){
-        $em = $this->getDoctrine()->getManager();
-        $observations = $em->getRepository('App:Observation')->findBy([], ['observedAt' => 'DESC']);
-        return $this->render('admin/observations.html.twig', [
-            'observations' => $observations
-        ]);
+        $observations = $this->em->getRepository('App:Observation')->findBy([], ['observedAt' => 'DESC']);
+
+        return $this->render('admin/observations.html.twig', ['observations' => $observations]);
     }
 
 }
