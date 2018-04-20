@@ -23,7 +23,7 @@
                     </div>
                     <div>
                         <h3>Rejoignez une communauté qui <br><strong><span class="green">vous ressemble</span></strong>.</h3>
-                        <a href="{{ url('security.register') }}" class="visible-xs register-xs">S'inscrire gratuitement</a>
+                        <a href="{{ url('security.register') }}" class="visible-xs register-xs text-center">S'inscrire gratuitement</a>
                     </div>
                     <h4 class="hidden-xs"><span class="green">Participez à la sauvegarde des oiseaux</span> <br>et des lieux dont ils ont besoin.</h4>
                     <h4 class="hidden-xs">Mettez à profit le talent de <span class="green">scientifique <br>citoyen</span> qui se cache en vous <span class="glyphicon glyphicon-heart"></span></h4>
@@ -45,27 +45,33 @@
     </div>
 
     <div class="operation">
-        <h2>Comment cela fonctionne</h2>
+        <h2 class="text-center">Comment cela fonctionne</h2>
         <div class="sliders">
-            <div id="target1" class="slider">
+            <div id="target1" class="slider text-center">
                 <img src="{{ asset('images/slider1.png') | imagine_filter('card_image') }}">
-                <h3>Partagez vos observations</h3>
-                <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
-                <a href="{{ url('observation.add') }}">Commencer</a>
+                <div class="text">
+                    <h3>Partagez vos observations</h3>
+                    <p>Partagez vos clichés et les lieux de vos découvertes ! Chaque observation est une pierre de plus à l'édifice.</p>
+                    <a href="{{ url('observation.add') }}">Commencer</a>
+                </div>
             </div>
 
-            <div id="target2" class="slider">
+            <div id="target2" class="slider text-center">
                 <img src="{{ asset('images/slider2.png') | imagine_filter('card_image') }}">
-                <h3>En apprendre sur les oiseaux</h3>
-                <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
-                <a href="{{ url('observation.search') }}">Explorer</a>
+                <div class="text">
+                    <h3>En apprendre sur les oiseaux</h3>
+                    <p>Explorez les oiseaux et les spots près de vous. Accèdez aux dernières observations provenant du monde entier.</p>
+                    <a href="{{ url('observation.search') }}">Explorer</a>
+                </div>
             </div>
 
-            <div id="target3" class="slider">
+            <div id="target3" class="slider text-center">
                 <img src="{{ asset('images/slider3.png') | imagine_filter('card_image') }}">
-                <h3>Contribuez à la sience</h3>
-                <p>Aidez-nous à collecter des données sur le réchauffement climatique, analyser les effets de l'agriculture sur les oiseaux, etc.</p>
-                <a href="#">En savoir plus</a>
+                <div class="text">
+                    <h3>Contribuez à la sience</h3>
+                    <p>Aidez-nous à collecter des données sur le réchauffement climatique, analyser les effets de l'agriculture sur les oiseaux, etc.</p>
+                    <a href="#">En savoir plus</a>
+                </div>
             </div>
 
             <div class="visible-xs target-links">
@@ -76,45 +82,74 @@
         </div>
     </div>
     <div class="users">
-        <h2>Qui utilise l'application NAO</h2>
-        <div class="usersContent">
-            <div class="userType">
+        <h2 class="text-center">Qui utilise l'application NAO</h2>
+        <div class="users-content">
+            <div class="user-type text-center">
                 <img class="img-circle" src="{{ asset('images/gerard.jpeg') | imagine_filter('gerard') }}">
                 <p>"Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est eopksio laborum."</p>
-                <h3><span class="green">Gérard L.</span>, naturaliste</h3>
+                <h3><span class="green">Gérard L.</span><br>Naturaliste</h3>
             </div>
 
-            <div class="partners">
+            <div class="partners text-center">
                 <h3>Nos partenaires</h3>
-                <img src="{{ asset('images/LPO.png') }}" height="300" width="700">
-                <img src="{{ asset('images/images.jpg') }}">
-                <img src="{{ asset('images/logo.png') }}">
+                <div class="img-container">
+                    <img src="{{ asset('images/LPO.png') }}" height="300" width="700"><br>
+                    <img src="{{ asset('images/images.jpg') }}"><br>
+                    <img src="{{ asset('images/logo.png') }}">
+                </div>
             </div>
         </div>
     </div>
-    <div class="join-us">
-        <h3>Aidez-nous à <span class="green">préserver la nature</span> et <span class="green">faire avancer la science</span> <a href="#" class="greenLink">rejoignez-nous</a></h3>
+    <div class="join-us text-center">
+        <h2>
+            Aidez-nous à <span class="green">préserver la nature</span> et
+            <span class="green">faire avancer la science</span>
+        </h2>
+
+        <a href="{{ url('security.register') }}" class="green-link">REJOIGNEZ-NOUS</a>
     </div>
-    <footer>
-        <div class="explorer">
-            <h5>Explorer</h5>
-            <a href="#">Observations</a>
-            <a href="#">Le blog NAO</a>
-            <a href="#">Connexion</a>
+    <div class="visible-xs community text-center">
+        <h2>La communauté NAO</h2>
+        <div class="community-icons">
+            <a href="#"><img src="{{ asset('images/logo_twitter.png') }}" alt="Logo Twitter"></a>
+            <a href="#"><img src="{{ asset('images/logo_facebook.png') }}" alt="Logo Facebook"></a>
+            <a href="#"><img src="{{ asset('images/logo_instagram.png') }}" alt="Logo Instagram"></a>
         </div>
-        <div class="about">
-            <h5>A propos</h5>
-            <a href="#">Pour nous joindre</a>
-            <a href="#">Mentions légales</a>
-        </div>
-        <div class="don">
+        <div class="donation">
             <a href="#">Faites un don</a>
         </div>
-        <div class="newsletter">
-            <h4>Recevoir la newsletter NAO</h4>
-            <input type="text" class="form-control" placeholder="Inscrivez votre e-mail">
-            <a href="#">Consultez notre politique de protection des données personnelles.</a>
-            <button type="button" class="greenLink">Envoyer</button>
+    </div>
+    <footer class="text-center">
+        <div class="first-level">
+            <div class="explorer">
+                <h5>Explorer</h5>
+                <ul>
+                    <li><a href="{{ url('observation.search') }}">Observations</a></li>
+                    <li><a href="{{ url('blog.list_article') }}">Le blog NAO</a></li>
+                    <li><a href="{{ url('security.login') }}">Connexion</a></li>
+                </ul>
+            </div>
+            <div class="about">
+                <h5>A propos</h5>
+                <ul>
+                    <li><a href="{{ url('app.contact') }}">Pour nous joindre</a></li>
+                    <li><a href="{{ url('app.terms_of_use') }}">Mentions légales</a></li>
+                </ul>
+            </div>
+            <div class="hidden-xs desktop-community">
+                <h5>Communauté NAO</h5>
+                <ul>
+                    <li><a href="#"><img src="{{ asset('images/logo_twitter.png') }}" alt="Logo Twitter"></a></li>
+                    <li><a href="#"><img src="{{ asset('images/logo_facebook.png') }}" alt="Logo Facebook"></a></li>
+                    <li><a href="#"><img src="{{ asset('images/logo_instagram.png') }}" alt="Logo Instagram"></a></li>
+                </ul>
+
+                <a href="#" class="desktop-footer-donation">Faites un don</a>
+            </div>
+        </div>
+
+        <div class="second-level">
+            <p>&copy; {{ "now"|date("Y") }} Nos Amis les Oiseaux - Tous droits réservés</p>
         </div>
     </footer>
 {% endblock %}
