@@ -118,6 +118,7 @@
 
 .users h2 {
     color: #fff;
+    font-family: 'FranklinDC', sans-serif;
     font-size: 25px;
     margin-top: 0;
     padding: 15px; }
@@ -126,6 +127,8 @@
 
 .user-type {
     background-color: #fff9f1;
+    max-width: 400px;
+    margin: 0 auto;
     padding: 20px;
     border-radius: 15px; }
 
@@ -339,7 +342,14 @@ footer h5 {
         color: #fff;
         font-size: 20px;
         padding: 10px 15px;
-        margin: 15px 0; }
+        margin: 15px 0;
+        outline: 0; }
+
+    .subscribe-form form button:focus {
+        margin-top: 17px;
+        margin-left: 4px;
+        box-shadow: none;
+    }
 
     .terms-and-conditions {
         margin-top: 5px;
