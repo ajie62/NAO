@@ -51,33 +51,46 @@ $(function() {
         }
     });
 
+    var speciesId;
+
     $(document).on('click', '.species', function(){
-        var speciesId = $(this).data('species-id');
+        speciesId = $(this).data('species-id');
 
         if (!!speciesId) {
             $searchInput.val($(this).text());
             $matchDiv.hide(0);
             speciesObj = findSpeciesObjectFromTheListWithId(listOfSpecies, speciesId);
-
-            if (markers.length > 0) deleteMarkers();
-
-            $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
-                success: function(response) {
-                    if (response) {
-                        if (response.length === 0) {
-                            $('.no-result').text('Aucun résultat pour cette espèce.');
-                        } else {
-                            $('.no-result').text('');
-                            observations = response;
-                            for (var i=0; i<observations.length; ++i) {
-                                var location = { lat: observations[i].latitude, lng: observations[i].longitude };
-                                addMarker(location, observations[i], speciesObj);
-                            }
-                        }
-                    }
-                }
-            });
         }
+    });
+
+    $("#search-ok-button").on('click', function() {
+        if (speciesId === undefined) {
+            $('.no-result').text('Aucun résultat');
+            return;
+        }
+
+        if (markers.length > 0) deleteMarkers();
+
+        $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
+            success: function(response) {
+                if (response.length === 0) {
+                    $('.no-result').html('<p>Aucun résultat pour : <strong>' + $searchInput.val() + '</strong></p>');
+                } else {
+                    $('.no-result').text('');
+                    observations = response;
+                    for (var i=0; i<observations.length; ++i) {
+                        var location = { lat: observations[i].latitude, lng: observations[i].longitude };
+                        addMarker(location, observations[i], speciesObj);
+                    }
+                    $('.search-species').fadeToggle();
+                }
+            }
+        });
+    });
+
+    $('#js-start-search').on('click', function(e) {
+        e.preventDefault();
+        $('.search-species').fadeToggle();
     });
 });
 
@@ -105,7 +118,10 @@ function searchMap() {
         streetViewControl: false,
         mapTypeControl: false,
         gestureHandling: 'cooperative',
-        scrollwheel: false
+        scrollwheel: false,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_BOTTOM
+        }
     });
 }
 

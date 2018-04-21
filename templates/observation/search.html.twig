@@ -15,12 +15,12 @@
     <div class="map-container">
         <div id="js-search-map" class="search-map"></div>
         <div class="search-species">
-            <span>Rechercher une espèce :</span>
+            <p>Rechercher une espèce :</p>
             <div class="search-field" id="input-container" data-get-url="{{ url('observation.get_species') }}" data-search-url="{{ url('observation.ajax.search_observation') }}">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" id="input">
                     <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">OK</button>
+                        <button id="search-ok-button" class="btn btn-default" type="button">OK</button>
                     </span>
                 </div>
 
@@ -33,7 +33,8 @@
         </div>
 
         <div class="obs-buttons">
-            <a href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+            <a class="step-link" href="#" id="js-start-search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+            <a class="step-link" href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
         </div>
     </div>
 {% endblock %}
