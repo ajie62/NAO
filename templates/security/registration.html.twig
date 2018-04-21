@@ -3,10 +3,15 @@
 {% block title %}Créer un compte{% endblock %}
 
 {% block body %}
-    {# ADD LOGO HERE #}
-    <h1>Inscrivez-vous gratuitement</h1>
+    <div class="basic-container register-form">
+        <div class="text-center">
+            <img src="{{ asset('images/nao2.png') }}" alt="Logo de l'association Nos Amis les Oiseaux">
+        </div>
+        <h1 class="text-center">Inscrivez-vous gratuitement</h1>
+        <div class="register-form-container">
+            {% include 'includes/registration.html.twig' %}
 
-    {% include 'includes/registration.html.twig' %}
-
-    <p>Vous avez déjà un compte ?<br><a href="{{ url('security.login') }}">Identifiez-vous</a></p>
+            <p class="text-center">Vous avez déjà un compte ?<br><a href="{{ url('security.login') }}">Identifiez-vous</a></p>
+        </div>
+    </div>
 {% endblock %}
