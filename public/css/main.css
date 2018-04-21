@@ -18,6 +18,10 @@
     font-style: normal; }
 
 /* GENERAL */
+html, body {
+    height: 100%;
+    margin: 0; }
+
 body {
     background : fixed url(../images/fondDesktop.png);
     background-size : cover;
@@ -27,6 +31,8 @@ body {
 h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif; }
 
 .content { background-color : #FFF9F1; }
+
+.alert, .alert-success { margin-bottom: 0!important; }
 
 /* NAVBAR */
 nav { margin-bottom: 0 !important; }
@@ -99,7 +105,6 @@ nav { margin-bottom: 0 !important; }
     border: none; }
 
 .basic-container {
-    min-height: calc(100vh - 64px);
     background: #fff9f1;
     color: #3b3b3b;
     padding: 30px 15px;
@@ -135,15 +140,16 @@ nav { margin-bottom: 0 !important; }
     height: 44px;
     width: 42px; }
 
-.legal {
-    margin-top: 20px;
-    padding: 0 20px; }
+.legal { margin-top: 20px; }
 
 .legal p {
-    font-size: .9em;
+    font-family: 'PT Sans', sans-serif;
+    font-size: .8em;
     font-style: italic; }
 
 /* Login */
+.login-form { min-height: calc(100vh - 64px); }
+
 .login-form h1, .register-form h1 { margin: 0; }
 
 .login-form img,
@@ -190,6 +196,10 @@ nav { margin-bottom: 0 !important; }
     /* Contact */
     .g-recaptcha { margin: 0; }
     .contact-button { justify-content: space-between; }
+
+    .contact-container {
+        min-height: calc(100vh - 64px);
+    }
 
     .contact-container form textarea {
         max-width: 100%;

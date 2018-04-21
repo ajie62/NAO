@@ -5,19 +5,17 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/stylesLandingPage.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container"> {# Using Bootstrap Container class #}
-
+    <div class="basic-container add-obs-container">
         {# Tab content for mobile steps #}
         <div class="tab-content">
 
             {# First menu #}
             <div id="menu1" class="tab-pane fade in active">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
+                    <div class="visible-xs-block">
                         <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
                     </div>
                     <div class="hidden-xs">
@@ -25,6 +23,9 @@
                         <p>Placer le marqueur sur la position de l'animal.</p>
                     </div>
                 </div>
+
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
 
                 <div class="map-container">
                     <div id="map"></div>
@@ -36,7 +37,7 @@
             {# Second menu #}
             <div id="menu2" class="tab-pane fade">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
+                    <div class="visible-xs-block">
                         <p>Étape 2 : Insérer ou prendre une photographie de l'animal</p>
                     </div>
                     <div class="hidden-xs">
@@ -45,18 +46,16 @@
                     </div>
                 </div>
 
-                {{ form_start(form) }}
-                {{ form_errors(form) }}
-
                 <div class="flex-step">
                     <div class="fields upload-btn-wrapper">
                         <button class="btn"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></button>
                         {{ form_errors(form.image) }}
                         {{ form_label(form.image) }}
                         {{ form_widget(form.image) }}
+                        <div class="js-chosen-picture"></div>
                     </div>
 
-                    <div class="nav-buttons">
+                    <div class="step-buttons">
                         <a data-toggle="tab" href="#menu1" class="step-link"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
                         <a data-toggle="tab" href="#menu3" class="step-link"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                     </div>
@@ -66,7 +65,7 @@
             {# Third menu #}
             <div id="menu3" class="tab-pane fade">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
+                    <div class="visible-xs-block">
                         <p>Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
                     </div>
                     <div class="hidden-xs">
@@ -120,7 +119,7 @@
                         </div>
                     </div>
 
-                    <div class="nav-buttons">
+                    <div class="step-buttons text-right">
                         <a data-toggle="tab" href="#menu2" class="step-link"><span class="glyphicon glyphicon-chevron-left"></span></a>
                         <button class="submit-button" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
                     </div>

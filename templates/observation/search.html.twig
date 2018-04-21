@@ -2,24 +2,39 @@
 
 {% block title %}Recherche d'observation{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
+{% endblock %}
+
 {% block body %}
     {% for message in app.flashes('notice') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
 
     <div class="map-container">
-        <div id="js-search-map" style="width: 100%; min-height: 100vh;"></div>
+        <div id="js-search-map" class="search-map"></div>
         <div class="search-species">
+            <span>Rechercher une espèce :</span>
             <div class="search-field" id="input-container" data-get-url="{{ url('observation.get_species') }}" data-search-url="{{ url('observation.ajax.search_observation') }}">
-                <input type="text" name="search" id="input" placeholder="Recherche">
-                <div id="js-search-match" style="display:none; background: #fff; border: 1px solid #d8d8d8; max-height: 100px; overflow: scroll;" >
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" id="input">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">OK</button>
+                    </span>
+                </div>
+
+                <div id="js-search-match" class="obs-search-results" >
                     <ul id="search-species-results" style="padding: 0; list-style: none;"></ul>
                 </div>
-                <span class="loader">Chargement...</span>
+                {#<span class="loader">Chargement...</span>#}
                 <span class="no-result"></span>
             </div>
         </div>
-        <a href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+
+        <div class="obs-buttons">
+            <a href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+        </div>
     </div>
 {% endblock %}
 

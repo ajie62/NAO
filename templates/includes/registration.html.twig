@@ -36,7 +36,7 @@
     <p class="terms-and-conditions">
         En cliquant sur &laquo; S'inscrire &raquo;, j'accepte les <a href="{{ url('app.terms_of_use') }}">Conditions Générales d'Utilisations</a>
         et la <a href="{{ url('app.terms_of_use')~"#privacy-policy" }}">politique de confidentialité</a>.<br>
-        <span class="mandatory">* Champs obligatoires</span>
+        <span class="text-danger">* Champs obligatoires</span>
     </p>
 
     {% if registration_form.password.vars.errors | length > 0 %}
