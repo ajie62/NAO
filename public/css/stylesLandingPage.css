@@ -22,7 +22,10 @@
     font-size: 30px;
     text-shadow: 2px 2px 4px #333; }
 
-.typed-container { max-width: 80%; }
+.typed-container {
+    margin: 0 auto;
+    max-width: 80%; }
+
 .typed-container h3, h4 {
     line-height: 1.4;
     margin-top: 20px;
