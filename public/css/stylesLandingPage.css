@@ -13,7 +13,6 @@
     font-weight: lighter; }
 
 .typed h1 {
-    font-family: 'Roboto', Arial, sans-serif;
     font-size: 30px;
     font-weight: bold;
     text-shadow: 2px 2px 4px #333; }
@@ -23,6 +22,7 @@
     font-size: 30px;
     text-shadow: 2px 2px 4px #333; }
 
+.typed-container { max-width: 80%; }
 .typed-container h3, h4 {
     line-height: 1.4;
     margin-top: 20px;
@@ -65,7 +65,6 @@
     border-radius: 10px 10px 0 0; }
 
 .operation h2 {
-    font-family: 'FranklinDC', Arial, sans-serif;
     font-size: 25px;
     margin-top: 0;
     padding-bottom: 20px; }
@@ -118,7 +117,6 @@
 
 .users h2 {
     color: #fff;
-    font-family: 'FranklinDC', sans-serif;
     font-size: 25px;
     margin-top: 0;
     padding: 15px; }
@@ -243,7 +241,7 @@ footer h5 {
         text-align: center; }
 
     /* SECOND BLOCK */
-    .sliders > div { margin: 0 auto; }
+    .sliders > div { margin: 20px auto; }
 
     .sliders #target2, .sliders #target3 { display: none; }
 }
@@ -310,7 +308,6 @@ footer h5 {
         text-decoration: underline; }
 
     .subscribe-form h4 {
-        font-family: 'FranklinDC', Arial, sans-serif;
         font-size: 1.4em;
         margin-top: 5px;
         padding: 0 10px; }

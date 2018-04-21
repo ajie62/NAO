@@ -170,7 +170,7 @@ margin : 10px;
 
 .article-title {
     background-color: rgba(0,0,0,0.5);
-    font-family : 'FranklinDC';
+    font-family : 'FranklinDC', sans-serif;
     position: absolute;
     bottom:0;
     margin: 0;

@@ -1,6 +1,4 @@
 $(function() {
-    var $currentRoute = $('#js-current-route').data('route');
-
     window.addEventListener("load", function(){
         window.cookieconsent.initialise({
             "palette": {
@@ -13,11 +11,13 @@ $(function() {
                     "text": "#ffffff"
                 }
             },
-            "theme": "edgeless",
+            "theme": "classic",
             "content": {
-                "message": "En poursuivant votre navigation sur ce site, vous acceptez l’utilisation de cookies pour vous assurer la meilleure expérience.",
+                "header": "Cookies utilisés sur le site web",
+                "message": "En poursuivant votre navigation sur ce site, vous acceptez l’utilisation de cookies.",
                 "dismiss": "J'ai compris !",
-                "href": $currentRoute
+                "link": "En savoir plus",
+                "href": '/terms-of-use'
             }
         })});
 });
