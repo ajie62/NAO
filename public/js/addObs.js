@@ -144,4 +144,33 @@ $(function() {
     $('.upload-btn-wrapper .btn').on('click', function() {
         $('.upload-btn-wrapper input[type="file"]').trigger('click');
     });
+
+    /** Handling addObs page change depending it's on mobile or desktop */
+    var $window = $(window);
+
+    function checkWidth() {
+        var windowSize = $window.width();
+        if (windowSize > 768) {
+            $("#menu1").removeClass("tab-pane fade");
+            $("#menu2").removeClass("tab-pane fade");
+            $("#menu3").removeClass("tab-pane fade");
+        } else {
+            $("#menu1").addClass("tab-pane fade");
+            $("#menu2").addClass("tab-pane fade");
+            $("#menu3").addClass("tab-pane fade");
+        }
+    }
+
+    checkWidth();
+    $window.resize(checkWidth);
+
+    /* IMAGE */
+    var $inputImage = $('#observation_image_file');
+
+    $inputImage.on('change', function(e) {
+        var isFileUploaded = e.target.files.length > 0;
+        var $chosenPicture = $('.js-chosen-picture');
+        var fileName = (isFileUploaded) ? e.target.files[0].name : null;
+        $chosenPicture.text(fileName);
+    });
 });

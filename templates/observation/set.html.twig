@@ -5,20 +5,18 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/stylesLandingPage.css') }}">
 {% endblock %}
 
 {% block body %}
-    <div class="container"> {# Using Bootstrap Container class #}
-
+    <div class="add-obs-container main-layout">
         {# Tab content for mobile steps #}
         <div class="tab-content">
 
             {# First menu #}
             <div id="menu1" class="tab-pane fade in active">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
-                        <p>Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
+                    <div class="visible-xs-block white-bg">
+                        <p class="no-margin common-padding">Étape 1 : Placer le marqueur de position à l'endroit exact de l'oiseau observé.</p>
                     </div>
                     <div class="hidden-xs">
                         <h2>Localisation de l'observation</h2>
@@ -26,18 +24,21 @@
                     </div>
                 </div>
 
+                {{ form_start(form) }}
+                {{ form_errors(form) }}
+
                 <div class="map-container">
                     <div id="map"></div>
-                    <div id="error"></div>
-                    <a data-toggle="tab" href="#menu2" class="step-link-map"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                    <div id="error" class="hidden text-justify common-padding"></div>
+                    <a data-toggle="tab" href="#menu2" class="step-link-map visible-xs orange-bg txt-white"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                 </div>
             </div>
 
             {# Second menu #}
             <div id="menu2" class="tab-pane fade">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
-                        <p>Étape 2 : Insérer ou prendre une photographie de l'animal</p>
+                    <div class="visible-xs-block white-bg">
+                        <p class="no-margin common-padding">Étape 2 : Insérer ou prendre une photographie de l'animal</p>
                     </div>
                     <div class="hidden-xs">
                         <h2>Insérer une photo</h2>
@@ -45,20 +46,18 @@
                     </div>
                 </div>
 
-                {{ form_start(form) }}
-                {{ form_errors(form) }}
-
                 <div class="flex-step">
-                    <div class="fields upload-btn-wrapper">
-                        <button class="btn"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></button>
+                    <div class="fields upload-btn-wrapper text-center">
+                        <button class="btn blue-bg txt-white common-padding"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></button>
                         {{ form_errors(form.image) }}
                         {{ form_label(form.image) }}
                         {{ form_widget(form.image) }}
+                        <div class="js-chosen-picture"></div>
                     </div>
 
-                    <div class="nav-buttons">
-                        <a data-toggle="tab" href="#menu1" class="step-link"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
-                        <a data-toggle="tab" href="#menu3" class="step-link"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+                    <div class="step-buttons">
+                        <a data-toggle="tab" href="#menu1" class="step-link txt-white orange-bg"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></a>
+                        <a data-toggle="tab" href="#menu3" class="step-link txt-white orange-bg"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </div>
@@ -66,8 +65,8 @@
             {# Third menu #}
             <div id="menu3" class="tab-pane fade">
                 <div class="instruction">
-                    <div class="visible-xs-block mobile-step">
-                        <p>Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
+                    <div class="visible-xs-block white-bg">
+                        <p class="no-margin common-padding">Étape 3 : Remplir le formulaire ci-dessous en renseignant un maximum d'informations.</p>
                     </div>
                     <div class="hidden-xs">
                         <h3>Informations sur l'oiseau observé</h3>
@@ -82,8 +81,8 @@
                             {{ form_widget(form.espece) }}
                             <span class="loader">Chargement...</span>
                             <div style="position:relative;">
-                                <div id="js-match" class="species-match">
-                                    <ul id="species"></ul>
+                                <div id="js-match" class="species-match white-bg">
+                                    <ul id="species" class="no-margin no-padding"></ul>
                                 </div>
                             </div>
                         </div>
@@ -120,9 +119,9 @@
                         </div>
                     </div>
 
-                    <div class="nav-buttons">
-                        <a data-toggle="tab" href="#menu2" class="step-link"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                        <button class="submit-button" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                    <div class="step-buttons text-right">
+                        <a data-toggle="tab" href="#menu2" class="step-link visible-xs txt-white orange-bg"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <button class="submit-button no-border green-bg" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
                     </div>
                 </div>
                 {{ form_end(form) }}

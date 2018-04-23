@@ -3,53 +3,70 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-offset-1 col-lg-10">
-                <h1>Besoin de nous contacter ?</h1>
+    <div class="contact-container main-layout">
+        <h1>Besoin de nous contacter ?</h1>
 
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem, molestiae,
-                    sequi! A aliquid assumenda aut eos id incidunt iste nam saepe unde voluptas.
-                    A eligendi explicabo facere harum maiores nihil quo soluta? Omnis perspiciatis
-                    quam quasi voluptatem voluptatum? A accusamus accusantium architecto asperiores,
-                    aspernatur corporis culpa cum eius eligendi error eveniet ex fugiat fugit illum
-                    inventore iure, iusto laudantium maxime mollitia nam necessitatibus numquam
-                    optio perferendis quaerat quasi quo ratione sapiente sed sequi tenetur unde,
-                    velit veritatis voluptas? Architecto, dolores, tempora!
-                </p>
+        <p>
+            Envoyez-nous un email. Nous faisons de notre mieux pour répondre en
+            temps opportun. Cependant, en raison du grand nombre de demandes,
+            vous obtiendrez généralement une réponse plus rapide si vous postez
+            une question publique à la communauté Nos Amis les Oiseaux sur
+            <a href="https://www.facebook.com/Nos-Amis-les-Oiseaux-123326628512952/"
+               target="_blank">notre page Facebook.</a>
+        </p>
 
-                {{ form_start(form) }}
+        <div class="contact-form">
+            {{ form_start(form) }}
 
-                <div>
-                    {{ form_errors(form.mail) }}
-                    {{ form_label(form.mail) }}
-                    {{ form_widget(form.mail) }}
-                </div>
+            <div>
+                {{ form_errors(form.mail) }}
+                {{ form_label(form.mail) }}
+                {{ form_widget(form.mail) }}
+            </div>
 
-                <div>
-                    {{ form_errors(form.subject) }}
-                    {{ form_label(form.subject) }}
-                    {{ form_widget(form.subject) }}
-                </div>
+            <div>
+                {{ form_errors(form.subject) }}
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject) }}
+            </div>
 
-                <div>
-                    {{ form_errors(form.message) }}
-                    {{ form_label(form.message) }}
-                    {{ form_widget(form.message) }}
-                </div>
+            <div>
+                {{ form_errors(form.message) }}
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
 
-                <div class="g-recaptcha" data-sitekey="6LekM1QUAAAAAAcR6juxN2o7S9MHo_9cJmLsJ5wa"></div>
+            <div class="text-left">
+                <div class="g-recaptcha no-margin text-right" data-sitekey="6LekM1QUAAAAAAcR6juxN2o7S9MHo_9cJmLsJ5wa"></div>
                 {% if captchaError %}
                     <p class="text-danger">{{ captchaError }}</p>
                 {% endif %}
-
-                <div class="nav-buttons">
-                    <button type="submit" class="submit-button submit-button-contact"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-                </div>
-
-                {{ form_end(form) }}
             </div>
+
+            <div class="contact-btn-container">
+                <button type="submit" class="orange-bg no-border">Envoyer</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+        <hr>
+
+        <div class="legal">
+            <p class="text-justify">Conformément à l’article 32 de la loi « Informatique et Libertés » n°78-17
+                du 6 janvier 1978, modifiée par la loi n°2004-801 du 6 août 2004, les
+                informations recueillies via ce formulaire de contact font l’objet d’un
+                traitement informatique destiné uniquement à ce que le responsable du
+                traitement puisse répondre aux utilisateurs et ne seront jamais utilisées
+                à des fins non prévues ni transmises à des partenaires. En outre, les
+                données collectées ne sont pas conservées plus d’un an. Egalement, aucune
+                information personnelle autre que celles demandées dans ce cadre n’est
+                collectée à l’insu des utilisateurs. Enfin, conformément aux articles 39
+                et 40 de la loi sus-citée, l’utilisateur de ce site bénéficie des droits
+                d’interrogation, d’accès, de rectification et de suppression portant sur
+                les données le concernant en adressant un courrier à : Michel Dujardin -
+                Responsable de l'association Nos Amis les Oiseaux - 1 rue des Champs Elysées
+                à Paris, CP 75001
+            </p>
         </div>
     </div>
 {% endblock %}

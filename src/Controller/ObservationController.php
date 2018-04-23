@@ -14,6 +14,7 @@ use App\Entity\User;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -56,6 +57,7 @@ class ObservationController extends AbstractController
     /**
      * Add an observation
      * @Route("/observation/add", name="observation.add")
+     * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -68,6 +70,7 @@ class ObservationController extends AbstractController
     /**
      * Update an observation
      * @Route("/observation/{id}/update", name="observation.update", requirements={"id" = "\d+"})
+     * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
      *
      * @param Request $request
      * @param Observation $observation
@@ -81,6 +84,7 @@ class ObservationController extends AbstractController
     /**
      * Delete an observation
      * @Route("observation/{id}/delete", name="observation.delete", requirements={"id" = "\d+"})
+     * @Security("is_granted('ROLE_NATURALISTE')")
      *
      * @param Request $request
      * @param Observation $observation
@@ -105,7 +109,7 @@ class ObservationController extends AbstractController
     }
 
     /**
-     * Set an observation
+     * Private method used to add or edit an observation
      *
      * @param Request $request
      * @param Observation $observation

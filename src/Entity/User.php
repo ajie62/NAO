@@ -36,12 +36,14 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(max="60", maxMessage="Ce champ ne peut contenir que {{ limit }} caractères maximum.")
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Veuillez renseigner ce champ.")
+     * @Assert\Length(max="60", maxMessage="Ce champ ne peut contenir que {{ limit }} caractères maximum.")
      */
     private $lastname;
 
@@ -53,6 +55,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=64)
+     * @Assert\Length(max="64", maxMessage="Le mot de passe ne peut contenir que {{ limit }} caractères maximum.")
      * @Assert\Regex(
      *     pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,64}/",
      *     message="Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules de minuscules et un chiffre.",
@@ -87,6 +90,17 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="datetime")
      */
     private $subscribedAt;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Image", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     */
+    private $image;
+
+    /**
+     * @ORM\Column(type="string", length=700)
+     */
+    private $introduction;
 
     /**
      * User constructor.
@@ -273,6 +287,42 @@ class User implements AdvancedUserInterface, \Serializable
     public function setSubscribedAt($subscribedAt)
     {
         $this->subscribedAt = $subscribedAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     * @return User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIntroduction()
+    {
+        return $this->introduction;
+    }
+
+    /**
+     * @param mixed $introduction
+     * @return User
+     */
+    public function setIntroduction($introduction)
+    {
+        $this->introduction = $introduction;
         return $this;
     }
 

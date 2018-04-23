@@ -8,6 +8,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class ArticleRepository extends EntityRepository
@@ -25,5 +26,16 @@ class ArticleRepository extends EntityRepository
                 ->select('COUNT(article)')
                 ->getQuery()
                 ->getSingleScalarResult();
+    }
+
+    public function totalDraftsOrPublishedArticles(User $user, bool $bool){
+        return $this->createQueryBuilder('article')
+            ->select('COUNT(article)')
+            ->andWhere('article.published = :published')
+            ->setParameter('published', $bool)
+            ->andWhere('article.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 }

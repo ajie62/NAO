@@ -3,27 +3,38 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <div class="login-form main-layout">
+        <div class="text-center">
+            <img src="{{ asset('images/nao2.png') }}" alt="Logo de l'association Nos Amis les Oiseaux">
+        </div>
+        <h1 class="text-center no-margin">Connexion</h1>
+        <div class="login-form-container">
+            {% if error %}
+                <div class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            {{ form_start(form, { attr: { action: path('security.login') }}) }}
+            <div class="text-center">
+                {{ form_errors(form.mail) }}
+                {{ form_label(form.mail) }}
+                {{ form_widget(form.mail) }}
+            </div>
+            <div class="text-center">
+                {{ form_errors(form.password) }}
+                {{ form_label(form.password) }}
+                {{ form_widget(form.password) }}
+            </div>
+            <span class="text-danger">* Champs obligatoires</span>
 
-    {{ form_start(form, { attr: { action: path('security.login') }}) }}
-    <div>
-        {{ form_errors(form.mail) }}
-        {{ form_label(form.mail) }}
-        {{ form_widget(form.mail) }}
+            <div class="text-center">
+                <button type="submit" class="no-border">Se connecter</button>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            </div>
+            {{ form_end(form) }}
+            <p class="text-center"><a href="#">Mot de passe oublié ?</a></p>
+
+            <hr>
+
+            <p class="text-center">Pas encore inscrit ?<br><a href="{{ url('security.register') }}">Inscrivez-vous</a></p>
+        </div>
     </div>
-    <div>
-        {{ form_errors(form.password) }}
-        {{ form_label(form.password) }}
-        {{ form_widget(form.password) }}
-    </div>
-
-    <button type="submit">Se connecter</button>
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    {{ form_end(form) }}
-    <p><a href="#">Mot de passe oublié ?</a></p>
-
-    <p>Pas encore inscrit ?<br><a href="{{ url('security.register') }}">Inscrivez-vous</a></p>
-
 {% endblock %}
