@@ -84,10 +84,19 @@
             </div>
 
             {% for obs in observations %}
-                <div>
-                    <img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}" alt="Photo de {{ obs.species.name }}">
-                    {{ obs.observedAt|date('d/m/Y') }} {# Observation date #}
-                    {{ obs.species.name }} {# Species name #}
+                <div class="personal-obs text-center">
+                    <div class="personal-obs-img">
+                        <img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}" alt="Photo de {{ obs.species.name }}">
+                    </div>
+                    <div class="personal-obs-date">
+                        {{ obs.observedAt|date('d/m/Y') }}
+                    </div>
+                    <div class="personal-obs-name">
+                        {{ obs.species.name }}
+                    </div>
+                    <div class="personal-obs-status">
+                        {{ obs.validated }}
+                    </div>
                 </div>
             {% endfor %}
         {% else %}

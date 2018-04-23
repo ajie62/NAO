@@ -284,6 +284,42 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     * @return User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIntroduction()
+    {
+        return $this->introduction;
+    }
+
+    /**
+     * @param mixed $introduction
+     * @return User
+     */
+    public function setIntroduction($introduction)
+    {
+        $this->introduction = $introduction;
+        return $this;
+    }
+
+    /**
      * @ORM\PrePersist()
      */
     public function prePersist()

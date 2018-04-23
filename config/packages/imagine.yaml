@@ -20,4 +20,4 @@ liip_imagine :
         profile_personal_obs_image:
             quality: 100
             filters:
-                thumbnail: { size: [80, 80], mode : outbound }
+                thumbnail: { size: [50, 50], mode : outbound }
