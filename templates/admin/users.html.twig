@@ -2,12 +2,14 @@
 {% block body %}
     <input placeholder="Rechercher un utilisateur" type="text">
     {% for user in users %}
+        <a href="#">
             <div class="user">
                 <span>{{ user.firstname }}</span>
                 <span>{{ user.lastname }}</span>
                 <span>{{ user.roles[0] }}</span>
                 <span>Inscrit depuis le {{ user.subscribedAt | date('d/m/Y') }}</span>
             </div>
+        </a>
         <hr>
     {% endfor %}
 {% endblock %}

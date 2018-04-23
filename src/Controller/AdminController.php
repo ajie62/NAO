@@ -38,7 +38,6 @@ class AdminController extends Controller
     public function users(){
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
-//        dump($em);die;
         return $this->render('admin/users.html.twig', [
             'users' => $users
         ]);
