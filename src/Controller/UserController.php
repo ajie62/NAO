@@ -38,11 +38,13 @@ class UserController extends AbstractController
         $listOfObservations = $this->em->getRepository(Observation::class)->findByUser($user);
         $numberArticlesPublished = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, true);
         $numberArticlesDrafts = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, false);
+        $numberOfAwaitingObservations = $this->em->getRepository(Observation::class)->findNumberOfAwaitingObservations($user);
         return $this->render('user/profile.html.twig', [
             'user' => $this->getUser(),
             'observations' => $listOfObservations,
             'numberArticlesPublished' => $numberArticlesPublished,
-            'numberArticlesDrafts' => $numberArticlesDrafts
+            'numberArticlesDrafts' => $numberArticlesDrafts,
+            'numberOfAwaitingObservations' => $numberOfAwaitingObservations
         ]);
     }
 

@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
@@ -17,7 +16,12 @@
             {% set naturaliste = role == 'ROLE_NATURALISTE' %}
             {% set admin = role == 'ROLE_ADMIN' %}
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
-            <p>{{ user.mail }}</p>
+            {% if user.image %}
+                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+            {% else %}
+                <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+            {% endif %}
+                <p>{{ user.mail }}</p>
             <p>
                 {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
             </p>
@@ -68,7 +72,7 @@
                 {% if particulier %}
                     <div class="blue-bg awaiting-obs">
                         <h4>Observations en attente</h4>
-                        <span class="stats-nb">0</span>
+                        <span class="stats-nb">{{ numberOfAwaitingObservations }}</span>
                     </div>
                 {% endif %}
                 <div class="{{ particulier ? 'green-bg' : 'blue-bg' }}">
@@ -81,11 +85,9 @@
         <div class="profile-obs-list">
         {# Observation published by user #}
         {% if observations|length > 0 %}
-            {# TODO: HANDLE OBSERVATION RESEARCH #}
             <div class="profile-input-container text-center">
                 <input type="text" placeholder="Rechercher une de mes observations">
             </div>
-
             {% for obs in observations %}
                 <div class="personal-obs text-center">
                     <div class="personal-obs-img">

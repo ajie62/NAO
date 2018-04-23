@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
 class ObservationRepository extends EntityRepository
@@ -33,9 +34,19 @@ class ObservationRepository extends EntityRepository
           'validated' => $validated,
           'obsPourcentage' => $this->pourcentage($validated, $total)
         ];
-//        $rejeted = ;
-
     }
+
+    public function findNumberOfAwaitingObservations(User $user){
+        return $this->createQueryBuilder('observation')
+            ->select('COUNT(observation)')
+            ->andWhere('observation.validated = :valid')
+            ->setParameter('valid', false)
+            ->andWhere('observation.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     private function pourcentage($nombre, $total) {
         return $nombre * 100 / $total;
     }
