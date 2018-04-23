@@ -91,6 +91,10 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $subscribedAt;
 
+    private $image;
+
+    private $introduction;
+
     /**
      * User constructor.
      */

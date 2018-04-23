@@ -3,11 +3,11 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div class="basic-container login-form">
+    <div class="login-form main-layout">
         <div class="text-center">
             <img src="{{ asset('images/nao2.png') }}" alt="Logo de l'association Nos Amis les Oiseaux">
         </div>
-        <h1 class="text-center">Connexion</h1>
+        <h1 class="text-center no-margin">Connexion</h1>
         <div class="login-form-container">
             {% if error %}
                 <div class="text-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -26,7 +26,7 @@
             <span class="text-danger">* Champs obligatoires</span>
 
             <div class="text-center">
-                <button type="submit">Se connecter</button>
+                <button type="submit" class="no-border">Se connecter</button>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
             </div>
             {{ form_end(form) }}

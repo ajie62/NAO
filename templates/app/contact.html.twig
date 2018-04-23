@@ -3,7 +3,7 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
-    <div class="basic-container contact-container">
+    <div class="contact-container main-layout">
         <h1>Besoin de nous contacter ?</h1>
 
         <p>
@@ -15,35 +15,39 @@
                target="_blank">notre page Facebook.</a>
         </p>
 
-        {{ form_start(form) }}
+        <div class="contact-form">
+            {{ form_start(form) }}
 
-        <div>
-            {{ form_errors(form.mail) }}
-            {{ form_label(form.mail) }}
-            {{ form_widget(form.mail) }}
+            <div>
+                {{ form_errors(form.mail) }}
+                {{ form_label(form.mail) }}
+                {{ form_widget(form.mail) }}
+            </div>
+
+            <div>
+                {{ form_errors(form.subject) }}
+                {{ form_label(form.subject) }}
+                {{ form_widget(form.subject) }}
+            </div>
+
+            <div>
+                {{ form_errors(form.message) }}
+                {{ form_label(form.message) }}
+                {{ form_widget(form.message) }}
+            </div>
+
+            <div class="text-left">
+                <div class="g-recaptcha no-margin text-right" data-sitekey="6LekM1QUAAAAAAcR6juxN2o7S9MHo_9cJmLsJ5wa"></div>
+                {% if captchaError %}
+                    <p class="text-danger">{{ captchaError }}</p>
+                {% endif %}
+            </div>
+
+            <div class="contact-btn-container">
+                <button type="submit" class="orange-bg no-border">Envoyer</button>
+            </div>
+            {{ form_end(form) }}
         </div>
-
-        <div>
-            {{ form_errors(form.subject) }}
-            {{ form_label(form.subject) }}
-            {{ form_widget(form.subject) }}
-        </div>
-
-        <div>
-            {{ form_errors(form.message) }}
-            {{ form_label(form.message) }}
-            {{ form_widget(form.message) }}
-        </div>
-
-        <div class="contact-button">
-            <div class="g-recaptcha" data-sitekey="6LekM1QUAAAAAAcR6juxN2o7S9MHo_9cJmLsJ5wa"></div>
-            {% if captchaError %}
-                <p class="text-danger">{{ captchaError }}</p>
-            {% endif %}
-            <button type="submit" class="submit-button submit-button-contact"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
-        </div>
-
-        {{ form_end(form) }}
 
         <hr>
 
