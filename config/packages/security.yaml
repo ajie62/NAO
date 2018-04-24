@@ -26,7 +26,7 @@ security:
                 username_parameter: login[mail]
                 password_parameter: login[password]
                 csrf_token_generator: security.csrf.token_manager
-                default_target_path: /
+                default_target_path: /profile
             logout:
                 path: /logout
                 target: /

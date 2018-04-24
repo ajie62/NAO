@@ -27,6 +27,7 @@
 .txt-white { color: #ffffff }
 .txt-black { color: #3b3b3b }
 .txt-orange { color: #fbb03b }
+.txt-green { color: #8CC63F }
 
 /* Content */
 .no-border { border: none }
@@ -49,6 +50,12 @@
     min-height: calc(100vh - 64px);
     padding: 15px }
 
+.content-link,
+.content-link:hover,
+.content-link:focus {
+    color: #fbb03b;
+    text-decoration: none }
+
 /* GENERAL */
 html, body { height: 100%; }
 
@@ -57,6 +64,13 @@ body {
     background-size : cover;
     font-family: 'Roboto', sans-serif;
     color: #3b3b3b }
+
+.base-profile-pic {
+    border-radius: 50%;
+    height: 30px;
+    vertical-align: top;
+    width: 30px;
+}
 
 h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
 .alert, .alert-success { margin-bottom: 0!important }

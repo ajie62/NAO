@@ -98,7 +98,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $image;
 
     /**
-     * @ORM\Column(type="string", length=700)
+     * @ORM\Column(type="string", length=700, nullable=true)
      */
     private $introduction;
 

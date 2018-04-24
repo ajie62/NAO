@@ -39,7 +39,20 @@
                     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li><a href="{{ url('app.homepage') }}">Accueil</a></li>
                     {% else %}
-                        <li><a href="{{ url('user.profile') }}">Mon profil</a></li>
+                        <li>
+                            <a href="{{ url('user.profile') }}">
+                                {% if app.user.image %}
+                                    <img class="base-profile-pic"
+                                         src="{{ user.image.webPath | imagine_filter('min_profile_picture') }}"
+                                         alt="{{ user.image.alt }}">
+                                {% else %}
+                                    <img class="base-profile-pic"
+                                         src="{{ asset('images/no-profile.png') }}"
+                                         alt="pas d'image de profil.">
+                                {% endif %}
+                                Mon profil
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
                         <li><a href="{{ url('observation.search') }}">Observations</a></li>
@@ -63,6 +76,7 @@
         {% endblock %}
         {% block javascripts %}
             <script type="text/javascript" src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+            <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
             <script src="{{ asset('js/cookieconsent.js') }}">

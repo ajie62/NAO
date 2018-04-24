@@ -17,7 +17,7 @@
             {% set admin = role == 'ROLE_ADMIN' %}
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
             {% if user.image %}
-                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ app.user.image.alt }}">
             {% else %}
                 <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
             {% endif %}
@@ -40,10 +40,8 @@
             suscipit ullam vitae. Adipisci cupiditate explicabo id illo ipsum nihil non praesentium
             quaerat similique.
 
-            <div class="text-right">
-                <a href="#" class="txt-orange">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Modifier
-                </a>
+            <div class="profile-action text-right">
+                <a href="#" class="content-link"><i class="fas fa-edit"></i> Modifier</a>
             </div>
         </div>
 
@@ -52,18 +50,21 @@
             {% if naturaliste or admin %}
                 <h3>Mes articles</h3>
                 <div class="profile-articles text-center txt-white">
-                    <a href="{{ path('user.profile_draft_article') }}">
-                        <div class="orange-bg">
+                    <div class="orange-bg">
+                        {% if numberArticlesDrafts > 0 %}<a class="txt-white" href="{{ url('user.profile_draft_article') }}">{% endif %}
                             <h4>Brouillons</h4>
                             <span class="stats-nb">{{ numberArticlesDrafts }}</span>
-                        </div>
-                    </a>
-                    <a href="{{ path('user.profile_published_article') }}">
-                        <div class="green-bg">
+                        {% if numberArticlesDrafts > 0 %}</a>{% endif %}
+                    </div>
+                    <div class="green-bg">
+                        {% if numberArticlesPublished > 0 %}<a class="txt-white" href="{{ url('user.profile_published_article') }}">{% endif %}
                             <h4>Publiés</h4>
                             <span class="stats-nb">{{ numberArticlesPublished }}</span>
-                        </div>
-                    </a>
+                        {% if numberArticlesPublished > 0 %}</a>{% endif %}
+                    </div>
+                </div>
+                <div class="profile-action new-article text-right">
+                    <a href="{{ url('blog.add_article') }}" class="content-link"><i class="fas fa-pencil-alt"></i> Rédiger un nouvel article</a>
                 </div>
             {% endif %}
 
@@ -71,12 +72,12 @@
             <div class="profile-observations text-center txt-white">
                 {% if particulier %}
                     <div class="blue-bg awaiting-obs">
-                        <h4>Observations en attente</h4>
+                        <h4>En attente</h4>
                         <span class="stats-nb">{{ numberOfAwaitingObservations }}</span>
                     </div>
                 {% endif %}
                 <div class="{{ particulier ? 'green-bg' : 'blue-bg' }}">
-                    <h4>Observations {% if particulier %}validées{% endif %}</h4>
+                    <h4>{% if naturaliste or admin %}Observations{% endif %}{% if particulier %}Validées{% endif %}</h4>
                     <span class="stats-nb">{{ observations|length }}</span>
                 </div>
             </div>
@@ -85,9 +86,6 @@
         <div class="profile-obs-list">
         {# Observation published by user #}
         {% if observations|length > 0 %}
-            <div class="profile-input-container text-center">
-                <input type="text" placeholder="Rechercher une de mes observations">
-            </div>
             {% for obs in observations %}
                 <div class="personal-obs text-center">
                     <div class="personal-obs-img">
@@ -100,12 +98,17 @@
                         {{ obs.species.name }}
                     </div>
                     <div class="personal-obs-status">
-                        {{ obs.validated }}
+                        {% if obs.validated == 1 %}
+                            <span class="glyphicon glyphicon-ok txt-green" aria-hidden="true"></span>
+                        {% else %}
+                            <i class="fas fa-hourglass-half"></i>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
         {% else %}
-            <p class="text-center">Vous n'avez pas encore ajouté d'observation.
+            <p class="text-center">
+                Vous n'avez pas encore ajouté d'observation.
                 <a class="txt-orange" href="{{ url('observation.add') }}">En ajouter une maintenant.</a>
             </p>
         {% endif %}

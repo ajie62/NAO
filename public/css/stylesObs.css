@@ -106,12 +106,25 @@ a[class^='step-link']:focus { color: #fff; }
     color: #ffffff!important;
     outline: 0!important }
 
+#search-species-results {
+    list-style: none;
+    padding: 0 }
+
 .obs-search-results {
     border: 1px solid #d8d8d8;
     display: none;
     position: absolute;
     max-height: 100px;
     overflow: scroll }
+
+#search-ok-button:hover,
+#search-ok-button:focus { background: #fbb03b }
+
+.obs-search-results li { padding: 6px 12px }
+
+.obs-search-results li:hover {
+    background: #8cc63f;
+    color: #ffffff }
 
 .obs-buttons {
     bottom: 15px;

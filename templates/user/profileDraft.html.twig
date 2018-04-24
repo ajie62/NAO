@@ -1,29 +1,41 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    Mes brouillons
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
+
+{% block title %} Mes brouillons - {{ parent() }}{% endblock %}
+
 {% block body %}
-    {% for article in articles %}
-            <table>
-                <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Contenu</th>
-                    <th>Date de création</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th>{{ article.title }}</th>
-                    <th>{{ article.content | slice(0, 10) }}</th>
-                    <th>{{ article.createdAt | date('d/m/Y') }}</th>
-                    <th>
-                        <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="txt-orange"><span class="glyphicon glyphicon-pencil"></span></a>
-                        <a href="#" class="txt-orange"><span class="glyphicon glyphicon-trash"></span></a>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-    {% endfor %}
+    <div class="draft-container main-layout">
+        <h2>Mes brouillons</h2>
+
+        <div class="table-responsive">
+            {% for article in articles %}
+                <table class="table table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Titre</th>
+                        <th class="text-center">Contenu</th>
+                        <th class="text-center">Date de création</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="text-center">
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.content|length > 20 ? article.content|striptags|slice(0, 20) ~ '...' : article.content|striptags }}</td>
+                        <td>{{ article.createdAt | date('d/m/Y') }}</td>
+                        <td>
+                            <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="content-link"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="content-link"><i class="fas fa-trash-alt"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+
+        <a href="{{ url('user.profile') }}" class="profile-action txt-orange">Retour au profil</a>
+    </div>
 {% endblock %}

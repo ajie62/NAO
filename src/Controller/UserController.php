@@ -39,6 +39,7 @@ class UserController extends AbstractController
         $numberArticlesPublished = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, true);
         $numberArticlesDrafts = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, false);
         $numberOfAwaitingObservations = $this->em->getRepository(Observation::class)->findNumberOfAwaitingObservations($user);
+
         return $this->render('user/profile.html.twig', [
             'user' => $this->getUser(),
             'observations' => $listOfObservations,
@@ -49,30 +50,34 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/profile/articles/draft", name="user.profile_draft_article")
+     * @Route("/profile/draft-articles", name="user.profile_draft_article")
      * @Security("is_granted('ROLE_NATURALISTE')")
      */
     public function userDraftArticles()
     {
         $user = $this->getUser();
         $articles = $this->em->getRepository(Article::class)->findBy(['user' => $user, 'published' => false]);
+        $hasDraftArticles = count($articles) > 0;
 
-        return $this->render('user/profileDraft.html.twig', [
-           'articles' => $articles
-        ]);
+        if (!$hasDraftArticles)
+            return $this->redirectToRoute('user.profile');
+
+        return $this->render('user/profileDraft.html.twig', ['articles' => $articles]);
     }
 
     /**
-     * @Route("/profile/articles/published", name="user.profile_published_article")
+     * @Route("/profile/published-articles", name="user.profile_published_article")
      * @Security("is_granted('ROLE_NATURALISTE')")
      */
     public function userPublishedArticles()
     {
         $user = $this->getUser();
         $articles = $this->em->getRepository(Article::class)->findBy(['user' => $user, 'published' => true]);
+        $hasPublishedArticles = count($articles) > 0;
 
-        return $this->render('user/profileDraft.html.twig', [
-            'articles' => $articles
-        ]);
+        if (!$hasPublishedArticles)
+            return $this->redirectToRoute('user.profile');
+
+        return $this->render('user/profileDraft.html.twig', ['articles' => $articles]);
     }
 }
