@@ -16,6 +16,7 @@ use App\Form\RegistrationType;
 use App\Service\SecurityInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use ReCaptcha\ReCaptcha;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,12 +42,14 @@ class AppController extends AbstractController
      */
     public function homepage(SecurityInterface $securityHandler, Request $request)
     {
-        $form = $this->createForm('App\Form\RegistrationType');
+        if ($this->getUser())
+            return $this->redirectToRoute('user.profile');
 
+        $form = $this->createForm('App\Form\RegistrationType');
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+
+        if($form->isSubmitted() && $form->isValid())
             return $securityHandler->handleSubmittedRegistrationForm($form);
-        }
 
         return $this->render('app/index.html.twig', [
             'registration_form' => $form->createView()

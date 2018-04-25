@@ -10,30 +10,34 @@ $(function() {
     const GET_SPECIES_URL = $inputContainer.data('get-url');
 
     var $searchInput = $('#input');
-    var $matchDiv = $('#js-search-match');
-    var $speciesContainer = $matchDiv.find('ul');
+    var $speciesUnorderedListContainer = $('#js-search-match');
+    var $speciesUnorderedList = $speciesUnorderedListContainer.find('ul');
     var listOfSpecies = [];
 
     $.getJSON(GET_SPECIES_URL, function(response) {
-        $('.loader').hide(0);
-
-        for (var i=0; i<response.count; ++i) {
+        for (var i = 0; i < response.count; ++i) {
             var species = createAndHydrateSpecies(response, i);
             listOfSpecies.push(species);
         }
 
         response.items.forEach(function(species) {
-            $speciesContainer.append('<li style="cursor: pointer;" class="species visible" data-species-id="'+species.id+'" data-value="'+ $.trim(species.name.toLowerCase()) +'">'+ $.trim(species.name.toLowerCase()) +'</li>');
+            $speciesUnorderedList.append(
+                '<li style="cursor: pointer;" ' +
+                    'class="species visible" ' +
+                    'data-species-id="'+species.id+'" ' +
+                    'data-value="'+ $.trim(species.name.toLowerCase()) +'">'+
+                    $.trim(species.name.toLowerCase()) +
+                '</li>');
         });
     });
 
     $searchInput.on('input', function() {
-        $matchDiv.hide(0);
+        $speciesUnorderedListContainer.hide(0);
         var input = $(this).val() || false;
 
         if (input) {
             if (input.length > 0) {
-                $speciesContainer.find('li').each(function(){
+                $speciesUnorderedList.find('li').each(function(){
                     var species = $(this).data('value');
 
                     if (species.toLowerCase() === input.toLowerCase() || species.toUpperCase() === input.toUpperCase()) {
@@ -47,7 +51,7 @@ $(function() {
                     }
                 });
             }
-            ($speciesContainer.find('.visible').length === 0) ? $matchDiv.hide(0) : $matchDiv.show(0);
+            ($speciesUnorderedList.find('.visible').length === 0) ? $speciesUnorderedListContainer.hide(0) : $speciesUnorderedListContainer.show(0);
         }
     });
 
@@ -58,14 +62,13 @@ $(function() {
 
         if (!!speciesId) {
             $searchInput.val($(this).text());
-            $matchDiv.hide(0);
+            $speciesUnorderedListContainer.hide(0);
             speciesObj = findSpeciesObjectFromTheListWithId(listOfSpecies, speciesId);
         }
     });
 
     $("#search-ok-button").on('click', function() {
         if (speciesId === undefined) {
-            $('.no-result').text('Aucun résultat');
             return;
         }
 

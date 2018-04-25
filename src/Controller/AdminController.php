@@ -34,24 +34,24 @@ class AdminController extends Controller
     /**
      * @Route("/", name="admin.index")
      */
-    public function users(){
-        $users = $this->em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
-        return $this->render('admin/users.html.twig', ['users' => $users]);
-    }
-
-    /**
-     * @Route("/stats", name="admin.stats")
-     */
     public function stats(){
         $statsObs = $this->em->getRepository('App:Observation')->findNumberOfObservationsAndStats();
         $statsUsers = $this->em->getRepository('App:User')->findStatsUser();
         $statsArticles = $this->em->getRepository('App:Article')->totalArticles();
 
         return $this->render('admin/stats.html.twig', [
-           'statsObs' => $statsObs,
-           'statsUsers' => $statsUsers,
-           'statsArticles' => $statsArticles
+            'statsObs' => $statsObs,
+            'statsUsers' => $statsUsers,
+            'statsArticles' => $statsArticles
         ]);
+    }
+
+    /**
+     * @Route("/users", name="admin.users")
+     */
+    public function users(){
+        $users = $this->em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
+        return $this->render('admin/users.html.twig', ['users' => $users]);
     }
 
     /**

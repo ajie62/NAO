@@ -23,7 +23,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <div class="logo-container navbar-brand ">
+                    {% if not is_granted('ROLE_PARTICULIER') %}
                     <a href="{{ url('app.homepage') }}" class="logo-link">
+                        {% else %}
+                        <a href="{{ url('user.profile') }}" class="logo-link">
+                            {% endif %}
                         <img src="{{ asset('images/LogoNAO_white.png') }}">
                     </a>
                     <div>

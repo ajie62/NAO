@@ -1,44 +1,61 @@
 {% extends 'base.html.twig' %}
+{% block title %}Administration - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
 {% block body %}
-    <div class="stats">
-        <h4>Observations en attente</h4>
-        <p>{{ statsObs['awaiting'] }}</p>
-    </div>
-    <div class="stats">
-        <h4>Observations validées</h4>
-        <p>{{ statsObs['validated'] }}</p>
-    </div>
-    <div class="stats">
-        <h4>Nombre d'inscrits</h4>
-        <p>{{ statsUsers['total'] }}</p>
-    </div>
-    <div class="stats">
-        <h4>Naturalistes professionnels</h4>
-        <p>{{ statsUsers['naturaliste'] }}</p>
-    </div>
-    <div class="stats">
-        <h4>Particuliers</h4>
-        <p>{{ statsUsers['particulier'] }}</p>
-    </div>
-    <div class="stats">
-        <h4>Nombre d'articles</h4>
-        <p>{{ statsArticles }}</p>
-    </div>
-    <div class="usersSubscribed">
-        <h4>Nombre d'utilisateurs inscrits {{ statsUsers['total'] }}</h4>
-        <div class="progress">
-            <h5 style="text-align: right; float: right; margin: 0">{{ statsUsers['particulier'] }}</h5>
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsUsers['naturalistePourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsUsers['naturalistePourcentage'] }}%">
-                <h5 style="text-align: left; margin: 0">{{ statsUsers['naturaliste'] }}</h5>
+    <div class="main-layout">
+        <div class="admin-stats-container">
+        <h1>D'un coup d'aile !</h1>
+            <div class="admin-stats">
+                <div class="stats-awaiting-obs common-padding green-bg txt-white">
+                    <h4 class="text-center">Observations en attente</h4>
+                    <p>{{ statsObs['awaiting'] }}</p>
+                </div>
+                <div class="stats-validated-obs common-padding green-bg txt-white">
+                    <h4 class="text-center">Observations validées</h4>
+                    <p>{{ statsObs['validated'] }}</p>
+                </div>
+                <div class="stats-users common-padding green-bg txt-white">
+                    <h4 class="text-center">Nombre d'inscrits</h4>
+                    <p>{{ statsUsers['total'] }}</p>
+                </div>
+                <div class="stats-professionals common-padding green-bg txt-white">
+                    <h4 class="text-center">Naturalistes professionnels</h4>
+                    <p>{{ statsUsers['naturaliste'] }}</p>
+                </div>
+                <div class="stats-individuals common-padding green-bg txt-white">
+                    <h4 class="text-center">Particuliers</h4>
+                    <p>{{ statsUsers['particulier'] }}</p>
+                </div>
+                <div class="stats-published-articles common-padding green-bg txt-white">
+                    <h4 class="text-center">Nombre d'articles</h4>
+                    <p>{{ statsArticles }}</p>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="obs">
-        <h4>Observations soumises - total {{ statsObs['total'] }}</h4>
-        <div class="progress">
-            <h5 style="text-align: right; float: right; margin: 0">{{ statsObs['awaiting'] }}</h5>
-            <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsObs['obsPourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsObs['obsPourcentage'] }}%">
-                <h5 style="text-align: left; margin: 0">{{ statsObs['validated'] }}</h5>
+
+            <div class="admin-stats-two">
+                <div class="usersSubscribed">
+                    <h4>Nombre d'utilisateurs inscrits {{ statsUsers['total'] }}</h4>
+                    <div class="progress">
+                        <h5 style="text-align: right; float: right; margin: 0">{{ statsUsers['particulier'] }}</h5>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsUsers['naturalistePourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsUsers['naturalistePourcentage'] }}%">
+                            <h5 style="text-align: left; margin: 0">{{ statsUsers['naturaliste'] }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="obs">
+                    <h4>Observations soumises - total {{ statsObs['total'] }}</h4>
+                    <div class="progress">
+                        <h5 style="text-align: right; float: right; margin: 0">{{ statsObs['awaiting'] }}</h5>
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsObs['obsPourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsObs['obsPourcentage'] }}%">
+                            <h5 style="text-align: left; margin: 0">{{ statsObs['validated'] }}</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -7,8 +7,12 @@ use Doctrine\ORM\EntityRepository;
 
 class ObservationRepository extends EntityRepository
 {
-    public function findNumberOfObservationsAndStats(){
-
+    /**
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findNumberOfObservationsAndStats()
+    {
         $total = $this->createQueryBuilder('observation')
         ->select('COUNT(observation)')
         ->getQuery()
@@ -36,6 +40,11 @@ class ObservationRepository extends EntityRepository
         ];
     }
 
+    /**
+     * @param User $user
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findNumberOfAwaitingObservations(User $user){
         return $this->createQueryBuilder('observation')
             ->select('COUNT(observation)')
@@ -47,7 +56,15 @@ class ObservationRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
-    private function pourcentage($nombre, $total) {
-        return $nombre * 100 / $total;
+    /**
+     * @param $number
+     * @param $total
+     * @return float|int|void
+     */
+    private function pourcentage($number, $total) {
+        if (!$number)
+            return;
+
+        return $number * 100 / $total;
     }
 }

@@ -40,13 +40,13 @@
 
 /* Miscellaneous*/
 .common-min-height { min-height: calc(100vh - 64px) }
-.common-centering { margin: 0 auto; max-width: 700px }
+.common-centering { margin: 0 auto; max-width: 960px }
 .common-padding { padding: 15px }
 
 .main-layout {
     background: #fff9f1;
     margin: 0 auto;
-    max-width: 700px;
+    max-width: 960px;
     min-height: calc(100vh - 64px);
     padding: 15px }
 

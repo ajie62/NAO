@@ -1,0 +1,42 @@
+/* Stats */
+.admin-stats-container h1 { text-align: center }
+
+.admin-stats {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    grid-auto-rows: 150px;
+    padding: 20px 0 }
+
+.admin-stats-two {
+    margin: 0 auto;
+    max-width: calc(100% - 170px);
+}
+
+div[class^="stats"] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center }
+
+div[class^="stats"] h4 { font-size: 20px }
+div[class^="stats"] p { font-size: 38px }
+
+/* div[class^="stats"] h4 { font-size: 20px; }
+div[class^="stats"] p { font-size: 42px; }*/
+
+@media screen and (min-width: 480px) {
+    .admin-stats { grid-template-columns: repeat(3, 1fr) }
+}
+
+@media screen and (min-width: 768px) {
+    .admin-stats-container h1 {
+        padding-left: 85px;
+        text-align: left }
+
+    .admin-stats {
+        grid-template-columns: repeat(3, 1fr);
+        margin: 0 auto;
+        max-width: calc(100% - 170px) }
+}
