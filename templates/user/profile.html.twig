@@ -30,18 +30,15 @@
         {# User description #}
         <div class="profile-intro">
             <h3>Présentation</h3>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab animi consequatur cumque
-            deserunt eligendi enim eveniet, harum itaque iure libero magnam obcaecati officia
-            perspiciatis repellendus sequi temporibus totam veritatis vero vitae voluptatum.
-            Adipisci, consequatur eligendi ipsam rem velit voluptate. Adipisci amet corporis
-            debitis deserunt doloremque maxime molestiae molestias, nostrum provident quo quos sint,
-            veritatis? Accusantium animi, aut autem consequatur cum dicta distinctio earum est
-            eveniet exercitationem expedita iusto nam nihil provident, quis ratione rem repellendus
-            suscipit ullam vitae. Adipisci cupiditate explicabo id illo ipsum nihil non praesentium
-            quaerat similique.
+
+            {% if user.introduction is empty %}
+                <p>Vous n'avez pas encore de description.</p>
+            {% else %}
+                {{ user.introduction }}
+            {% endif %}
 
             <div class="profile-action text-right">
-                <a href="#" class="content-link"><i class="fas fa-edit"></i> Modifier</a>
+                <a href="{{ path('user.edit_profile') }}" class="content-link"><i class="fas fa-edit"></i> Modifier</a>
             </div>
         </div>
 

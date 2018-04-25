@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="profile-container beige-bg common-min-height common-centering">
+        <div class="profile-header text-center">
+            {% set role = user.roles[0] %}
+            {% set particulier = role == 'ROLE_PARTICULIER' %}
+            {% set naturaliste = role == 'ROLE_NATURALISTE' %}
+            {% set admin = role == 'ROLE_ADMIN' %}
+            {% if user.image %}
+                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+            {% else %}
+                <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+            {% endif %}
+
+
+
+            <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+            <p>
+                {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
+            </p>
+            {{ form_start(form) }}
+            {{ form_widget(form.image) }}
+            {{ form_errors(form.image) }}
+            {{ form_widget(form.mail) }}
+            {{ form_errors(form.mail) }}
+            {{ form_widget(form.introduction) }}
+            {{ form_errors(form.introduction) }}
+            <button type="submit">Valider</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div>
+            <a href="#">Nouveau mot de passe</a>
+            {% if errors is not empty %}
+                {{ errors }}
+            {% endif %}
+            {{ form_start(newPasswordForm) }}
+                {{ form_label(newPasswordForm.oldPassword, 'Ancien mot de passe : ') }}
+                {{ form_widget(newPasswordForm.oldPassword) }}
+                {{ form_label(newPasswordForm.newPasswordFirst, 'Nouveau mot de passe : ') }}
+                {{ form_widget(newPasswordForm.newPasswordFirst) }}
+                {{ form_label(newPasswordForm.newPasswordSecond, 'Répétez le nouveau mot de passe : ') }}
+                {{ form_widget(newPasswordForm.newPasswordSecond) }}
+                <button type="submit">Enregistrer</button>
+                <button type="button">Annuler</button>
+            {{ form_end(newPasswordForm) }}
+        </div>
+
+    </div>
+{% endblock %}

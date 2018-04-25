@@ -69,4 +69,17 @@ class EmailManager
 
         $this->mailer->send($message);
     }
+
+    public function sendNewPassword(User $user, $password)
+    {
+        $body = $this->twig->render('emails/newPass.html.twig', ['pass' => $password]);
+        $title = "Nouveau mot de passe.";
+
+        $message = (new \Swift_Message($title))
+            ->setFrom(self::EMAIL)
+            ->setTo($user->getMail())
+            ->setBody($body, 'text/html');
+
+        $this->mailer->send($message);
+    }
 }

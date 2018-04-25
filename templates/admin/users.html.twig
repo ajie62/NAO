@@ -2,7 +2,7 @@
 {% block body %}
     <input placeholder="Rechercher un utilisateur" type="text">
     {% for user in users %}
-        <a href="#">
+        <a href="{{ path('admin.users_edit', {'id' : user.id }) }}">
             <div class="user">
                 <span>{{ user.firstname }}</span>
                 <span>{{ user.lastname }}</span>

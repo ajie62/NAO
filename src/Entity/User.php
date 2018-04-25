@@ -70,12 +70,12 @@ class User implements AdvancedUserInterface, \Serializable
     private $roles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="user", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Observation", mappedBy="user", cascade={"persist", "remove"})
      */
     private $observations;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user" ,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="user" ,cascade={"persist", "remove"})
      */
     private $articles;
 
