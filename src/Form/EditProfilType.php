@@ -22,6 +22,9 @@ class EditProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('image', ImageType::class,[
+                'required' => false
+            ])
             ->add('mail', EmailType::class, [
                 'required' => false,
                 'constraints' => [

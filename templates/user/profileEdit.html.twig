@@ -30,23 +30,20 @@
         </div>
 
         <div>
-            <a href="{{ path('admin.users_generatePassword', {'id': user.id}) }}">Générer un nouveau mot de passe</a>
-            <a href="{{ path('admin.users_passNaturalist',{'id': user.id }) }}"><span class="glyphicon glyphicon-ok"></span>
-                {% if particulier %}
-                Naturaliste professionnel(le)
-                {% elseif naturaliste %}
-                Particulier
-                {% endif %}
-            </a>
-
-            <a href="{{ path('admin.users_block', {'id' : user.id }) }}"><span class="glyphicon glyphicon-remove"></span>
-                {% if user.active %}
-                Bloquer cet utilisateur
-                {% else %}
-                Débloquer cet utilisateur
-                {% endif %}
-            </a>
-            <a href="{{ path('admin.users_delete', {'id': user.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimer cet utilisateur</a>
+            <a href="#">Nouveau mot de passe</a>
+            {% if errors is not empty %}
+                {{ errors }}
+            {% endif %}
+            {{ form_start(newPasswordForm) }}
+                {{ form_label(newPasswordForm.oldPassword, 'Ancien mot de passe : ') }}
+                {{ form_widget(newPasswordForm.oldPassword) }}
+                {{ form_label(newPasswordForm.newPasswordFirst, 'Nouveau mot de passe : ') }}
+                {{ form_widget(newPasswordForm.newPasswordFirst) }}
+                {{ form_label(newPasswordForm.newPasswordSecond, 'Répétez le nouveau mot de passe : ') }}
+                {{ form_widget(newPasswordForm.newPasswordSecond) }}
+                <button type="submit">Enregistrer</button>
+                <button type="button">Annuler</button>
+            {{ form_end(newPasswordForm) }}
         </div>
 
     </div>
