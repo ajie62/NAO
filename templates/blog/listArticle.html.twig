@@ -29,8 +29,7 @@
                         <div class="uiCard__description">
                             <p class="uiCard__text-article">{{ article.content | striptags }}</p>
                         </div>
-                
-                        
+
                     </div>
                         </a>
                     <footer class="uiCard__footer">
@@ -38,9 +37,11 @@
                             <span class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>15 heures</span>
                             <span class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>19 commentaires</span>
                         </div>
-                        <div class="uiCard__admin">
-                            <a href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash uiCard__trash" aria-hidden="true"></span></a>
-                        </div>
+                        {% if is_granted('ROLE_NATURALISTE') %}
+                            <div class="uiCard__admin">
+                                <a href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash uiCard__trash" aria-hidden="true"></span></a>
+                            </div>
+                        {% endif %}
                     </footer>
                 </article>
             </div>

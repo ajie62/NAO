@@ -56,6 +56,28 @@
     color: #fbb03b;
     text-decoration: none }
 
+.back-button, .confirm-button {
+    color: #ffffff;
+    padding: 5px }
+
+.back-button {
+    background: #fbb03b;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    width: 80px }
+
+.back-button:hover, .back-button:focus { 
+    background: #fbb03b;
+    color: #ffffff;
+    text-decoration: none }
+
+.confirm-button {
+    background: #8CC63F;
+    border: none;
+    width: 80px }
+
 /* GENERAL */
 html, body { height: 100%; }
 
@@ -69,8 +91,7 @@ body {
     border-radius: 50%;
     height: 30px;
     vertical-align: top;
-    width: 30px;
-}
+    width: 30px }
 
 h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
 .alert, .alert-success { margin-bottom: 0!important }
@@ -129,7 +150,10 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     margin: 30px 0 10px 0 }
 
 .terms-container p { text-align: justify }
-.contact-form { margin: 30px 0 }
+
+.contact-form {
+    flex: 1;
+    margin: 30px 0 }
 
 .contact-form button {
     border-radius: 5px;
@@ -141,13 +165,31 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     border: 1px solid #8cc63f;
     margin-bottom: 15px }
 
+.contact-container form textarea {
+    min-width: 100%;
+    max-width: 100% }
+
 .g-recaptcha { margin-bottom: 10px }
 .contact-btn-container { text-align: center }
 
-.legal { margin-top: 20px }
-.legal p { font: italic .8em 'PT Sans', sans-serif }
+.legal { margin-top: 20px; }
+
+.legal p { font: italic 1em 'PT Sans', sans-serif }
 
 /* Login & registration */
+.login-form,
+.register-form {
+    background: #FFF9F1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - 64px) }
+
+.login-form-content, .register-form-content {
+    background: #FFF9F1;
+    padding: 15px;
+}
+
 .login-form img,
 .register-form img {
     height: 150px;
@@ -177,11 +219,46 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     .contact-container { padding: 15px 40px }
     .contact-btn-container { text-align: right }
 
+    .login-form, .register-form {
+        background : fixed url(../images/fondDesktop.png);
+        background-size : cover;
+    }
+
+    .login-form-content,
+    .register-form-content {
+        background: rgba(255, 249, 241, .9);
+        border-radius: 10px 50px;
+        margin: auto;
+        min-height: auto }
+
+    .login-form-content {
+        min-width: 450px;
+        padding: 0 35px }
+
+    .register-form-content {
+        min-width: 450px;
+        max-width: 450px;
+        padding: 0 }
+
     .contact-container form textarea {
-        max-width: 100%;
-        min-width: 100% }
+        min-height: 200px;
+        min-width: 420px;
+        max-width: 420px }
 
     .login-form img, .register-form img {
-        height: 180px;
-        width: 180px }
+        height: 150px;
+        width: 150px }
+
+    .cf-and-legal {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between }
+
+    .contact-form {
+        flex: 1;
+        margin-right: 40px }
+
+    .legal {
+        flex: 1;
+        padding-top: 10px }
 }

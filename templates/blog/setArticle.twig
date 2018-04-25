@@ -10,43 +10,62 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block body %}
-    <div class="container no-padding content">
+    <div class="main-layout">
         <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12 margin-nav">
-        {{ form_start(form) }}
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-            {{ form_label(form.title) }}<br/>
-            {{ form_widget(form.title) }}
-            <div class="containerErrors" style="height: 20px">
-                {{ form_errors(form.title) }}
+            <div class="col-sm-12 col-md-12 col-lg-12 margin-nav">
+                {{ form_start(form) }}
+                <div class="row">
+                    <div class="col-sm-10 col-sm-offset-1">
+                        {{ form_label(form.title) }}<br/>
+                        {{ form_widget(form.title) }}
+                        <div class="containerErrors" style="height: 20px">
+                            {{ form_errors(form.title) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-4 col-xs-offset-4 insert-image">
+                        {{ form_label(form.image) }}
+                        {{ form_widget(form.image) }}
+                        <div class="containerErrors" style="height: 20px">
+                            {{ form_errors(form.image) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
+                    <div class="containerErrors" style="height: 20px">
+                        {{ form_errors(form.content) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2 col-sm-offset-10">
+                        {{ form_row(form.published)}}
+
+                        <div class="new-article-buttons">
+                            <div class="article-draft">
+                                <button type="submit" id="draft" class="orange-bg txt-white">
+                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                                </button>
+                                <br>
+                                <small>Brouillon</small>
+                            </div>
+
+                            <div class="article-validate">
+                                <button type="submit" id="publish" class="orange-bg txt-white">
+                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                </button>
+                                <br>
+                                <small>Valider</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{ form_end(form) }}
             </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-4 col-xs-offset-4 insert-image">
-            {{ form_label(form.image) }}
-            {{ form_widget(form.image) }}
-            <div class="containerErrors" style="height: 20px">
-                {{ form_errors(form.image) }}
-            </div>
-            </div>
-        </div>
-        <div class="row">
-            {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
-            <div class="containerErrors" style="height: 20px">
-                {{ form_errors(form.content) }}
-            </div>
-        </div>
-            <div class="row">
-                <div class="col-sm-4 col-sm-offset-8">
-            {{ form_row(form.published)}}
-        <button type="submit" id="publish">Enregistrer</button>
-        <button type="submit" id="draft">Brouillon</button>
-        {{ form_end(form) }}
-            </div>  
-            </div>
-</div>
         </div>
     </div>
 {% endblock %}

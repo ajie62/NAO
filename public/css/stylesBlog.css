@@ -38,9 +38,8 @@
         width: 315px;
         height : 360px;
         background-color: #fff;
-        margin: 0 auto;
-        margin-bottom : 20px;
-        box-shadow: 0px 3px 20px rgba(0,0,0,0.3);
+        margin: 0 auto 20px auto;
+        box-shadow: 0 3px 20px rgba(0,0,0,0.3);
         overflow: hidden;}
 
     .uiCard a {
@@ -167,6 +166,7 @@ margin : 10px;
 }
 */
 /* --------------------------------------------------------------------Style pour Affichage d'un article */
+.show-art-container { padding-bottom: 20px }
 
 .article-title {
     background-color: rgba(0,0,0,0.5);
@@ -198,7 +198,7 @@ margin : 10px;
 }
 
 .article-content {
-    font-size: 20px;
+    font-size: 16px;
     margin: 5px 10px 0 10px;
 }
 
@@ -217,7 +217,31 @@ margin : 10px;
 }
 
 .article-date {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.new-article-buttons {
+    display: flex }
+
+.article-draft, .article-validate {
+    flex: 1;
+    text-align: center;
+}
+
+.article-draft button,
+.article-validate button {
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+}
+
+.delete-article-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 64px);
+    justify-content: center;
 }
 
 /* ----------------------------------------------------Style Pagination */
@@ -245,27 +269,13 @@ margin : 10px;
     margin-top: 3px;
 }
 /* ---------------------------------------------------- Style boutons admin */
-.article-admin {
-    text-align: right;
-    margin-right:10px;
-}
-.article-admin span {
-    margin-right: 5px;
-}
+.art-meta-first a { text-decoration: none }
+.article-edit { color: #FBB03B; }
+.article-remove, .deleteButton { color: #FF6D6D; }
+.article-edit:hover, .article-edit:focus { color: #FBB03B }
+.article-remove:hover, .article-remove:focus { color: #FF6D6D }
 
-.article-admin a {
-    text-decoration: none;
-}
-.article-edit {
-    color: #FBB03B;
-}
-
-.article-remove, .deleteButton {
-    color: #FF6D6D;
-}
 /* ----------------------------------------------------Style Commentaires */
-
-
 .article-comment h2 span {
     margin-right : 5px;
     font-size : 24px;
@@ -313,6 +323,15 @@ margin : 10px;
     text-align: right;
 }
 
+.comment {
+    width: 85%;
+    margin-left: 10%;
+    margin-top: 10px;
+    background-color: #E5E5E5;
+    padding: 5px 12px 9px 12px;
+    border-radius: 10px;
+}
+
 /* ----------------------------------------------------Style pour Insertion de commentaires */
 .icon-write {
     display: inline-block;
@@ -331,29 +350,31 @@ margin : 10px;
     font-size: 24px;
 }
 
-.article-write-comment-form {
-    width: 90%;
-}
 .article-write-comment label {
     display:none;
 }
 
 .article-write-comment textarea {
-    width: 100%;
+    width: 85%;
     height: 115px;
     border: 1px solid #8CC63F;
-    margin: 0 5%;
     border-radius : 10px;
     padding: 10px;
-    font-family: 'Roboto';
+    margin-left: 10%;
+    font-family: 'Roboto', sans-serif;
 }
 
 .article-write-comment .submitButton {
     font-size: 18px;
-    font-family:'Roboto';
+    font-family:'Roboto', sans-serif;
     font-weight: 700;
     color: #8CC63F;
 }
+
+.article-comment-button-container {
+    padding-top: 10px;
+    width: 95% }
+
 /* ----------------------------------------------------Style version desktop */
 @media (min-width : 768px) {
     .article-title {
@@ -361,27 +382,12 @@ margin : 10px;
         text-align: right;
         padding-right:10px;
     }
-.comment {
-    width:80%;
-    margin:0 auto;
-    margin-bottom : 10px;
-    background-color: #E5E5E5;
-    padding: 5px 12px 9px 12px;
-    border-radius: 10px;
-}
-    .article-image {
-        height:320px;
-    }
-    .article-image img {
-    min-height: 320px;
-}
+
+    .article-image { height:320px; }
+    .article-image img { min-height: 320px; }
 }
 
 @media (min-width : 990px) {
-    .article-image {
-        height:640px;
-    }
-    .article-image img {
-    min-height: 640px;
-}
+    .article-image { height: 420px }
+    .article-image img { min-height: 420px }
 }

@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="container content">
+    <div class="container show-art-container common-min-height common-centering beige-bg">
         <button class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></button>
         <div class="row article-heading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
@@ -26,17 +26,21 @@
             </div>
             
             <div class="article-meta">
-                <p class="article-date"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</p>
-                <h4 class="article-author">Par Gérard Loiseau</h4>
+                <div class="art-meta-first">
+                    <p class="article-date"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}
+                        {% if is_granted('ROLE_NATURALISTE') %}
+                            <a class="article-edit" href="{{ path('blog.edit_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editer</a>
+                            <a class="article-remove" href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</a>
+                        {% endif %}
+                    </p>
+                </div>
+
+                <div class="art-meta-second">
+                    <h4 class="article-author">Par Gérard Loiseau</h4>
+                </div>
             </div>
         </div>
-        <div class="row">
-        <div class="article-admin">
-                <a class="article-edit" href="{{ path('blog.edit_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>Editer</a>
-                <a class="article-remove" href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Supprimer</a>
-            </div>
-        </div>
-            
+
         <hr class="hr">
         <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 article-pagination">
@@ -57,18 +61,11 @@
         </div>
         <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
-            <h2><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>Commentaires : </h2>
+            <h2><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>Commentaires</h2>
             </div></div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
-                
-<!-- Attention : j'ai rajouté des choses dans la div class=comment !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-        <!-- <div id="comments" comment-prototype='<div class="comment">
-            <h4 class="nameUser">__nameUser__</h4>
-            <span class="date">Le __date__ à __hour__</span>
-            <p class="contentComment">__comment__</p>
-            <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-remove"></span> Supprimer</button>
-        </div>'> -->
+
             <div id="comments" comment-prototype='<div class="comment">
             <article>
                         <div class="article-comment-heading">
@@ -95,7 +92,7 @@
                         <div class="article-comment-heading">
 
                             <div class="article-comment-profile">
-                                <img class="article-comment-profile-picture" src="/images/8.jpeg">
+                                <img class="article-comment-profile-picture" src="{{ app.user.image.webPath ?? asset('images/no-profile.png') }}">
                             </div>
 
                             <div class="article-comment-info">
@@ -111,6 +108,8 @@
                     </div>
                     
                 </div>
+            {% else %}
+                <p>Aucun commentaire n'a été publié.</p>
             {% endfor %}
         </div>
             </div>
@@ -122,11 +121,11 @@
                 {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
                 {{ form_label(formComment.content) }}
                 {{ form_widget(formComment.content) }}
-                
-                <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}"><span class="glyphicon glyphicon-ok"></span>Ajouter</button>
-                  <div class="containerErrors" style="height: 20px">
 
-                </div>
+                  <div class="article-comment-button-container text-right">
+                      <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}"><span class="glyphicon glyphicon-ok"></span> Soumettre</button>
+                  </div>
+                  <div class="containerErrors" style="height: 20px"></div>
                 {{ form_end(formComment) }}
               </div>
             </div>

@@ -6,13 +6,16 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Supprimer de l'article "{{ article.title }}" ?</h1>
-        <p>Etes-vous sur de vouloir supprimer cet article ?</p>
-        <form action="{{ path('blog.delete_article', {'id': article.id}) }}" method="post">
-            <a href="{{ path('blog.list_article') }}">Non</a>
-            <input type="submit" value="Supprimer">
-            {{ form_rest(form) }}
-        </form>
+    <div class="common-centering common-min-height beige-bg">
+        <div class="delete-article-content">
+            <h1>Suppression de l'article &laquo; {{ article.title }} &raquo; ?</h1>
+            <p>Êtes-vous sur de vouloir supprimer cet article ?</p>
+
+            <form action="{{ path('blog.delete_article', {'id': article.id}) }}" method="post">
+                <a class="back-button" href="{{ path('blog.list_article') }}">Retour</a>
+                <input class="confirm-button" type="submit" value="Supprimer">
+                {{ form_rest(form) }}
+            </form>
+        </div>
     </div>
 {% endblock%}
