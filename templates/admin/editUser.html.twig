@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="profile-container beige-bg common-min-height common-centering">
+        <div class="profile-header text-center">
+            {% set role = user.roles[0] %}
+            {% set particulier = role == 'ROLE_PARTICULIER' %}
+            {% set naturaliste = role == 'ROLE_NATURALISTE' %}
+            {% set admin = role == 'ROLE_ADMIN' %}
+            {% if user.image %}
+                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+            {% else %}
+                <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+            {% endif %}
+
+
+
+            <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+            <p>
+                {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
+            </p>
+            {{ form_start(form) }}
+            {{ form_widget(form.mail) }}
+            {{ form_errors(form.mail) }}
+            {{ form_widget(form.introduction) }}
+            {{ form_errors(form.introduction) }}
+            <button type="submit">Valider</button>
+            {{ form_end(form) }}
+        </div>
+
+        <div>
+            <a href="{{ path('admin.users_generatePassword', {'id': user.id}) }}">Générer un nouveau mot de passe</a>
+            <a href="{{ path('admin.users_passNaturalist',{'id': user.id }) }}"><span class="glyphicon glyphicon-ok"></span>
+                {% if particulier %}
+                Naturaliste professionnel(le)
+                {% elseif naturaliste %}
+                Particulier
+                {% endif %}
+            </a>
+
+            <a href="{{ path('admin.users_block', {'id' : user.id }) }}"><span class="glyphicon glyphicon-remove"></span>
+                {% if user.active %}
+                Bloquer cet utilisateur
+                {% else %}
+                Débloquer cet utilisateur
+                {% endif %}
+            </a>
+            <a href="{{ path('admin.users_delete', {'id': user.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimer cet utilisateur</a>
+        </div>
+
+    </div>
+{% endblock %}
