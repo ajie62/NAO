@@ -1,17 +1,29 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Toutes les observations - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
 {% block body %}
-    <input placeholder="Rechercher une observation" type="text">
-    {% for observation in observations %}
-        <a href="{{ path('observation.update', {'id' : observation.id }) }}">
-        <div class="observation">
-            <img src="{{ asset(observation.image.webPath) | imagine_filter('image_obs_admin') }}">
-            <span>{{ observation.observedAt | date('d/m/Y') }}</span>
-            <span>{{ observation.species.name }}</span>
-            {% if observation.validated == 0 %}
-                <span class="glyphicon glyphicon-time"></span>
-            {% endif %}
-        </div>
-        </a>
-        <hr>
-    {% endfor %}
+    <div class="main-layout">
+        <input placeholder="Rechercher une observation" type="text">
+        {% for observation in observations %}
+            <a href="{{ path('observation.update', {'id' : observation.id }) }}">
+                <div class="observation">
+                    <img src="{{ asset(observation.image.webPath) | imagine_filter('image_obs_admin') }}">
+                    <span>{{ observation.observedAt | date('d/m/Y') }}</span>
+                    <span>{{ observation.species.name }}</span>
+                    {% if observation.validated == 0 %}
+                        <span class="glyphicon glyphicon-time"></span>
+                    {% endif %}
+                </div>
+            </a>
+            <hr>
+        {% endfor %}
+
+        {{ include('includes/adminNav.html.twig') }}
+    </div>
 {% endblock %}

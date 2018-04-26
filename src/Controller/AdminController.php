@@ -118,7 +118,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("users/passusertonaturaliste/{id}", name="admin.users_passNaturalist")
+     * @Route("/users/passusertonaturaliste/{id}", name="admin.users_passNaturalist")
      */
     public function passUserToNaturalisteRole(User $user){
         if ($user->getRoles() == [$user::NATURALISTE]){
@@ -132,7 +132,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("users/block/{id}", name="admin.users_block")
+     * @Route("/users/block/{id}", name="admin.users_block")
      */
     public function blockUser(User $user){
         if ($user->isActive()){
@@ -146,7 +146,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("users/delete/{id}", name="admin.users_delete")
+     * @Route("/users/delete/{id}", name="admin.users_delete")
      */
     public function deleteUser(User $user){
         $this->em->remove($user);

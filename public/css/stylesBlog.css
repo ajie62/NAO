@@ -9,12 +9,16 @@
 }
 
 /* --------------------------------------------------------------------Style Liste d'article */
-    .hr {
-       display : none;}
+.hr { display : none }
+
+.articles-list-container {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) }
 
 .button-add {
-    width: 56px;
-    height:56px;
+    width: 40px;
+    height: 40px;
     border-radius : 50%;
     background-color: #FBB03B;
     color: #fff;
@@ -24,40 +28,37 @@
     border-style: none;
     font-size: 28px;
     z-index : 9999;
-    box-shadow: 3px 3px 20px rgba(0,0,0,0.3);
-}
+    box-shadow: 3px 3px 20px rgba(0,0,0,0.3) }
 
 .button-add span {
     padding-top: 5px;
-    padding-left: 2px;
-}
+    padding-left: 2px }
 
 /* ------------------------------------------------------------Style UICard */
     .uiCard {
         position: relative;
-        width: 315px;
+        width: 300px;
         height : 360px;
         background-color: #fff;
         margin: 0 auto 20px auto;
         box-shadow: 0 3px 20px rgba(0,0,0,0.3);
-        overflow: hidden;}
+        overflow: hidden }
 
     .uiCard a {
-        text-decoration: none;
         color: #3b3b3b;
-    }
+        text-decoration: none }
 
     .uiCard__body {
         font-size : 18px;
         line-height : 26px;
         width: 275px;
-        margin: 0 auto;}
+        margin: 0 auto }
 
     .uiCard__title h3{
         font-size : 30px;
         font-weight: 700;
         height: 68px;
-        margin: 9px 0 0 0;}
+        margin: 9px 0 0 0 }
 
         /* ----------------------------------------------------Style image */
         .uiCard__thumb {
@@ -118,7 +119,8 @@
 
     .uiCard__trash {
         color : #FF6D6D;
-        top : 5px;}
+        top: 5px;
+        right: 5px }
 
         /* ----------------------------------------------------Style UI Card tablet & Desktop */
         @media (min-width : 768px) and (max-width : 1199px){

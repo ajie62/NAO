@@ -1,15 +1,27 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
 {% block body %}
-    <input placeholder="Rechercher un utilisateur" type="text">
-    {% for user in users %}
-        <a href="{{ path('admin.users_edit', {'id' : user.id }) }}">
-            <div class="user">
-                <span>{{ user.firstname }}</span>
-                <span>{{ user.lastname }}</span>
-                <span>{{ user.roles[0] }}</span>
-                <span>Inscrit depuis le {{ user.subscribedAt | date('d/m/Y') }}</span>
-            </div>
-        </a>
-        <hr>
-    {% endfor %}
+    <div class="main-layout">
+        <input placeholder="Rechercher un utilisateur" type="text">
+        {% for user in users %}
+            <a href="{{ path('admin.users_edit', {'id' : user.id }) }}">
+                <div class="user">
+                    <span>{{ user.firstname }}</span>
+                    <span>{{ user.lastname }}</span>
+                    <span>{{ user.roles[0] }}</span>
+                    <span>Inscrit depuis le {{ user.subscribedAt | date('d/m/Y') }}</span>
+                </div>
+            </a>
+            <hr>
+        {% endfor %}
+
+        {{ include('includes/adminNav.html.twig') }}
+    </div>
 {% endblock %}

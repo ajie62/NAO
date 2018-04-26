@@ -7,9 +7,9 @@
 {% endblock %}
 
 {% block body %}
-    <div class="main-layout">
-        <div class="admin-stats-container">
-        <h1>D'un coup d'aile !</h1>
+    <div class="common-min-height common-centering beige-bg stats-container">
+        <div class="admin-stats-container common-padding">
+        <h1 class="text-center no-margin">D'un coup d'aile !</h1>
             <div class="admin-stats">
                 <div class="stats-awaiting-obs common-padding green-bg txt-white">
                     <h4 class="text-center">Observations en attente</h4>
@@ -38,67 +38,41 @@
             </div>
 
             <div class="admin-stats-two">
-                <div class="usersSubscribed">
-                    <h4>Nombre d'utilisateurs inscrits {{ statsUsers['total'] }}</h4>
-                    <div class="progress">
+                <div class="registered-users">
+                    <div class="numbers">
+                        <h4>Nombre d'utilisateurs inscrits</h4>
+                        <span class="number txt-green">{{ statsUsers['total'] }}</span>
+                    </div>
+                    <div class="progress green-bg txt-white">
                         <h5 style="text-align: right; float: right; margin: 0">{{ statsUsers['particulier'] }}</h5>
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsUsers['naturalistePourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsUsers['naturalistePourcentage'] }}%">
+                        <div class="progress-bar orange-bg txt-white" role="progressbar" aria-valuenow="{{ statsUsers['naturalistePourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsUsers['naturalistePourcentage'] }}%">
                             <h5 style="text-align: left; margin: 0">{{ statsUsers['naturaliste'] }}</h5>
                         </div>
                     </div>
+                    <div class="legend">
+                        <span class="txt-orange">Naturaliste Pro</span>
+                        <span class="txt-green">Particulier</span>
+                    </div>
                 </div>
-                <div class="obs">
-                    <h4>Observations soumises - total {{ statsObs['total'] }}</h4>
-                    <div class="progress">
+                <div class="submitted-observations">
+                    <div class="numbers">
+                        <h4>Observations soumises - total</h4>
+                        <span class="number txt-green">{{ statsObs['total'] }}</span>
+                    </div>
+                    <div class="progress red-bg txt-white">
                         <h5 style="text-align: right; float: right; margin: 0">{{ statsObs['awaiting'] }}</h5>
-                        <div class="progress-bar" role="progressbar" aria-valuenow="{{ statsObs['obsPourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsObs['obsPourcentage'] }}%">
+                        <div class="progress-bar green-bg txt-white" role="progressbar" aria-valuenow="{{ statsObs['obsPourcentage'] }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ statsObs['obsPourcentage'] }}%">
                             <h5 style="text-align: left; margin: 0">{{ statsObs['validated'] }}</h5>
                         </div>
+                    </div>
+                    <div class="legend">
+                        <span class="txt-green">Validées</span>
+                        <span class="txt-red">En attente</span>
                     </div>
                 </div>
             </div>
         </div>
+
+        {{ include('includes/adminNav.html.twig') }}
     </div>
-
-    {#<style>#}
-        {#.statsCircle{#}
-            {#position: relative;#}
-        {#}#}
-        {#.ring{#}
-            {#position: absolute;#}
-            {#top: 50%;#}
-            {#left: 50%;#}
-            {#transform: translate(-50%,-50%);#}
-            {#width: 150px;#}
-            {#height: 150px;#}
-            {#background: transparent;#}
-            {#border: 3px solid #3c3;#}
-            {#border-radius: 50%;#}
-            {#text-align: center;#}
-            {#line-height: 150px;#}
-        {#}#}
-        {#.secondRing{#}
-            {#content: '';#}
-            {#position: absolute;#}
-            {#top: 0;#}
-            {#left: 0;#}
-            {#width: 100%;#}
-            {#height: 100%;#}
-            {#border-top: 3px solid black;#}
-            {#border-right: 3px solid black;#}
-            {#border-radius: 50%;#}
-        {#}#}
-    {#</style>#}
-    {#<div class="statsCircle">#}
-        {#<div class="ring">#}
-            {#<span>33%</span>#}
-            {#<div class="secondRing">#}
-
-            {#</div>#}
-        {#</div>#}
-    {#</div>#}
 {% endblock %}
-{#{% block javascripts %}#}
-
-    {#<script src="scripts/plugin.js"></script>#}
-{#{% endblock %}#}

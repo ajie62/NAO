@@ -19,15 +19,18 @@
 
 /* Background & text-colors */
 .green-bg { background: #8cc63f }
+.light-green-bg { background: #bce486 }
 .blue-bg { background: #298ee2 }
 .orange-bg { background: #fbb03b }
 .white-bg { background: #ffffff }
 .beige-bg { background: #fff9f1 }
+.red-bg { background: #ff6d6d }
 
 .txt-white { color: #ffffff }
 .txt-black { color: #3b3b3b }
 .txt-orange { color: #fbb03b }
-.txt-green { color: #8CC63F }
+.txt-green { color: #8cc63f }
+.txt-red { color: #ff6d6d }
 
 /* Content */
 .no-border { border: none }
@@ -140,20 +143,24 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     text-decoration: none }
 
 .terms-container h1 {
-    font-size: 45px;
-    line-height: 1;
-    margin-top: 0;
-    margin-bottom: 40px }
+    font-size: 35px;
+    line-height: 1.4 }
+
+.terms-container h1:first-child { margin: 0 0 30px 0 }
+.terms-container h1:not(:first-child) { margin: 40px 0 30px 0 }
 
 .terms-container h2 {
-    font-size: 30px;
+    font-size: 25px;
     margin: 30px 0 10px 0 }
 
 .terms-container p { text-align: justify }
 
+/* Contact */
 .contact-form {
     flex: 1;
     margin: 30px 0 }
+
+.contact-intro { line-height: 1.5 }
 
 .contact-form button {
     border-radius: 5px;
@@ -171,10 +178,8 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
 
 .g-recaptcha { margin-bottom: 10px }
 .contact-btn-container { text-align: center }
-
-.legal { margin-top: 20px; }
-
-.legal p { font: italic 1em 'PT Sans', sans-serif }
+.legal { margin-top: 20px }
+.legal p { font: italic 1em/1.5 'PT Sans', sans-serif }
 
 /* Login & registration */
 .login-form,
@@ -256,9 +261,30 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
 
     .contact-form {
         flex: 1;
-        margin-right: 40px }
+        margin-right: 30px }
 
     .legal {
+        border-left: 1px solid rgba(140,198,63,.5);
         flex: 1;
+        padding-left: 30px;
         padding-top: 10px }
+
+    .terms-container {
+        display: grid;
+        grid-gap: 20px;
+        grid-template-columns: 1fr 3fr }
+
+    .terms-container a { line-height: 2 }
+
+    .terms-container a,
+    .terms-container a:hover,
+    .terms-container a:focus { color: #8CC63F }
+
+    .terms-content { line-height: 1.5 }
+
+    .terms-menu {
+        line-height: 1.5;
+        list-style: none;
+        margin-top: 20px;
+        padding-left: 0 }
 }

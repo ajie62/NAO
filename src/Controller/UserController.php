@@ -86,7 +86,7 @@ class UserController extends AbstractController
         if (!$hasPublishedArticles)
             return $this->redirectToRoute('user.profile');
 
-        return $this->render('user/profileDraft.html.twig', ['articles' => $articles]);
+        return $this->render('user/profilePublished.html.twig', ['articles' => $articles]);
     }
 
     /**
