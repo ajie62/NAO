@@ -41,3 +41,8 @@ services:
     App\Service\EmailManager:
         class: App\Service\EmailManager
         arguments: ["@mailer", "@twig"]
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }

@@ -6,7 +6,9 @@
 {% endblock %}
 {% block body %}
     <div class="container show-art-container common-min-height common-centering beige-bg">
-        <button class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></button>
+        {% if is_granted('ROLE_NATURALISTE') %}
+            <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <div class="row article-heading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div>
@@ -17,14 +19,14 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <hr class="hr">
-            
+
             <div class="fr-view article-content">
                 {{ article.content | raw }}
             </div>
-            
+
             <div class="article-meta">
                 <div class="art-meta-first">
                     <p class="article-date"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}
@@ -43,52 +45,41 @@
 
         <hr class="hr">
         <div class="row">
-        <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 article-pagination">
-            <div class="button-article-pagination">
-                <button name="previous-article">
-                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                </button><br/>
-                <label for="previous-article">Article précédent</label>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4 article-pagination">
+                {% if previousArticle is not empty %}
+                    <a href="{{ path('blog.show_article', {'id': previousArticle[0].id}) }}">
+                        <div class="button-article-pagination">
+                            <div>
+                                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                            </div>
+                            <p>Article précédent</p>
+                        </div>
+                    </a>
+                {% endif %}
+
+                {% if nextArticle is not empty %}
+                    <a href="{{ path('blog.show_article', {'id': nextArticle[0].id}) }}">
+                        <div class="button-article-pagination">
+                            <div>
+                                <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
+                            </div>
+                            <p>Article suivant</p>
+                        </div>
+                    </a>
+                {% endif %}
             </div>
-            
-            <div class="button-article-pagination">
-                <button name="next-article">
-                    <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span>
-                </button><br/>
-                <label for="next-article">Article suivant</label>
-            </div>
-        </div>
         </div>
         <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
-            <h2><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>Commentaires</h2>
+            <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
+                <h2><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>Commentaires</h2>
             </div></div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 article-comment">
 
-            <div id="comments" comment-prototype='<div class="comment">
-            <article>
-                        <div class="article-comment-heading">
-
-                            <div class="article-comment-profile">
-                                <img class="article-comment-profile-picture" src="/images/8.jpeg">
-                            </div>
-
-                            <div class="article-comment-info">
-                                <h4 class="nameUser">__nameUser__</h4>
-                                <span class="date">Le __date__ à __hour__</span>
-                            </div>
-                            </div>
-
-                        <p class="contentComment">__comment__</p>
-                    </article>
-            <div class="article-comment-admin">
-                        <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
-                    </div>'>
-                
-            {% for comment in comments %}
-                <div class="comment">
-                    <article>
+                <div id="comments"
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            comment-prototype='<div class="comment">
+                        <article>
                         <div class="article-comment-heading">
 
                             <div class="article-comment-profile">
@@ -96,40 +87,66 @@
                             </div>
 
                             <div class="article-comment-info">
-                                <h4 class="nameUser">Prénom nom</h4>
-                                <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:m') }}</span>
+                                <h4 class="nameUser">{{ user.firstname }} {{ user.lastname }}</h4>
+                                <span class="date">Le __date__ à __hour__</span>
                             </div>
                             </div>
 
-                        <p class="contentComment">{{ comment.content }}</p>
+                        <p class="contentComment">__comment__</p>
                     </article>
                     <div class="article-comment-admin">
-                        <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
-                    </div>
-                    
-                </div>
-            {% else %}
-                <p>Aucun commentaire n'a été publié.</p>
-            {% endfor %}
-        </div>
-            </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-12 col-md-12 col-sm-12 article-write-comment">  
-              <h2><span class="glyphicon glyphicon-pencil icon-write"></span>Laisser un commentaire : </h2>
-              <div class="article-write-comment-form">
-                {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
-                {{ form_label(formComment.content) }}
-                {{ form_widget(formComment.content) }}
+                        <button type="button" class="deleteButton" data-url="/blog/comments/delete/__id__"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
+                    </div>'
+                        {% endif %}
+                >
 
-                  <div class="article-comment-button-container text-right">
-                      <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}"><span class="glyphicon glyphicon-ok"></span> Soumettre</button>
-                  </div>
-                  <div class="containerErrors" style="height: 20px"></div>
-                {{ form_end(formComment) }}
-              </div>
+                    {% for comment in comments %}
+                        <div class="comment">
+                            <article>
+                                <div class="article-comment-heading">
+
+                                    <div class="article-comment-profile">
+                                        <img class="article-comment-profile-picture" src="{{ app.user.image.webPath ?? asset('images/no-profile.png') }}">
+                                    </div>
+
+                                    <div class="article-comment-info">
+                                        <h4 class="nameUser">{{ comment.user.firstname }} {{ comment.user.lastname }}</h4>
+                                        <span class="date">Le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:m') }}</span>
+                                    </div>
+                                </div>
+
+                                <p class="contentComment">{{ comment.content }}</p>
+                            </article>
+                            {% if is_granted('ROLE_NATURALISTE') or (app.user.id is not null and app.user.id == comment.user.id) %}
+                                <div class="article-comment-admin">
+                                    <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <p>Aucun commentaire n'a été publié.</p>
+                    {% endfor %}
+                </div>
             </div>
         </div>
+        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 article-write-comment">
+                    <h2><span class="glyphicon glyphicon-pencil icon-write"></span>Laisser un commentaire : </h2>
+                    <div class="article-write-comment-form">
+                        {{ form_start(formComment,{'action' : path('blog.add_Comment'), 'method' : 'POST'}) }}
+                        {{ form_label(formComment.content) }}
+                        {{ form_widget(formComment.content) }}
+
+                        <div class="article-comment-button-container text-right">
+                            <button type="button" class="submitButton" data-url="{{ path('blog.add_Comment') }}" id-article="{{article.id}}"><span class="glyphicon glyphicon-ok"></span> Soumettre</button>
+                        </div>
+                        <div class="containerErrors" style="height: 20px"></div>
+                        {{ form_end(formComment) }}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
 {% block javascripts %}

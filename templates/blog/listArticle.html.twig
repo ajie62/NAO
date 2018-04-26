@@ -6,9 +6,12 @@
 {% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
     <div class="main-layout">
         <h1>Le blog NAO</h1>
-        <button class="button-add"><span class="glyphicon glyphicon-plus"></span></button>
+        {% if is_granted('ROLE_NATURALISTE') %}
+            <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <div class="articles-list-container">
         {% for article in articles %}
             <article class="uiCard">
@@ -19,7 +22,7 @@
 
                     <div class="uiCard__date">
                         <span class="uiCard__day">{{ article.createdAt | date('d') }}</span>
-                        <span class="uiCard__month">{{ article.createdAt | date('M') }}</span>
+                        <span class="uiCard__month">{{ article.createdAt | localizeddate('none', 'none',  null,null, 'MMMM') }}</span>
                     </div>
 
                     <div class="uiCard__body">
@@ -41,6 +44,12 @@
                         <div class="uiCard__admin">
                             <a href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash uiCard__trash" aria-hidden="true"></span></a>
                         </div>
+                    <footer class="uiCard__footer">
+                        <div class="uiCard__meta">
+                            <span class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</span>
+                            <span class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>{{ commentsNumber[loop.index0] }} commentaires</span>
+                        </div>
+                    </footer>
                     {% endif %}
                 </footer>
             </article>

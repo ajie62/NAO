@@ -8,6 +8,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Article;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -37,5 +38,29 @@ class ArticleRepository extends EntityRepository
             ->setParameter('user', $user)
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findPreviousArticle(Article $article){
+        return $this->createQueryBuilder('article')
+            ->select('article')
+            ->andWhere('article.id < :articleId')
+            ->setParameter('articleId', $article->getId())
+            ->andWhere('article.published = true')
+            ->setFirstResult(0)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
+    }
+
+    public function findNextArticle(Article $article){
+        return $this->createQueryBuilder('article')
+            ->select('article')
+            ->andWhere('article.id > :articleId')
+            ->setParameter('articleId', $article->getId())
+            ->andWhere('article.published = true')
+            ->setFirstResult(0)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->execute();
     }
 }
