@@ -16,8 +16,8 @@ class UserRepository extends EntityRepository
     public function findStatsUser(){
         $total = $this->createQueryBuilder('user')
             ->select('COUNT(user)')
-            ->andWhere('user.roles != :admin')
-            ->setParameter('admin', 'a:1:{i:0;s:16:"ROLE_ADMIN";}')
+            ->andWhere('user.roles <> :admin')
+            ->setParameter('admin', 'a:1:{i:0;s:10:"ROLE_ADMIN";}')
             ->getQuery()
             ->getSingleScalarResult();
 
@@ -43,6 +43,16 @@ class UserRepository extends EntityRepository
           'naturaliste' => $naturaliste,
           'naturalistePourcentage' => $naturalistePourcentage
         ];
+    }
+
+    public function findUsersOrderedDesc(){
+        return $this->createQueryBuilder('user')
+            ->select('user')
+            ->andWhere('user.roles <> :admin')
+            ->setParameter('admin', 'a:1:{i:0;s:10:"ROLE_ADMIN";}')
+            ->orderBy('user.firstname','DESC')
+            ->getQuery()
+            ->execute();
     }
 
     private function pourcentage($nombre, $total) {

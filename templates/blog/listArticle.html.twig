@@ -7,9 +7,11 @@
 
 {% block body %}
     <div class="container content">
-        <button class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></button>
+        {% if is_granted('ROLE_NATURALISTE') %}
+        <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
+        {% endif %}
         <div class="row">
-        {% for article in articles %}
+            {% for article in articles %}
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
                 <article class="uiCard">
                     <a href="{{ path('blog.show_article', {'id' : article.id }) }}">
@@ -19,7 +21,7 @@
                     
                     <div class="uiCard__date">
                         <span class="uiCard__day">{{ article.createdAt | date('d') }}</span>
-                        <span class="uiCard__month">{{ article.createdAt | date('M') }}</span>
+                        <span class="uiCard__month">{{ article.createdAt | localizeddate('none', 'none',  null,null, 'MMMM') }}</span>
                     </div>
                     
                     <div class="uiCard__body">
@@ -34,8 +36,8 @@
                         </a>
                     <footer class="uiCard__footer">
                         <div class="uiCard__meta">
-                            <span class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>15 heures</span>
-                            <span class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>19 commentaires</span>
+                            <span class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</span>
+                            <span class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>{{ commentsNumber[loop.index0] }} commentaires</span>
                         </div>
                         {% if is_granted('ROLE_NATURALISTE') %}
                             <div class="uiCard__admin">

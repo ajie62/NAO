@@ -43,7 +43,7 @@ $(function () {
         }).done(function () {
             var $containerComments = $('#comments');
             var template = $containerComments.attr('comment-prototype')
-                .replace(/__nameUser__/g, 'Jérôme Butel')
+                // .replace(/__nameUser__/g, 'Jérôme Butel')
                 .replace(/__date__/g, '30/03/2018')
                 .replace(/__hour__/g, '10h30')
                 .replace(/__comment__/g, content.val())

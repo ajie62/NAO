@@ -16,6 +16,7 @@ use function dump;
 use function json_encode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,6 +27,7 @@ class AjaxBlogController extends AbstractController
     /**
      * @Route("/blog/comments/add", name="blog.add_Comment")
      * @Method("POST")
+     * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
      */
     public function addComment(Request $request, ValidatorInterface $validator){
         $em = $this->getDoctrine()->getManager();
@@ -33,10 +35,10 @@ class AjaxBlogController extends AbstractController
         $idArticle = $request->request->get('idArticle');
         $comment->setArticle($em->getRepository('App:Article')->find($idArticle));
         $comment->setContent($request->request->get('content'));
+        $comment->setUser($this->getUser());
         $errors = $validator->validate($comment);
         $response = new Response();
         $response->headers->set('Content-Type', 'application/json');
-        dump($errors);
         if (count($errors) > 0 || $this->is_html($request->request->get('content'))){
             $response->setStatusCode('403');
         } else {

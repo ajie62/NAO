@@ -18,6 +18,7 @@ use function strtolower;
 use function substr;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
@@ -59,7 +60,7 @@ class AdminController extends Controller
      * @Route("/users", name="admin.users")
      */
     public function users(){
-        $users = $this->em->getRepository('App:User')->findBy([], ['subscribedAt' => 'DESC']);
+        $users = $this->em->getRepository('App:User')->findUsersOrderedDesc();
         return $this->render('admin/users.html.twig', ['users' => $users]);
     }
 

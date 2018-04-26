@@ -254,20 +254,28 @@ margin : 10px;
 .button-article-pagination {
     text-align: center;
     width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.button-article-pagination button {
+.button-article-pagination > div {
     width:40px;
     height:40px;
     border-radius:50%;
     color: #fff;
     background-color : #FBB03B;
     border-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.button-article-pagination button span {
-    margin-top: 3px;
+.button-article-pagination a {
+    text-decoration: none;
 }
+
 /* ---------------------------------------------------- Style boutons admin */
 .art-meta-first a { text-decoration: none }
 .article-edit { color: #FBB03B; }
