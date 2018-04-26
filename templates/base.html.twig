@@ -47,8 +47,8 @@
                             <a href="{{ url('user.profile') }}">
                                 {% if app.user.image %}
                                     <img class="base-profile-pic"
-                                         src="{{ user.image.webPath | imagine_filter('min_profile_picture') }}"
-                                         alt="{{ user.image.alt }}">
+                                         src="{{ app.user.image.webPath| imagine_filter('min_profile_picture') }}"
+                                         alt="{{ app.user.image.alt }}">
                                 {% else %}
                                     <img class="base-profile-pic"
                                          src="{{ asset('images/no-profile.png') }}"

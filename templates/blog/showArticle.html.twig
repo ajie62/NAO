@@ -83,7 +83,7 @@
                         <div class="article-comment-heading">
 
                             <div class="article-comment-profile">
-                                <img class="article-comment-profile-picture" src="{{ app.user.image.webPath ?? asset('images/no-profile.png') }}">
+                                <img class="article-comment-profile-picture" src="{{ asset(app.user.image.webPath)|default('images/no-profile.png') }}">
                             </div>
 
                             <div class="article-comment-info">
@@ -104,9 +104,8 @@
                         <div class="comment">
                             <article>
                                 <div class="article-comment-heading">
-
                                     <div class="article-comment-profile">
-                                        <img class="article-comment-profile-picture" src="{{ app.user.image.webPath ?? asset('images/no-profile.png') }}">
+                                        <img class="article-comment-profile-picture" src="{{ asset(app.user.image.webPath)|default('images/no-profile.png') }}">
                                     </div>
 
                                     <div class="article-comment-info">
