@@ -56,6 +56,15 @@ class ObservationRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findAwaitingObservationsOrderedByMoreOlder(){
+        return $this->createQueryBuilder('observation')
+            ->select('observation')
+            ->andWhere('observation.validated = false')
+            ->orderBy('observation.observedAt', 'ASC')
+            ->getQuery()
+            ->execute();
+    }
+
     /**
      * @param $number
      * @param $total

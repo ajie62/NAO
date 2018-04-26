@@ -13,6 +13,7 @@ use App\Entity\Species;
 use App\Entity\User;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
+use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -64,7 +65,7 @@ class ObservationController extends AbstractController
      */
     public function add(Request $request)
     {
-        return $this->setObservation($request, new Observation());
+        return $this->setObservation($request, new Observation(), false);
     }
 
     /**
@@ -78,7 +79,7 @@ class ObservationController extends AbstractController
      */
     public function update(Request $request, Observation $observation)
     {
-        return $this->setObservation($request, $observation);
+        return $this->setObservation($request, $observation, false);
     }
 
     /**
@@ -100,12 +101,31 @@ class ObservationController extends AbstractController
             $this->em->flush();
             $this->addFlash('notice', 'L\'observation a bien été supprimée !');
 
-            return $this->redirectToRoute('observation.list');
+            return $this->redirectToRoute('observation.awaiting');
         }
 
         return $this->render('observation/delete.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("observation/awaiting", name="observation.awaiting")
+     * @Security("is_granted('ROLE_NATURALISTE')")
+     */
+    public function awaiting(){
+        $obsAwaiting = $this->em->getRepository('App:Observation')->findAwaitingObservationsOrderedByMoreOlder();
+        return $this->render('observation/awaiting.html.twig', [
+           'obsAwaiting' => $obsAwaiting
+        ]);
+    }
+
+    /**
+     * @Route("observation/awaiting/{id}", name="observation.validation")
+     * @Security("is_granted('ROLE_NATURALISTE')")
+     */
+    public function validation(Request $request, Observation $observation){
+        return $this->setObservation($request, $observation, true);
     }
 
     /**
@@ -115,7 +135,7 @@ class ObservationController extends AbstractController
      * @param Observation $observation
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    private function setObservation(Request $request, Observation $observation)
+    private function setObservation(Request $request, Observation $observation, $validation)
     {
         $user = $this->getUser();
         $isNewObservation = $observation->getId() === null;
@@ -125,12 +145,18 @@ class ObservationController extends AbstractController
             null,
             null
         );
-
+        $speciesId = 0;
+        if (!$isNewObservation){
+            $speciesId = $observation->getSpecies()->getId();
+        }
         $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
+//        dump($speciesId);die;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $observation->setUser($user);
+            if (!$validation){
+                $observation->setUser($user);
+            }
 
             if (!$isNewObservation) {
                 $observation->setUpdatedAt(new \DateTime());
@@ -156,6 +182,8 @@ class ObservationController extends AbstractController
             'isNewObservation' => $isNewObservation,
             'observation' => $observation,
             'speciesList' => $speciesList,
+            'validation' => $validation,
+            'speciesId' => $speciesId
         ]);
     }
 

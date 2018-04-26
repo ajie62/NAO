@@ -46,6 +46,9 @@ class EditProfilType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault('data_class', User::class);
+        $resolver->setDefaults([
+            'data_class' => User::class,
+            'validation_groups' => ['update_profile']
+            ]);
     }
 }

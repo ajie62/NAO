@@ -48,7 +48,7 @@
 
                 <div class="flex-step">
                     <div class="fields upload-btn-wrapper text-center">
-                        <button class="btn blue-bg txt-white common-padding"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></button>
+                        <div class="btn-js btn blue-bg txt-white common-padding"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span></div>
                         {{ form_errors(form.image) }}
                         {{ form_label(form.image) }}
                         {{ form_widget(form.image) }}
@@ -78,7 +78,11 @@
                         <div id="get-species-url" data-url="{{ url('observation.get_species') }}">
                             {{ form_errors(form.espece) }}
                             {{ form_label(form.espece) }}
-                            {{ form_widget(form.espece) }}
+                            {% if not isNewObservation %}
+                                {{ form_widget(form.espece,{'value': observation.species.name }) }}
+                            {% else %}
+                                {{ form_widget(form.espece) }}
+                            {% endif %}
                             <span class="loader">Chargement...</span>
                             <div style="position:relative;">
                                 <div id="js-match" class="species-match white-bg">
@@ -117,11 +121,19 @@
                             {{ form_label(form.comment) }}
                             {{ form_widget(form.comment) }}
                         </div>
+                        {% if not isNewObservation %}
+                        {{ form_widget(form.species,{'value' : speciesId}) }}
+                        {% endif %}
                     </div>
 
                     <div class="step-buttons text-right">
                         <a data-toggle="tab" href="#menu2" class="step-link visible-xs txt-white orange-bg"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        {% if validation %}
+                            <button class="submit-button no-border green-bg" type="submit">Valider</button>
+                            <a href="{{ path('observation.delete', {'id': observation.id }) }}">Supprimer</a>
+                        {% else %}
                         <button class="submit-button no-border green-bg" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        {% endif %}
                     </div>
                 </div>
                 {{ form_end(form) }}
