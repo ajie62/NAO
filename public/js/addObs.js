@@ -100,6 +100,15 @@ $(function() {
     const GET_SPECIES_URL = $('#get-species-url').data('url');
     var $speciesContainer = $('#js-match > #species');
 
+    // console.log()
+    if ($('#observation_deceased').val() == 1){
+        styleDeath.display = 'block';
+        styleFlightDir.display = 'none';
+    } else {
+        styleDeath.display = 'none';
+        styleFlightDir.display = 'block';
+    }
+
     $.getJSON(GET_SPECIES_URL, function(response) {
         $('.loader').hide(0);
         response.items.forEach(function(species) {
@@ -141,8 +150,8 @@ $(function() {
         $matchDiv.hide(0);
     });
 
-    $('.upload-btn-wrapper .btn').on('click', function() {
-        $('.upload-btn-wrapper input[type="file"]').trigger('click');
+    $('.btn-js').on('click', function() {
+        $('.upload-btn-wrapper input[type="file"]').click();
     });
 
     /** Handling addObs page change depending it's on mobile or desktop */

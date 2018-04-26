@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+{% block body %}
+    {% if obsAwaiting|length > 0 %}
+        <div class="profile-container beige-bg common-min-height common-centering">
+            {% for obs in obsAwaiting %}
+                <a href="{{ path('observation.validation', {'id': obs.id}) }}">
+                    <div class="personal-obs text-center">
+                        <div class="personal-obs-img">
+                            <img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}" alt="Photo de {{ obs.species.name }}">
+                        </div>
+                        <div class="personal-obs-date">
+                            {{ obs.observedAt|date('d/m/Y') }}
+                        </div>
+                        <div class="personal-obs-name">
+                            {{ obs.species.name }}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}
