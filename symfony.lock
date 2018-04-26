@@ -83,6 +83,9 @@
     "kms/froala-editor-bundle": {
         "version": "v2.7.5"
     },
+    "knplabs/knp-time-bundle": {
+        "version": "1.8.0"
+    },
     "liip/imagine-bundle": {
         "version": "1.8",
         "recipe": {
