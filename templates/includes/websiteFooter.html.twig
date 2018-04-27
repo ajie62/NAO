@@ -1,0 +1,33 @@
+<footer class="text-center">
+    <div class="first-level">
+        <div class="explorer">
+            <h5>Explorer</h5>
+            <ul>
+                <li><a href="{{ url('observation.search') }}">Observations</a></li>
+                <li><a href="{{ url('blog.list_article') }}">Le blog NAO</a></li>
+                <li><a href="{{ url('security.login') }}">Connexion</a></li>
+            </ul>
+        </div>
+        <div class="about">
+            <h5>A propos</h5>
+            <ul>
+                <li><a href="{{ url('app.contact') }}">Pour nous joindre</a></li>
+                <li><a href="{{ url('app.terms_of_use') }}">Mentions légales</a></li>
+            </ul>
+        </div>
+        <div class="hidden-xs desktop-community">
+            <h5>Communauté NAO</h5>
+            <ul>
+                <li><a href="https://twitter.com/NAO_FRENCH" target="_blank"><img src="{{ asset('images/logo_twitter.png') }}" alt="Logo Twitter"></a></li>
+                <li><a href="https://www.facebook.com/Nos-Amis-les-Oiseaux-123326628512952/" target="_blank"><img src="{{ asset('images/logo_facebook.png') }}" alt="Logo Facebook"></a></li>
+                <li><a href="https://www.instagram.com/nao_nosamislesoiseaux/" target="_blank"><img src="{{ asset('images/logo_instagram.png') }}" alt="Logo Instagram"></a></li>
+            </ul>
+
+            <a href="https://www.helloasso.com/associations/nos-amis-les-oiseaux" target="_blank" class="desktop-footer-donation txt-white orange-bg">Faites un don</a>
+        </div>
+    </div>
+
+    <div class="second-level">
+        <p>&copy; {{ "now"|date("Y") }} Nos Amis les Oiseaux - Tous droits réservés</p>
+    </div>
+</footer>

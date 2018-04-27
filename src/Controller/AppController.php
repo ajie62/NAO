@@ -103,4 +103,12 @@ class AppController extends AbstractController
     {
         return $this->render('app/termsOfUse.html.twig');
     }
+
+    /**
+     * @Route("/about", name="app.about")
+     */
+    public function about()
+    {
+        return $this->render('app/about.html.twig');
+    }
 }

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}À propos - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="frame1 txt-white">
+        <div class="title common-padding text-center">
+            <h1>Vous observez des oiseaux sur votre terrain ?</h1>
+
+            <h2 class="visible-xs">Vos découvertes sont utiles pour les chercheurs</h2>
+        </div>
+        <div class="content beige-bg">
+            <h2 class="hidden-xs">Vos découvertes sont utiles pour les chercheurs</h2>
+            <p>Contribuer à des banques de données sur la faune aviaire est possible en quelques clics.</p>
+            <p>
+                Plusieurs amateurs d'oiseaux compilent leurs observations et les ajoutent sur la
+                plateforme Nos Amis les Oiseaux. Il s'agit d'une façon de contribuer aux connaissances
+                scientifiques et au suivi des populations en alimentant une base de données accessible
+                par n'importe quel ornithologue, amateur comme professionnel.
+            </p>
+            <p>
+                Ces informations pourront ensuite être utilisées par des chercheurs ou des spécialistes
+                de la conservation de la faune. Elles permettent de mieux connaître les aires de répartition
+                des espèces, leur comportement et leur reproduction.
+            </p>
+        </div>
+    </div>
+
+    <div class="frame2 txt-white">
+        <div class="title common-padding text-center">
+            <h1>Observez la nature et les oiseaux</h1>
+        </div>
+        <div class="content beige-bg">
+            <p>
+                Dans la partie Observations de notre plateforme en ligne, les amateurs peuvent
+                enregistrer leurs observations. <strong>&laquo; Même les données concernant les espèces
+                observées dans une cour arrière sont intéressantes &raquo;</strong>, souligne Michel
+                Dujardin, le directeur général de l'association Nos Amis les Oiseaux. <strong>&laquo;
+                Les gens nous demandent souvent si, effectivement, les oiseaux qu'ils ont à leurs
+                mangeoires peuvent être intéressants pour la science. Oui, ça l'est ! &raquo;</strong>
+            </p>
+            <p>
+                La banque de données Études des populations d'oiseaux de France (ÉPOF), une des premières
+                en son genre, a été fondée en 1985. Elle laisse de plus en plus sa place à Nos Amis les
+                Oiseaux, entièrement en ligne.
+            </p>
+        </div>
+    </div>
+
+    <div class="frame3">
+        <div class="the-frame3-image">
+            <h1 class="hidden-xs text-center">L'ornithologie, une science citoyenne</h1>
+        </div>
+        <div class="content beige-bg">
+            <h2 class="visible-xs">L'Ornithologie, une science citoyenne</h2>
+            <blockquote>
+                &laquo; Tout le monde peut y participer. Je ne crois pas me tromper en avançant
+                que c'est une des premières, sinon la première science citoyenne. &raquo;
+                Michel Dujardin, directeur général de l'association Nos Amis les Oiseaux.
+            </blockquote>
+            <p>
+                Ouvrir la collecte de données à tous augmente les chances qu'il y ait des erreurs,
+                reconnaît-il. Cependant, ce risque est négligeable, selon lui.
+                <strong>
+                    &laquo; La quantité de données noie l'incertitude. &raquo;
+                </strong>
+                Grâce aux données de plusieurs observateurs, des biologistes ont noté une baisse
+                importante des populations de moineaux domestiques au Québec.
+            </p>
+        </div>
+    </div>
+
+    <div class="frame4">
+        <div class="content beige-bg">
+            <div class="image"></div>
+            <div class="txt">
+                <p>
+                    Ces observations ont notamment permis de mesurer des changements dans le comportement de
+                    la faune aviaire, explique le directeur général.
+                    <strong>
+                        &laquo; On sait maintenant que les oiseaux arrivent plus tôt et repartent plus tard
+                        [pour leur migration]. On pense que ce sont les changements climatiques qui sont
+                        associés à ça &raquo;
+                    </strong>,
+                    explique-t-il.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {{ include('includes/joinus.html.twig') }}
+    {{ include('includes/websiteFooter.html.twig') }}
+{% endblock %}

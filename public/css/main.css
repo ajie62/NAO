@@ -126,6 +126,65 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     line-height: 2em;
     width: 100% }
 
+/* FOOTER */
+footer {
+    background-color: #FFF9F1;
+    padding: 20px 15px 15px 15px; }
+
+footer h5 {
+    font-size: 20px;
+    margin-top: 0; }
+
+.first-level {
+    display: flex;
+    justify-content: space-around; }
+
+.first-level > div { width: 100%; }
+
+.first-level ul {
+    list-style: none;
+    padding-left: 0; }
+
+.first-level a:not(.desktop-footer-donation) { color: #3b3b3b; }
+.second-level p { margin: 0;}
+
+.desktop-footer-donation,
+.desktop-footer-donation:hover,
+.desktop-footer-donation:focus {
+    color: #ffffff;
+    text-decoration: none }
+
+/* Call to action */
+.join-us {
+    padding: 15px;
+    background: #ffffff;
+    border-bottom: 1px solid #8CC63F; }
+
+.join-us h2 {
+    font-size: 25px;
+    line-height: 1.4; }
+
+.green-link {
+    color: white;
+    background-color: #8CC63F;
+    display: inline-block;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    text-decoration: none; }
+
+.green-link:hover {
+    background-color: #75a735;
+    color: #fff;
+    text-decoration: none; }
+
+
+
+
+
 /* Add observation "previous step" & "next step" buttons*/
 .nav-buttons {
     display: flex;
@@ -218,6 +277,52 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
     margin: 15px 0;
     padding: 10px 15px }
 
+/* ABOUT PAGE */
+div[class^="frame"]:not(.frame4) { border-bottom: 15px solid #FFF9F1 }
+
+div[class^="frame"] h1 { font-size: 2em }
+div[class^="frame"] h2 { font-size: 1.7em }
+
+div[class^="frame"] h1,
+div[class^="frame"] h2 {
+    margin: 0 10px;
+    padding: 10px }
+
+div[class^="frame"] .content {
+    color: #3b3b3b;
+    font-size: 1.250em;
+    padding: 20px }
+
+.frame1 .title {
+    background: url(../images/frame1.jpg) no-repeat center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 490px }
+
+.frame2 .title {
+    background: url(../images/frame2.jpg) no-repeat center;
+    background-size: cover;
+    min-height: 400px }
+
+.the-frame3-image {
+    background: url(../images/frame3.jpg) no-repeat center 20%;
+    background-size: cover;
+    min-height: 400px }
+
+.frame4 .image {
+    background: url(../images/frame4.jpg) no-repeat center;
+    background-size: cover;
+    min-height: 240px }
+
+.frame4 .content { padding: 0 !important }
+
+.frame4 .content p {
+    margin-bottom: 0;
+    padding: 10px }
+
+
 @media screen and (min-width: 768px) {
     .menu { padding: 0 15px }
     .g-recaptcha { display: inline-block }
@@ -287,4 +392,122 @@ h1, h2, h3, h4 { font-family: 'FranklinDC', sans-serif }
         list-style: none;
         margin-top: 20px;
         padding-left: 0 }
+
+    /* Footer */
+    .second-level { margin-top: 10px }
+
+    .desktop-community ul { display: block }
+    .desktop-community ul li { display: inline-block }
+
+    .desktop-community img {
+        margin: 0 5px;
+        width: 40px }
+
+    .desktop-footer-donation {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 3px;
+        font-size: 1em;
+        text-decoration: none }
+
+    /* ABOUT PAGE */
+    div[class^="frame"] h1 { font-size: 4em }
+
+    .frame1 h1,
+    .frame2 h2 {
+        margin: 0 0 10px 0;
+        padding: 0 }
+
+    .frame1 .title h1,
+    .frame2 .title h1,
+    .the-frame3-image h1 {
+        max-width: 450px;
+        padding: 0 10px }
+
+    .frame1 {
+        background: url(../images/frame1.jpg) no-repeat center;
+        background-size: cover;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        min-height: 500px; }
+
+    .frame1 .title {
+        background: none;
+        grid-column: 1 / 8;
+        justify-content: center }
+
+    .frame1 .content {
+        background: rgba(255,255,255,.4);
+        color: #ffffff!important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        grid-column: 8 / -1 }
+
+    .frame2 {
+        display: flex;
+        flex-direction: row-reverse;
+        min-height: 500px }
+
+    .frame2 .content {
+        background: #8CC63F;
+        color: #ffffff!important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 1 }
+
+    .frame2 .title {
+        align-items: center;
+        display: flex;
+        flex: 2;
+        flex-direction: row;
+        justify-content: flex-end }
+
+    .frame3 {
+        background: #ffffff;
+        display: flex;
+        min-height: 500px }
+
+    .the-frame3-image {
+        background: url(../images/frame3.jpg) no-repeat 100%;
+        background-size: contain;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex: 2;
+        min-height: 400px }
+
+    .frame3 .content {
+        background: #ffffff;
+        color: #3b3b3b;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center }
+
+
+    .frame4 { position: relative }
+    .frame4 .image { min-height: 700px }
+
+    .frame4 .txt {
+        background: rgba(0,0,0,.2);
+        color: #ffffff;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .frame4 .txt p {
+        font-size: 1.250em;
+        margin: 0 auto;
+        max-width: 900px;
+        text-align: center }
+}
+
+@media screen and (min-width: 1500px) {
+    div[class^="frame"] h1 { font-size: 4.5em }
+    div[class^="frame"] h2 { font-size: 2em }
+    div[class^="frame"] .content p { font-size: 24px }
 }
