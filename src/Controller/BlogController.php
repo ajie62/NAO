@@ -122,6 +122,8 @@ class BlogController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     private function setArticle(Request $request, Article $article){
+        $isNewArticle = $article->getId() === null;
+
         $form = $this->createForm('App\Form\ArticleFormType', $article);
         if ($request->isMethod('POST'))
         {
@@ -133,6 +135,9 @@ class BlogController extends AbstractController
                 return $this->redirectToRoute('blog.list_article');
             }
         }
-        return $this->render('blog/setArticle.twig', ['form' => $form->createView()]);
+        return $this->render('blog/setArticle.twig', [
+            'form' => $form->createView(),
+            'isNewArticle' => $isNewArticle
+        ]);
     }
 }

@@ -1,7 +1,6 @@
 $(function() { $('textarea').froalaEditor({
     height: 500,
     maxHeight: 500,
-    width: '90%',
     placeholderText: "Votre texte ...",
     pluginsEnabled: ['colors', 'emoticons', 'lists', 'link', 'quotes', 'charCounter', 'paragraphStyle', 'paragraphFormat', 'align', 'fontSize']
 }) });

@@ -143,28 +143,18 @@
 /* --------------------------------------------------------------------Fin de style pour Liste d'article */
 
 /* --------------------------------------------------------------------Style pour Insertion d'article */
-/*
-.fr-box {
-margin : 10px;
-}
+.fr-box { margin: 0 auto; }
 
 #article_form_title {
-    font-family: 'Roboto';
-    font-size : 16px;
-    padding-left: 10px;
-}
+    font: 16px 'Roboto', sans-serif;
+    padding-left: 10px }
 
-.insert-image input[type=file] {
-    display: none;
-}
+.insert-image input[type=file] { display: none }
 
-.insert-image label[for=article_form_image_file] {
-    cursor: pointer;
-    background-color: #298EE2;
-    width : 48px;
-    height:48px;
-}
-*/
+.fr-toolbar {
+    border-top: none!important;
+    border-radius: 10px!important }
+
 /* --------------------------------------------------------------------Style pour Affichage d'un article */
 .show-art-container { padding-bottom: 20px }
 
@@ -199,50 +189,35 @@ margin : 10px;
 
 .article-content {
     font-size: 16px;
-    margin: 5px 10px 0 10px;
-}
+    margin: 5px 10px 0 10px }
 
 .article-meta {
     display:flex;
     justify-content: space-between;
     margin: 0 10px;
-    align-items: baseline;
-}
+    align-items: baseline }
+
 .article-meta h4 {
     text-align: right;
     margin: 0;
     font-style: italic;
     font-weight : 500;
-    font-size: 20px;
-}
+    font-size: 20px }
 
-.article-date {
-    font-size: 16px;
-}
+.article-date { font-size: 16px }
 
 .new-article-buttons {
-    display: flex }
+    display: flex;
+    justify-content: flex-end }
 
-.article-draft, .article-validate {
-    flex: 1;
-    text-align: center;
-}
-
-.article-draft button,
-.article-validate button {
+.new-article-buttons button {
     border: none;
     border-radius: 50%;
-    width: 40px;
     height: 40px;
-}
+    width: 40px }
 
-.delete-article-content {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    min-height: calc(100vh - 64px);
-    justify-content: center;
-}
+.new-article-buttons .article-draft,
+.new-article-buttons .article-validate { margin-left: 20px }
 
 /* ----------------------------------------------------Style Pagination */
 .article-pagination {

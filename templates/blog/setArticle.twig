@@ -11,62 +11,46 @@
 {% endblock %}
 {% block body %}
     <div class="main-layout">
-        <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12 margin-nav">
-                {{ form_start(form) }}
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        {{ form_label(form.title) }}<br/>
-                        {{ form_widget(form.title) }}
-                        <div class="containerErrors" style="height: 20px">
-                            {{ form_errors(form.title) }}
-                        </div>
-                    </div>
-                </div>
+        <h1>{{ isNewArticle ? 'Rédaction' : 'Édition' }} d'un article</h1>
+        {{ form_start(form) }}
 
-                <div class="row">
-                    <div class="col-xs-4 col-xs-offset-4 insert-image">
-                        {{ form_label(form.image) }}
-                        {{ form_widget(form.image) }}
-                        <div class="containerErrors" style="height: 20px">
-                            {{ form_errors(form.image) }}
-                        </div>
-                    </div>
-                </div>
+        {{ form_label(form.title) }}<br/>
+        {{ form_widget(form.title) }}
+        <div class="containerErrors" style="height: 20px">
+            {{ form_errors(form.title) }}
+        </div>
 
-                <div class="row">
-                    {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
-                    <div class="containerErrors" style="height: 20px">
-                        {{ form_errors(form.content) }}
-                    </div>
-                </div>
+        {{ form_label(form.image) }}
+        {{ form_widget(form.image) }}
+        <div class="containerErrors" style="height: 20px">
+            {{ form_errors(form.image) }}
+        </div>
 
-                <div class="row">
-                    <div class="col-sm-2 col-sm-offset-10">
-                        {{ form_row(form.published)}}
+        {{ form_widget(form.content, {'attr' : {'hidden' : 'hidden'}}) }}
+        <div class="containerErrors" style="height: 20px">
+            {{ form_errors(form.content) }}
+        </div>
 
-                        <div class="new-article-buttons">
-                            <div class="article-draft">
-                                <button type="submit" id="draft" class="orange-bg txt-white">
-                                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
-                                </button>
-                                <br>
-                                <small>Brouillon</small>
-                            </div>
+        {{ form_row(form.published) }}
 
-                            <div class="article-validate">
-                                <button type="submit" id="publish" class="orange-bg txt-white">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </button>
-                                <br>
-                                <small>Valider</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{ form_end(form) }}
+        <div class="new-article-buttons">
+            <div class="article-draft">
+                <button type="submit" id="draft" class="orange-bg txt-white">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                </button>
+                <br>
+                <small>Brouillon</small>
+            </div>
+
+            <div class="article-validate">
+                <button type="submit" id="publish" class="orange-bg txt-white">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                </button>
+                <br>
+                <small>Valider</small>
             </div>
         </div>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
 {% block javascripts %}
