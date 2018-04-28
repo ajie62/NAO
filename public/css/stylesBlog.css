@@ -95,21 +95,19 @@
         width : 40px;
         height: 40px;
         border-radius: 50%;
-        color: #fff;}
+        color: #fff }
 
-    .uiCard__month {
-        text-transform: uppercase;}
+    .uiCard__month { text-transform: uppercase }
 
     .uiCard__footer {
-        position : absolute;
-        width : 295px;
+        border: 2px solid #dd4444;
         display: flex;
         justify-content: space-between;
-        bottom: 10px;
-        margin: 0 10px;}
+        margin: 10px }
 
-    .uiCard__footer span {
-        margin-right: 5px;}
+    .uiCard__meta > div { display: inline-block }
+
+    .uiCard__footer span { margin-right: 5px }
 
     .uiCard__icon-green {
         color : #8CC63F;

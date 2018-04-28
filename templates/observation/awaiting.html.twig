@@ -4,23 +4,42 @@
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
 {% block body %}
+    <div class="awaiting-container beige-bg common-min-height common-centering">
+    <h1 class="text-center">Observations en attente de validation</h1>
+
     {% if obsAwaiting|length > 0 %}
-        <div class="profile-container beige-bg common-min-height common-centering">
-            {% for obs in obsAwaiting %}
-                <a href="{{ path('observation.validation', {'id': obs.id}) }}">
-                    <div class="personal-obs text-center">
-                        <div class="personal-obs-img">
-                            <img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}" alt="Photo de {{ obs.species.name }}">
-                        </div>
-                        <div class="personal-obs-date">
-                            {{ obs.observedAt|date('d/m/Y') }}
-                        </div>
-                        <div class="personal-obs-name">
-                            {{ obs.species.name }}
-                        </div>
-                    </div>
-                </a>
-            {% endfor %}
+        <div class="awaiting-table table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th class="text-center">Photo</th>
+                    <th class="text-center">Observée le</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Commentaire</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody class="text-center">
+                {% for obs in obsAwaiting %}
+                    <tr>
+                        <td><img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}"
+                                 alt="Photo de {{ obs.species.name }}"></td>
+                        <td>{{ obs.observedAt|date('d/m/Y') ~ ' (' ~ obs.observedAt|ago ~ ')' }}</td>
+                        <td>{{ obs.species.name }}</td>
+                        <td>{{ obs.comment|default('Pas de commentaire') }}</td>
+                        <td>
+                            <a class="check-obs-link"
+                               href="{{ url('observation.validation', {id: obs.id}) }}">Vérifier</a> ou
+                            <a class="delete-obs-link" href="{{ url('observation.delete', {id: obs.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
+        </div>
+    {% else %}
+        <p>Aucune observation n'est en attente de validation.</p>
     {% endif %}
 {% endblock %}

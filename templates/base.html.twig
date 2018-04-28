@@ -60,15 +60,17 @@
                     {% endif %}
                     {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
                         <li><a href="{{ url('blog.list_article') }}">Blog</a></li>
-                        <li><a href="{{ url('app.contact') }}">Contact</a></li>
                         <li><a href="{{ url('observation.search') }}">Observations</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_NATURALISTE') %}
+                        <li><a href="{{ url('observation.awaiting') }}">En attente</a></li>
+                    {% endif %}
+                    {% if is_granted('IS_AUTHENTICATED_ANONYMOUSLY') %}
+                        <li><a href="{{ url('app.contact') }}">Contact</a></li>
                     {% endif %}
                     {% if not is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                         <li><a href="{{ url('security.login') }}">Connexion</a></li>
                         <li><a href="{{ url('security.register') }}">Inscription</a></li>
-                    {% endif %}
-                    {% if is_granted('ROLE_NATURALISTE') %}
-                        <li><a href="{{ url('observation.awaiting') }}">En attente</a></li>
                     {% endif %}
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ url('admin.index') }}">Administration</a></li>

@@ -90,6 +90,7 @@ styleDeath.display = 'none';
 deceasedCheckbox.addEventListener('change', function() {
     styleDeath.display = (styleDeath.display === 'none') ? 'block' : 'none';
     styleFlightDir.display = (styleFlightDir.display === 'none') ? 'block' : 'none';
+    console.log($(this).val());
 });
 
 /** Autocomplete */
@@ -100,8 +101,7 @@ $(function() {
     const GET_SPECIES_URL = $('#get-species-url').data('url');
     var $speciesContainer = $('#js-match > #species');
 
-    // console.log()
-    if ($('#observation_deceased').val() == 1){
+    if ($('#observation_deceased').is(':checked')){
         styleDeath.display = 'block';
         styleFlightDir.display = 'none';
     } else {
@@ -154,6 +154,16 @@ $(function() {
         $('.upload-btn-wrapper input[type="file"]').click();
     });
 
+    /* IMAGE */
+    var $inputImage = $('#observation_image_file');
+
+    $inputImage.on('change', function(e) {
+        var isFileUploaded = e.target.files.length > 0;
+        var $chosenPicture = $('.js-chosen-picture');
+        var fileName = (isFileUploaded) ? e.target.files[0].name : null;
+        $chosenPicture.text(fileName);
+    });
+
     /** Handling addObs page change depending it's on mobile or desktop */
     var $window = $(window);
 
@@ -172,14 +182,4 @@ $(function() {
 
     checkWidth();
     $window.resize(checkWidth);
-
-    /* IMAGE */
-    var $inputImage = $('#observation_image_file');
-
-    $inputImage.on('change', function(e) {
-        var isFileUploaded = e.target.files.length > 0;
-        var $chosenPicture = $('.js-chosen-picture');
-        var fileName = (isFileUploaded) ? e.target.files[0].name : null;
-        $chosenPicture.text(fileName);
-    });
 });

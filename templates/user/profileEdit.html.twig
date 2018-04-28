@@ -1,50 +1,109 @@
 {% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+
 {% block body %}
-    <div class="profile-container beige-bg common-min-height common-centering">
+    <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
         <div class="profile-header text-center">
             {% set role = user.roles[0] %}
-            {% set particulier = role == 'ROLE_PARTICULIER' %}
-            {% set naturaliste = role == 'ROLE_NATURALISTE' %}
-            {% set admin = role == 'ROLE_ADMIN' %}
-            {% if user.image %}
-                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
-            {% else %}
-                <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
-            {% endif %}
+            {% set particulier, naturaliste, admin = role == 'ROLE_PARTICULIER', 'ROLE_NATURALISTE', 'ROLE_ADMIN' %}
+                {% if user.image %}
+                    <figure>
+                        <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+                        <div class="overlay">
+                            <div>Modifier</div>
+                        </div>
+                    </figure>
+                {% else %}
+                    <figure>
+                        <img id="profile-picture" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+                        <div class="overlay">
+                            <div>Modifier</div>
+                        </div>
+                    </figure>
+                {% endif %}
 
+            {{ form_start(form) }}
 
+            {{ form_errors(form.image) }}
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image) }}
+            <div class="js-chosen-picture"></div>
 
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
             <p>
                 {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
             </p>
-            {{ form_start(form) }}
-            {{ form_widget(form.image) }}
-            {{ form_errors(form.image) }}
-            {{ form_widget(form.mail) }}
-            {{ form_errors(form.mail) }}
+
+            <div class="mail-change-form">
+                {{ form_widget(form.mail) }}
+                {{ form_errors(form.mail) }}
+            </div>
+
             {{ form_widget(form.introduction) }}
             {{ form_errors(form.introduction) }}
-            <button type="submit">Valider</button>
+            <div class="btn-container">
+                <button class="green-bg txt-white no-border" type="submit">Valider</button>
+            </div>
             {{ form_end(form) }}
         </div>
 
-        <div>
-            <a href="#">Nouveau mot de passe</a>
+        <div class="change-password">
             {% if errors is not empty %}
                 {{ errors }}
             {% endif %}
-            {{ form_start(newPasswordForm) }}
-                {{ form_label(newPasswordForm.oldPassword, 'Ancien mot de passe : ') }}
+            <div class="text-center new-pwd">
+                <a class="content-link" id="js-pwd-change" href="#">Changer de mot de passe</a>
+            </div>
+            <div class="pwd-change-form">
+                {{ form_start(newPasswordForm) }}
+                {{ form_label(newPasswordForm.oldPassword) }}
                 {{ form_widget(newPasswordForm.oldPassword) }}
-                {{ form_label(newPasswordForm.newPasswordFirst, 'Nouveau mot de passe : ') }}
+                {{ form_label(newPasswordForm.newPasswordFirst) }}
                 {{ form_widget(newPasswordForm.newPasswordFirst) }}
-                {{ form_label(newPasswordForm.newPasswordSecond, 'Répétez le nouveau mot de passe : ') }}
+                {{ form_label(newPasswordForm.newPasswordSecond) }}
                 {{ form_widget(newPasswordForm.newPasswordSecond) }}
-                <button type="submit">Enregistrer</button>
-                <button type="button">Annuler</button>
-            {{ form_end(newPasswordForm) }}
-        </div>
 
+                <div class="btn-container">
+                    <button class="no-border green-bg txt-white" type="submit">Enregistrer</button>
+                    <button class="no-border orange-bg txt-white" type="button">Annuler</button>
+                </div>
+                {{ form_end(newPasswordForm) }}
+            </div>
+
+            <div class="text-center">
+                <a class="naturaliste-pro txt-green" href="{{ url('app.contact') }}">Demander à passer Naturaliste professionnel</a>
+            </div>
+        </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            var $editProfileImgInput = $('#edit_profil_image_file');
+            var $profilePicture = $('#profile-picture');
+
+            $profilePicture.parent('figure').find('> *').click(function() {
+                $editProfileImgInput.click();
+            });
+
+            $editProfileImgInput.on('change', function(e) {
+                var isFileUploaded = e.target.files.length > 0;
+                var $chosenPicture = $('.js-chosen-picture');
+                var fileName = (isFileUploaded) ? e.target.files[0].name : null;
+                $chosenPicture.text(fileName);
+            });
+
+            var $pwdChangeLink = $('#js-pwd-change');
+            $pwdChangeLink.on('click', function(e) {
+                e.preventDefault();
+                $('.pwd-change-form').fadeToggle();
+            });
+        });
+    </script>
 {% endblock %}

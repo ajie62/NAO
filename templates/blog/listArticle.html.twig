@@ -7,7 +7,7 @@
 
 {% block body %}
     <div class="main-layout">
-        <h1>Le blog NAO</h1>
+        <h1 class="text-center">Le blog NAO</h1>
         {% if is_granted('ROLE_NATURALISTE') %}
             <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
         {% endif %}
@@ -34,21 +34,26 @@
                     </div>
                 </a>
 
-                <footer class="uiCard__footer">
+                <div class="uiCard__footer">
+                    <div class="uiCard__meta">
+                        <div class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</div>
+                        <div class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>{{ commentsNumber[loop.index0] }}</div>
+                    </div>
                     {% if is_granted('ROLE_NATURALISTE') %}
                         <div class="uiCard__admin">
                             <a href="{{ path('blog.delete_article', {'id' : article.id }) }}"><span class="glyphicon glyphicon-trash uiCard__trash" aria-hidden="true"></span></a>
                         </div>
-                    <footer class="uiCard__footer">
-                        <div class="uiCard__meta">
-                            <span class="icon icon-time"><span class="glyphicon glyphicon-time uiCard__icon-green" aria-hidden="true"></span>{{ article.createdAt | date('d/m/Y') }}</span>
-                            <span class="icon icon-comment"><span class="glyphicon glyphicon-comment uiCard__icon-green" aria-hidden="true"></span>{{ commentsNumber[loop.index0] }} commentaires</span>
-                        </div>
-                    </footer>
                     {% endif %}
-                </footer>
+                </div>
             </article>
             <hr class="hr">
+        {% else %}
+            <p class="text-center">
+                Aucun article n'a été publié.
+                {% if is_granted('ROLE_NATURALISTE') %}
+                    <a class="content-link" href="{{ url('blog.add_article') }}">En rédiger un maintenant.</a>
+                {% endif %}
+            </p>
         {% endfor %}
         </div>
     </div>

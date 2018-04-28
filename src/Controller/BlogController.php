@@ -41,7 +41,6 @@ class BlogController extends AbstractController
             $number = $this->em->getRepository('App:Comment')->numberComments($article);
             array_push($commentsNumber, $number);
         }
-        dump($commentsNumber[0]);
 
         return $this->render('blog/listArticle.html.twig', [
             'articles' => $articles,

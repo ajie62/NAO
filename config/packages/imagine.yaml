@@ -24,7 +24,7 @@ liip_imagine :
         profile_picture:
             quality: 100
             filters:
-                thumbnail: { size: [140, 140], mode : outbound }
+                thumbnail: { size: [200, 200], mode : outbound }
         min_profile_picture:
             quality: 100
             filters:

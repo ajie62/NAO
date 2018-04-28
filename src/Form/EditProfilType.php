@@ -23,15 +23,15 @@ class EditProfilType extends AbstractType
     {
         $builder
             ->add('image', ImageType::class,[
-                'required' => false
+                'required' => false,
+                'label' => false,
             ])
             ->add('mail', EmailType::class, [
                 'required' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Vous devez indiquer une adresse mail.'
-                    ])
-                ]
+                    new NotBlank(['message' => 'Vous devez indiquer une adresse mail.'])
+                ],
+                'attr' => ['placeholder' => 'Votre adresse e-mail']
             ])
             ->add('introduction', TextareaType::class, [
                 'required' => false,
@@ -40,7 +40,8 @@ class EditProfilType extends AbstractType
                         'max' => 700,
                         'maxMessage' => 'Votre description ne peut pas faire plus de 700 caractères.'
                     ])
-                ]
+                ],
+                'attr' => ['placeholder' => 'Présentez-vous en quelques mots...']
             ]);
     }
 
@@ -49,6 +50,6 @@ class EditProfilType extends AbstractType
         $resolver->setDefaults([
             'data_class' => User::class,
             'validation_groups' => ['update_profile']
-            ]);
+        ]);
     }
 }

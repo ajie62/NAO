@@ -8,7 +8,6 @@
 
 namespace App\Form;
 
-
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,19 +19,19 @@ class NewPasswordType extends AbstractType
     {
         $builder
             ->add('oldPassword', PasswordType::class, [
-                'constraints' => [
-                    new NotBlank()
-                ]
+                'label' => false,
+                'attr' => ['placeholder' => 'Ancien mot de passe'],
+                'constraints' => [ new NotBlank() ]
             ])
             ->add('newPasswordFirst', PasswordType::class, [
-                'constraints' => [
-                    new NotBlank()
-                ]
+                'label' => false,
+                'attr' => ['placeholder' => 'Nouveau mot de passe'],
+                'constraints' => [ new NotBlank() ]
             ])
             ->add('newPasswordSecond', PasswordType::class, [
-                'constraints' => [
-                    new NotBlank()
-                ]
+                'label' => false,
+                'attr' => ['placeholder' => 'Confirmer le nouveau mot de passe'],
+                'constraints' => [ new NotBlank() ]
             ]);
     }
 }

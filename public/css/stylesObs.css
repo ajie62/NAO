@@ -55,6 +55,7 @@ a[class^='step-link']:focus { color: #fff; }
 .upload-btn-wrapper .btn { font-weight: bold }
 
 .upload-btn-wrapper .btn:hover {
+    color: #ffffff;
     cursor: pointer;
     opacity: .8 }
 
