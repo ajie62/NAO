@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationType extends AbstractType
 {
@@ -35,6 +36,13 @@ class RegistrationType extends AbstractType
                 'attr' => ['placeholder' => 'Email*'],
             ])
             ->add('password', RepeatedType::class, [
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,64}/',
+                        'match' => true,
+                        'message' => 'Le mot de passe doit contenir entre 8 et 64 caractères, un mélange de majuscules de minuscules et un chiffre.'
+                    ])
+                ],
                 'type' => PasswordType::class,
                 'label' => false,
                 'first_options' => [
