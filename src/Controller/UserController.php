@@ -94,7 +94,7 @@ class UserController extends AbstractController
      */
     public function editProfil(Request $request){
         $user = $this->getUser();
-        $form = $this->createForm(EditProfilType::class, $user, ['validation_groups' => ['update_profile']]);
+        $form = $this->createForm(EditProfilType::class, $user);
         $newPasswordForm = $this->createForm(NewPasswordType::class);
         $errors = '';
         if ($request->isMethod('POST')){

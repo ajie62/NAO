@@ -58,6 +58,7 @@ $(function() {
     var speciesId;
 
     $(document).on('click', '.species', function(){
+
         speciesId = $(this).data('species-id');
 
         if (!!speciesId) {
@@ -74,21 +75,28 @@ $(function() {
 
         if (markers.length > 0) deleteMarkers();
 
-        $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
-            success: function(response) {
-                if (response.length === 0) {
-                    $('.no-result').html('<p>Aucun résultat pour : <strong>' + $searchInput.val() + '</strong></p>');
-                } else {
-                    $('.no-result').text('');
-                    observations = response;
-                    for (var i=0; i<observations.length; ++i) {
-                        var location = { lat: observations[i].latitude, lng: observations[i].longitude };
-                        addMarker(location, observations[i], speciesObj);
+        if(speciesId !== null){
+            $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
+                success: function(response) {
+                    if (response.length === 0) {
+                        $('.no-result').html('<p>Aucun résultat pour : <strong>' + $searchInput.val() + '</strong></p>');
+                    } else {
+                        $('.no-result').text('');
+                        observations = response;
+                        for (var i=0; i<observations.length; ++i) {
+                            var location = { lat: observations[i].latitude, lng: observations[i].longitude };
+                            addMarker(location, observations[i], speciesObj);
+                        }
+                        $('.search-species').fadeToggle();
                     }
-                    $('.search-species').fadeToggle();
                 }
-            }
-        });
+            });
+        } else {
+            $('.no-result').html('<p>Aucun résultat pour : <strong>' + $searchInput.val() + '</strong></p>');
+            $speciesUnorderedListContainer.fadeOut();
+        }
+
+        speciesId = null;
     });
 
     $('#js-start-search').on('click', function(e) {

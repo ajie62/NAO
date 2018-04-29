@@ -150,7 +150,6 @@ class ObservationController extends AbstractController
             $speciesId = $observation->getSpecies()->getId();
         }
         $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
-//        dump($speciesId);die;
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
