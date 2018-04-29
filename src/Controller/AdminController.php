@@ -77,8 +77,6 @@ class AdminController extends Controller
      */
     public function editUser(User $user, Request $request){
         $form = $this->createForm(EditProfilType::class, $user);
-//        $oldPass = 'Particulier1!';
-//        dump($this->passwordEncoder->isPasswordValid($user, $oldPass));die;
         if ($request->isMethod('POST')){
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()){

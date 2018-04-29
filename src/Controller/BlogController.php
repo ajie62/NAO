@@ -31,7 +31,7 @@ class BlogController extends AbstractController
     }
 
     /**
-     * @Route("/blog/list", name="blog.list_article")
+     * @Route("/blog", name="blog.list_article")
      */
     public function listArticle()
     {
@@ -41,7 +41,6 @@ class BlogController extends AbstractController
             $number = $this->em->getRepository('App:Comment')->numberComments($article);
             array_push($commentsNumber, $number);
         }
-
         return $this->render('blog/listArticle.html.twig', [
             'articles' => $articles,
             'commentsNumber' => $commentsNumber
