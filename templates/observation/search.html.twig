@@ -8,10 +8,6 @@
 {% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('notice') %}
-        <div class="alert alert-success">{{ message }}</div>
-    {% endfor %}
-
     <div class="map-container">
         <div id="js-search-map" class="search-map common-min-height"></div>
         <div class="search-species beige-bg txt-white common-padding">

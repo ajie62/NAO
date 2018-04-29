@@ -16,23 +16,19 @@
     grid-gap: 10px;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) }
 
-.button-add {
-    width: 40px;
-    height: 40px;
-    border-radius : 50%;
-    background-color: #FBB03B;
-    color: #fff;
-    position: fixed;
-    bottom:24px;
-    right: 24px;
-    border-style: none;
+.add-article {
+    border-radius: 50%;
     font-size: 28px;
-    z-index : 9999;
-    box-shadow: 3px 3px 20px rgba(0,0,0,0.3) }
+    height: 40px;
+    padding-left: 2px;
+    padding-top: 2px;
+    position: fixed;
+    text-align: center;
+    right: 24px;
+    bottom: 24px;
+    width: 40px }
 
-.button-add span {
-    padding-top: 5px;
-    padding-left: 2px }
+.add-article:hover, .add-article:focus { color: #ffffff }
 
 /* ------------------------------------------------------------Style UICard */
     .uiCard {
@@ -100,7 +96,6 @@
     .uiCard__month { text-transform: uppercase }
 
     .uiCard__footer {
-        border: 2px solid #dd4444;
         display: flex;
         justify-content: space-between;
         margin: 10px }

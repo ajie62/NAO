@@ -6,10 +6,10 @@
 {% endblock %}
 
 {% block body %}
-    <div class="main-layout">
+    <div class="blog-list-container main-layout {% if articles|length == 0 %}flex-centered-all{% endif %}">
         <h1 class="text-center">Le blog NAO</h1>
         {% if is_granted('ROLE_NATURALISTE') %}
-            <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
+            <a class="add-article orange-bg txt-white" href="{{ url('blog.add_article') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
         {% endif %}
         <div class="articles-list-container">
         {% for article in articles %}

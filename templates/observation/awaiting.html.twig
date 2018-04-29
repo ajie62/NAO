@@ -4,7 +4,11 @@
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
 {% block body %}
-    <div class="awaiting-container beige-bg common-min-height common-centering">
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="beige-bg common-min-height common-centering common-padding {% if obsAwaiting|length == 0 %}flex-centered-all{% endif %}">
     <h1 class="text-center">Observations en attente de validation</h1>
 
     {% if obsAwaiting|length > 0 %}
