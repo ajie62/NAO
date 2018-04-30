@@ -108,7 +108,7 @@
                                 <div class="article-comment-heading">
                                     <div class="article-comment-profile">
                                         <img class="article-comment-profile-picture" src="
-                                        {% if app.user.image %}
+                                        {% if comment.user.image %}
                                             {{ asset(comment.user.image.webPath) }}
                                         {% else %}
                                             {{ asset('images/no-profile.png') }}
