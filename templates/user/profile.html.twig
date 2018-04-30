@@ -12,9 +12,9 @@
         {# Profile header #}
         <div class="profile-header text-center">
             {% set role = user.roles[0] %}
-            {% set particulier = role == 'ROLE_PARTICULIER' %}
-            {% set naturaliste = role == 'ROLE_NATURALISTE' %}
-            {% set admin = role == 'ROLE_ADMIN' %}
+            {% set particulier = (role == 'ROLE_PARTICULIER') %}
+            {% set naturaliste = (role == 'ROLE_NATURALISTE') %}
+            {% set admin = (role == 'ROLE_ADMIN') %}
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
             {% if user.image %}
                 <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ app.user.image.alt }}">

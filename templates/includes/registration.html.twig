@@ -33,6 +33,13 @@
     {{ form_widget(registration_form.password.first) }}
     <span class="pwd-details">8 caractères minimum dont au moins 1 majuscule et 1 chiffre</span>
     {{ form_widget(registration_form.password.second) }}
+
+    {% if registration_form.password.first.vars.errors | length > 0 %}
+        <div class="errors">
+            {{ form_errors(registration_form.password.first) }}
+        </div>
+    {% endif %}
+
     <p class="terms-and-conditions">
         {{ form_widget(registration_form.termsAccepted) }}
         J'accepte les <a href="{{ url('app.terms_of_use') }}">Conditions Générales d'Utilisations</a>
@@ -41,12 +48,6 @@
 
         <span class="text-danger">* Champs obligatoires</span>
     </p>
-
-    {% if registration_form.password.vars.errors | length > 0 %}
-    <div class="errors">
-        {{ form_errors(registration_form.password) }}
-    </div>
-    {% endif %}
 </div>
 
 <div class="text-center">

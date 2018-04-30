@@ -9,7 +9,9 @@
     <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
         <div class="profile-header text-center">
             {% set role = user.roles[0] %}
-            {% set particulier, naturaliste, admin = role == 'ROLE_PARTICULIER', 'ROLE_NATURALISTE', 'ROLE_ADMIN' %}
+            {% set particulier = ('ROLE_PARTICULIER' == role) %}
+            {% set naturaliste = ('ROLE_NATURALISTE' == role) %}
+            {% set admin = ('ROLE_ADMIN' == role) %}
                 {% if user.image %}
                     <figure>
                         <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
