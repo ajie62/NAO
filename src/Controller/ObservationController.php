@@ -13,30 +13,28 @@ use App\Entity\Species;
 use App\Entity\User;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
-use function dump;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class ObservationController extends AbstractController
 {
     /** @var EntityManagerInterface $entityManager */
     private $em;
+
+    /** @var array Choices to build the observation form */
     private $choices;
 
-    public function __construct($entityManager, $choices)
+    /**
+     * ObservationController constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param array $choices
+     */
+    public function __construct(EntityManagerInterface $entityManager, array $choices)
     {
         $this->em = $entityManager;
         $this->choices = $choices;
@@ -45,8 +43,9 @@ class ObservationController extends AbstractController
     /**
      * List of observations
      * @Route("/observation", name="observation.search")
+     * @return Response
      */
-    public function searchObservation()
+    public function searchObservation(): Response
     {
         $observationList = $this->em->getRepository(Observation::class)->findAll();
 
@@ -63,7 +62,7 @@ class ObservationController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function add(Request $request)
+    public function add(Request $request): Response
     {
         return $this->setObservation($request, new Observation(), false);
     }
@@ -77,21 +76,21 @@ class ObservationController extends AbstractController
      * @param Observation $observation
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function update(Request $request, Observation $observation)
+    public function update(Request $request, Observation $observation): Response
     {
         return $this->setObservation($request, $observation, false);
     }
 
     /**
      * Delete an observation
-     * @Route("observation/{id}/delete", name="observation.delete", requirements={"id" = "\d+"})
+     * @Route("/observation/{id}/delete", name="observation.delete", requirements={"id" = "\d+"}, methods={"GET", "DELETE"})
      * @Security("is_granted('ROLE_NATURALISTE')")
      *
      * @param Request $request
      * @param Observation $observation
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function delete(Request $request, Observation $observation)
+    public function delete(Request $request, Observation $observation): Response
     {
         $form = $this->getDeleteForm();
         $form->handleRequest($request);
@@ -110,11 +109,14 @@ class ObservationController extends AbstractController
     }
 
     /**
-     * @Route("observation/awaiting", name="observation.awaiting")
+     * @Route("/observation/awaiting", name="observation.awaiting")
      * @Security("is_granted('ROLE_NATURALISTE')")
+     * @return Response
      */
-    public function awaiting(){
+    public function awaiting(): Response
+    {
         $obsAwaiting = $this->em->getRepository('App:Observation')->findAwaitingObservationsOrderedByMoreOlder();
+
         return $this->render('observation/awaiting.html.twig', [
            'obsAwaiting' => $obsAwaiting
         ]);
@@ -123,8 +125,13 @@ class ObservationController extends AbstractController
     /**
      * @Route("observation/awaiting/{id}", name="observation.validation")
      * @Security("is_granted('ROLE_NATURALISTE')")
+     *
+     * @param Request $request
+     * @param Observation $observation
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function validation(Request $request, Observation $observation){
+    public function validation(Request $request, Observation $observation): Response
+    {
         return $this->setObservation($request, $observation, true);
     }
 
@@ -133,18 +140,14 @@ class ObservationController extends AbstractController
      *
      * @param Request $request
      * @param Observation $observation
+     * @param bool $validation
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    private function setObservation(Request $request, Observation $observation, $validation)
+    private function setObservation(Request $request, Observation $observation, bool $validation): Response
     {
         $user = $this->getUser();
         $isNewObservation = $observation->getId() === null;
-        $speciesList = $this->em->getRepository(Species::class)->findBy(
-            array(),
-            array('id' => 'desc'),
-            null,
-            null
-        );
+        $speciesList = $this->em->getRepository(Species::class)->findBy([], ['id' => 'desc']);
         $speciesId = 0;
         if (!$isNewObservation){
             $speciesId = $observation->getSpecies()->getId();
@@ -161,21 +164,19 @@ class ObservationController extends AbstractController
                 $observation->setUpdatedAt(new \DateTime());
             }
 
-            if (User::ADMIN === $user->getRoles()[0] ||
-                User::NATURALISTE === $user->getRoles()[0]) {
+            if (in_array(User::ADMIN, $user->getRoles()) || in_array(User::NATURALISTE, $user->getRoles())) {
                 $observation->setValidated(true);
             }
 
             $this->em->persist($observation);
             $this->em->flush();
 
-            $notice = "L'observation a bien été ";
-            $notice .= $isNewObservation ? "ajoutée !" : "mise à jour !";
-
+            $notice = sprintf("L'observation a bien été %s", $isNewObservation ? 'ajoutée !' : 'mise à jour !');
             $this->addFlash('notice', $notice);
 
             return $this->redirectToRoute('observation.search');
         }
+
         return $this->render('observation/set.html.twig', [
             'form' => $form->createView(),
             'isNewObservation' => $isNewObservation,
@@ -189,7 +190,7 @@ class ObservationController extends AbstractController
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getDeleteForm()
+    public function getDeleteForm(): FormInterface
     {
         $form = $this->createFormBuilder()->setMethod('DELETE')->getForm();
 
@@ -197,11 +198,14 @@ class ObservationController extends AbstractController
     }
 
     /**
+     * Get observation
      * @Route("/ajax_search_observation", name="observation.ajax.search_observation")
+     *
      * @param Request $request
      * @return JsonResponse|Response
      */
-    public function ajaxGetObservation(Request $request) {
+    public function ajaxGetObservation(Request $request): Response
+    {
         $data = $request->request->get('id');
         $results = $this->em->getRepository(Species::class)->findOneBy(["id" => $data]);
 
@@ -213,6 +217,8 @@ class ObservationController extends AbstractController
             $userFirstname = ucfirst($user->getFirstname());
             $userLastname = ucfirst($user->getLastname());
             $dateFormat = 'd/m/Y';
+            // TODO : Check whether working
+            // $observedAt = $observation->getObservedAt()->format($dateFormat);
             $observedAt = date_format($observation->getObservedAt(), $dateFormat);
             $updatedAt = null;
 
@@ -243,12 +249,13 @@ class ObservationController extends AbstractController
     }
 
     /**
-     * @Route("/species", name="observation.get_species", methods={"GET"})
      * Get species (async request)
+     * @Route("/species", name="observation.get_species", methods={"GET"})
+     *
      * @param Request $request
      * @return JsonResponse
      */
-    public function getSpecies(Request $request)
+    public function getSpecies(Request $request): Response
     {
         if ($request->isXmlHttpRequest()) {
             $results = $this->em->getRepository(Species::class)->findAll();
@@ -265,6 +272,7 @@ class ObservationController extends AbstractController
             $output = ['count' => count($output), 'items' => $output];
             return $this->json($output);
         }
-        throw new NotFoundHttpException();
+
+        return $this->json(['errors' => []], 404);
     }
 }

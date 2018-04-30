@@ -41,6 +41,7 @@ class BlogController extends AbstractController
             $number = $this->em->getRepository('App:Comment')->numberComments($article);
             array_push($commentsNumber, $number);
         }
+
         return $this->render('blog/listArticle.html.twig', [
             'articles' => $articles,
             'commentsNumber' => $commentsNumber
@@ -70,8 +71,8 @@ class BlogController extends AbstractController
         $form = $this->createForm('App\Form\CommentArticleType');
         $previousArticle = $this->em->getRepository('App:Article')->findPreviousArticle($article);
         $nextArticle = $this->em->getRepository('App:Article')->findNextArticle($article);
-        dump($previousArticle);
-        dump($nextArticle);
+        //dump($previousArticle);
+        //dump($nextArticle);
         return $this->render('blog/showArticle.html.twig', [
             'article' => $article,
             'formComment' => $form->createView(),
