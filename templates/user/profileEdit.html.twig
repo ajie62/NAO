@@ -36,9 +36,9 @@
             <div class="js-chosen-picture"></div>
 
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
-            <p>
+            <span cl>
                 {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
-            </p>
+            </span>
 
             <div class="mail-change-form">
                 {{ form_widget(form.mail) }}
@@ -55,7 +55,7 @@
 
         <div class="change-password">
             {% if errors is not empty %}
-                {{ errors }}
+                <div class="alert alert-danger">{{ errors }}</div>
             {% endif %}
             <div class="text-center new-pwd">
                 <a class="content-link" id="js-pwd-change" href="#">Changer de mot de passe</a>
@@ -71,7 +71,7 @@
 
                 <div class="btn-container">
                     <button class="no-border green-bg txt-white" type="submit">Enregistrer</button>
-                    <button class="no-border orange-bg txt-white" type="button">Annuler</button>
+                    <button id="js-cancel-pwd-change" class="no-border orange-bg txt-white" type="button">Annuler</button>
                 </div>
                 {{ form_end(newPasswordForm) }}
             </div>
@@ -101,10 +101,17 @@
                 $chosenPicture.text(fileName);
             });
 
+            var $pwdChangeForm = $('.pwd-change-form');
             var $pwdChangeLink = $('#js-pwd-change');
             $pwdChangeLink.on('click', function(e) {
                 e.preventDefault();
-                $('.pwd-change-form').fadeToggle();
+                $pwdChangeForm.show(500);
+            });
+
+            var $pwdChangeCancel = $('#js-cancel-pwd-change');
+            $pwdChangeCancel.on('click', function(e) {
+                e.preventDefault();
+                $pwdChangeForm.hide(500);
             });
         });
     </script>

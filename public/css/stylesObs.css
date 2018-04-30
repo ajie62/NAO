@@ -33,17 +33,24 @@ a[class^='step-link']:focus { color: #fff; }
 .step-link-map {
     position: absolute;
     bottom: 30px;
-    right: 30px }
+    right: 20px }
 
 .flex-step {
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 0 10px;
-    min-height: calc(100vh - 105px)
+    min-height: calc(100vh - 140px)
 }
 
-#menu3 .flex-step { justify-content: flex-start }
+#menu2 .step-buttons {
+    position: absolute;
+    bottom: 22px;
+    padding: 0 30px }
+
+#menu3 .flex-step {
+    justify-content: space-between;
+    padding-top: 20px }
 
 /* Add an image */
 #observation_image label { display: none; }
@@ -86,8 +93,6 @@ a[class^='step-link']:focus { color: #fff; }
     min-height: 100px;
     max-width: 100%;
     min-width: 100% }
-
-#menu3 .flex-step { margin-top: 20px }
 
 /*************** SEARCH OBS *************/
 .map-container { position: relative }

@@ -12,7 +12,7 @@
 {% block body %}
     <div class="main-layout">
         <h1>{{ isNewArticle ? 'Rédaction' : 'Édition' }} d'un article</h1>
-        {{ form_start(form) }}
+        {{ form_start(form, {attr: {'class':'set-article-form'}}) }}
 
         {{ form_label(form.title) }}<br/>
         {{ form_widget(form.title) }}
@@ -21,7 +21,15 @@
         </div>
 
         {{ form_label(form.image) }}
-        {{ form_widget(form.image) }}
+        {{ form_errors(form.image) }}
+        <div class="upload-btn-wrapper text-center">
+            <div class="btn-js btn blue-bg txt-white common-padding">
+                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+            </div>
+            {{ form_widget(form.image) }}
+            <div class="js-chosen-picture"></div>
+        </div>
+
         <div class="containerErrors" style="height: 20px">
             {{ form_errors(form.image) }}
         </div>
@@ -59,4 +67,19 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/js/froala_editor.pkgd.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/textEditorBlog.js') }}"></script>
+    <script>
+        $('.btn-js').on('click', function() {
+            $('.upload-btn-wrapper input[type="file"]').click();
+        });
+
+        /* IMAGE */
+        var $inputImage = $('#article_form_image_file');
+
+        $inputImage.on('change', function(e) {
+            var isFileUploaded = e.target.files.length > 0;
+            var $chosenPicture = $('.js-chosen-picture');
+            var fileName = (isFileUploaded) ? e.target.files[0].name : null;
+            $chosenPicture.text(fileName);
+        });
+    </script>
 {% endblock %}

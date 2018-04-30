@@ -150,6 +150,28 @@
     border-top: none!important;
     border-radius: 10px!important }
 
+.set-article-form label { font-size: 1.3em }
+
+#article_form_image label { display: none }
+
+.upload-btn-wrapper {
+    overflow: hidden;
+    position: relative }
+
+.upload-btn-wrapper .btn { font-weight: bold }
+
+.upload-btn-wrapper .btn:hover {
+    color: #ffffff;
+    cursor: pointer;
+    opacity: .8 }
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    left: 0; top: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: -1 }
+
 /* --------------------------------------------------------------------Style pour Affichage d'un article */
 .show-art-container { padding-bottom: 20px }
 
@@ -218,8 +240,13 @@
 .article-pagination {
     display:flex;
     justify-content: space-between;
-    margin-top : 35px;
-}
+    margin-top : 35px }
+
+.article-pagination a,
+.article-pagination a:hover,
+.article-pagination a:focus {
+    color: #3b3b3b;
+    text-decoration: none }
 
 .button-article-pagination {
     text-align: center;
@@ -227,24 +254,18 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-}
+    align-items: center }
 
 .button-article-pagination > div {
-    width:40px;
-    height:40px;
-    border-radius:50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     color: #fff;
     background-color : #FBB03B;
     border-style: none;
     display: flex;
     justify-content: center;
-    align-items: center;
-}
-
-.button-article-pagination a {
-    text-decoration: none;
-}
+    align-items: center }
 
 /* ---------------------------------------------------- Style boutons admin */
 .art-meta-first a { text-decoration: none }
