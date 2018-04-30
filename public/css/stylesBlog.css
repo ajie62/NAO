@@ -154,6 +154,8 @@
 
 #article_form_image label { display: none }
 
+.article-write { padding-top: 20px }
+
 .upload-btn-wrapper {
     overflow: hidden;
     position: relative }
