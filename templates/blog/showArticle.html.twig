@@ -6,9 +6,6 @@
 {% endblock %}
 {% block body %}
     <div class="container show-art-container common-min-height common-centering beige-bg">
-        {% if is_granted('ROLE_NATURALISTE') %}
-            <a href="{{ path('blog.add_article') }}" class="listeArticle-addArticle button-add"><span class="glyphicon glyphicon-plus"></span></a>
-        {% endif %}
         <div class="row article-heading">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                 <div>

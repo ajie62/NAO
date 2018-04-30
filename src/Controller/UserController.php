@@ -91,6 +91,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/profile/edit", name="user.edit_profile")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editProfil(Request $request){
         $user = $this->getUser();
@@ -119,7 +121,7 @@ class UserController extends AbstractController
                         $errors = 'Vous devez indiquer un nouveau mot de passe identique sur les deux champs.';
                     }
                 } else {
-                    $errors = 'L\'ancien mot de passe que vous avez indiqué est incorrecte';
+                    $errors = 'L\'ancien mot de passe que vous avez indiqué est incorrect.';
                 }
             }
         }
