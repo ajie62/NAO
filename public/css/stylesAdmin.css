@@ -82,7 +82,7 @@ div[class^="stats"] p { font-size: 38px }
     padding: 10px;
     border-radius: 10px }
 
-.admin-users {
+.admin-users, .admin-obs {
     display: flex;
     flex-direction: column }
 

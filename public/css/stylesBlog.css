@@ -8,6 +8,14 @@
     border-radius : 9px;
 }
 
+.delete-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center }
+
+.delete-article-content h1 { margin-bottom: 15px }
+.delete-article-content p { margin-bottom: 20px!important }
+
 /* --------------------------------------------------------------------Style Liste d'article */
 .hr { display : none }
 

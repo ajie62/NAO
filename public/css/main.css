@@ -302,6 +302,14 @@ footer h5 {
     padding: 11px 13px;
     text-decoration: none }
 
+.submit-button-validation {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    color: #8CC63F;
+    outline: none;
+}
+
 .terms-container h1 {
     font-size: 35px;
     line-height: 1.4 }

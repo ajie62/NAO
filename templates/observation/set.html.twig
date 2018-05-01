@@ -129,8 +129,8 @@
                     <div class="step-buttons text-right">
                         <a data-toggle="tab" href="#menu2" class="step-link visible-xs txt-white orange-bg"><span class="glyphicon glyphicon-chevron-left"></span></a>
                         {% if validation %}
-                            <button class="submit-button no-border green-bg" type="submit">Valider</button>
-                            <a href="{{ path('observation.delete', {'id': observation.id }) }}">Supprimer</a>
+                            <a class="txt-red" href="{{ path('observation.delete', {'id': observation.id }) }}"><span class="glyphicon glyphicon-remove"></span> Supprimer</a>
+                            <button class="submit-button submit-button-validation" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Valider</button>
                         {% else %}
                         <button class="submit-button no-border green-bg" type="submit"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
                         {% endif %}
