@@ -56,6 +56,18 @@ class ObservationRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
+    public function findNumberOfPublishedObservations(User $user){
+        return $this->createQueryBuilder('observation')
+            ->select('COUNT(observation)')
+            ->andWhere('observation.validated = :valid')
+            ->setParameter('valid', true)
+            ->andWhere('observation.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+
     public function findAwaitingObservationsOrderedByMoreOlder(){
         return $this->createQueryBuilder('observation')
             ->select('observation')

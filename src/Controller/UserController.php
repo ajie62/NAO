@@ -12,6 +12,7 @@ use App\Entity\Article;
 use App\Entity\Observation;
 use App\Form\EditProfilType;
 use App\Form\NewPasswordType;
+use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
 use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -47,13 +48,14 @@ class UserController extends AbstractController
         $numberArticlesPublished = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, true);
         $numberArticlesDrafts = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, false);
         $numberOfAwaitingObservations = $this->em->getRepository(Observation::class)->findNumberOfAwaitingObservations($user);
-
+        $numberOfPublishedObservations = $this->em->getRepository(Observation::class)->findNumberOfPublishedObservations($user);
         return $this->render('user/profile.html.twig', [
             'user' => $this->getUser(),
             'observations' => $listOfObservations,
             'numberArticlesPublished' => $numberArticlesPublished,
             'numberArticlesDrafts' => $numberArticlesDrafts,
-            'numberOfAwaitingObservations' => $numberOfAwaitingObservations
+            'numberOfAwaitingObservations' => $numberOfAwaitingObservations,
+            'numberOfPublishedObservations' => $numberOfPublishedObservations
         ]);
     }
 

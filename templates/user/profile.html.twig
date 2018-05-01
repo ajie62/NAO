@@ -75,7 +75,7 @@
                 {% endif %}
                 <div class="{{ particulier ? 'green-bg' : 'blue-bg' }}">
                     <h4>{% if naturaliste or admin %}Observations{% endif %}{% if particulier %}Validées{% endif %}</h4>
-                    <span class="stats-nb">{{ observations|length }}</span>
+                    <span class="stats-nb">{{ numberOfPublishedObservations }}</span>
                 </div>
             </div>
         </div>
