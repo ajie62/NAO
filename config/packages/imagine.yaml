@@ -29,3 +29,7 @@ liip_imagine :
             quality: 100
             filters:
                 thumbnail: { size: [30, 30], mode : outbound }
+        min_observation_picture:
+            quality: 100
+            filters:
+                thumbnail: { size: [30, 30], mode : outbound }

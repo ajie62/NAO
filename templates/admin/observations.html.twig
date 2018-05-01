@@ -8,21 +8,25 @@
 {% endblock %}
 
 {% block body %}
-    <div class="main-layout">
-        <input placeholder="Rechercher une observation" type="text">
-        {% for observation in observations %}
-            <a href="{{ path('observation.update', {'id' : observation.id }) }}">
-                <div class="observation">
-                    <img src="{{ asset(observation.image.webPath) | imagine_filter('image_obs_admin') }}">
-                    <span>{{ observation.observedAt | date('d/m/Y') }}</span>
-                    <span>{{ observation.species.name }}</span>
-                    {% if observation.validated == 0 %}
-                        <span class="glyphicon glyphicon-time"></span>
-                    {% endif %}
-                </div>
-            </a>
-            <hr>
-        {% endfor %}
+    <div class="main-layout admin-obs">
+        <h1>Liste des observations</h1>
+
+        <div class="list-users-container table-responsive">
+            <table class="table table-condensed">
+                <tbody>
+                {% for observation in observations %}
+                    <tr>
+                        <td>
+                            <img src="{{ asset(observation.image.webPath) | imagine_filter('min_observation_picture') }}" alt="{{ app.user.image.alt }}">
+                        </td>
+                        <td>{{ observation.observedAt|date('d/m/Y') }} <small>({{ observation.observedAt|ago }})</small></td>
+                        <td>{{ observation.species.name }}</td>
+                        <td>{{ observation.user.firstname ~ ' ' ~ observation.user.lastname }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
         {{ include('includes/adminNav.html.twig') }}
     </div>

@@ -81,7 +81,7 @@ class EmailManager
     public function sendNewPassword(User $user, $password)
     {
         $body = $this->twig->render('emails/newPass.html.twig', ['user' => $user, 'pass' => $password]);
-        $title = "Nouveau mot de passe.";
+        $title = "Votre nouveau mot de passe temporaire";
 
         $message = (new \Swift_Message($title))
             ->setFrom(self::EMAIL)

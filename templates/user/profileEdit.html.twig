@@ -12,21 +12,16 @@
             {% set particulier = ('ROLE_PARTICULIER' == role) %}
             {% set naturaliste = ('ROLE_NATURALISTE' == role) %}
             {% set admin = ('ROLE_ADMIN' == role) %}
+            <figure>
                 {% if user.image %}
-                    <figure>
-                        <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
-                        <div class="overlay">
-                            <div>Modifier</div>
-                        </div>
-                    </figure>
+                    <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
                 {% else %}
-                    <figure>
-                        <img id="profile-picture" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
-                        <div class="overlay">
-                            <div>Modifier</div>
-                        </div>
-                    </figure>
+                    <img id="profile-picture" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
                 {% endif %}
+                <div class="overlay">
+                    <div>Modifier</div>
+                </div>
+            </figure>
 
             {{ form_start(form) }}
 
@@ -36,7 +31,7 @@
             <div class="js-chosen-picture"></div>
 
             <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
-            <span cl>
+            <span class="user-role">
                 {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
             </span>
 
@@ -85,34 +80,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script>
-        $(function() {
-            var $editProfileImgInput = $('#edit_profil_image_file');
-            var $profilePicture = $('#profile-picture');
-
-            $profilePicture.parent('figure').find('> *').click(function() {
-                $editProfileImgInput.click();
-            });
-
-            $editProfileImgInput.on('change', function(e) {
-                var isFileUploaded = e.target.files.length > 0;
-                var $chosenPicture = $('.js-chosen-picture');
-                var fileName = (isFileUploaded) ? e.target.files[0].name : null;
-                $chosenPicture.text(fileName);
-            });
-
-            var $pwdChangeForm = $('.pwd-change-form');
-            var $pwdChangeLink = $('#js-pwd-change');
-            $pwdChangeLink.on('click', function(e) {
-                e.preventDefault();
-                $pwdChangeForm.show(500);
-            });
-
-            var $pwdChangeCancel = $('#js-cancel-pwd-change');
-            $pwdChangeCancel.on('click', function(e) {
-                e.preventDefault();
-                $pwdChangeForm.hide(500);
-            });
-        });
-    </script>
+    <script src="{{ asset('js/profileUpdate.js') }}"></script>
 {% endblock %}

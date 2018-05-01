@@ -76,9 +76,38 @@ div[class^="stats"] p { font-size: 38px }
     padding: 10px;
     border-radius: 10px }
 
+.admin-users, .admin-obs {
+    display: flex;
+    flex-direction: column }
+
+.admin-no-profile {
+    height: 30px;
+    width: 30px }
+
+.list-users-container a:hover, .list-users-container a:focus { color: #FBB03B }
+
+.list-users-container {
+    border: none;
+    flex: 1;
+    margin-top: 20px }
+
+
+.list-users-container table td {
+    border-top: 1px solid #8CC63F!important;
+    padding: 10px!important;
+    vertical-align: middle!important }
+
 .to-index span,
 .to-users span,
 .to-observations span { font-size: 24px }
+
+.admin-actions-for-user a:first-child { margin-top: 15px }
+.admin-actions-for-user a:not(:first-child) { margin: 8px 0 10px 0 }
+
+.generate-new-pwd:hover, .generate-new-pwd:focus { color: #fbb03b }
+.pass-naturaliste:hover, .pass-naturaliste:focus { color: #8cc63f }
+.block-user:hover, .block-user:focus { color: #fbb03b }
+.delete-user:hover, .delete-user:focus { color: #ff6d6d }
 
 @media screen and (min-width: 480px) {
     .admin-stats { grid-template-columns: repeat(3, 1fr) }

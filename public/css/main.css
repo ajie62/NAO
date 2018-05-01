@@ -126,6 +126,66 @@
 .the-error h1 { font-size: 2.5em }
 .the-error p { font-size: 1.2em }
 
+/* Update profile */
+.profile-header figure {
+    display: inline-block;
+    margin: 0 auto;
+    position: relative }
+
+.profile-header figure img { vertical-align: middle }
+
+.profile-header figure:hover .overlay { opacity: 1 }
+
+.overlay {
+    background: rgba(255,255,255,.8);
+    border-radius: 50%;
+    color: #3b3b3b;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    top: 0; right: 0; bottom: 0; left: 0;
+    opacity: 0;
+    position: absolute;
+    transition: .5s ease }
+
+.overlay > div {
+    position: absolute;
+    top: 50%; left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) }
+
+.profile-header img {
+    border-radius: 50%;
+    height: 200px;
+    width: 200px }
+
+.profile-header .upload-btn-wrapper { margin-bottom: 20px }
+
+.edit-profile-container form input { margin: 20px 0 }
+.edit-profile-container form textarea { margin: 0 }
+
+.edit-profile-container .btn-container {
+    margin: 10px;
+    text-align: center }
+
+#edit_profil_image_file,
+#edit_profil_image label { display: none }
+
+.profile-header, .change-password {
+    margin: 0 auto;
+    max-width: 340px }
+
+.mail-change-form {
+    margin: 0 auto;
+    max-width: 280px }
+
+.new-pwd { margin: 10px 0; }
+.pwd-change-form { display: none }
+.mail-change-form input { text-align: center }
+
 /* GENERAL */
 html, body { height: 100%; }
 
@@ -368,7 +428,6 @@ div[class^="frame"] .content {
     .menu { padding: 0 15px }
     .g-recaptcha { display: inline-block }
     .contact-container { padding: 15px 40px }
-    .btn-container { text-align: right }
 
     .login-form, .register-form {
         background : fixed url(../images/fondDesktop.png);
