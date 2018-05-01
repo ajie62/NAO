@@ -167,14 +167,39 @@ function deleteMarkers() {
 
 // Creates all info windows for the markers
 function createInfoWindow(marker, observation, species) {
-    var content = '<div style="padding:0; margin:0;">' +
-        '<img src="images/' + observation.image.id + '.' + observation.image.url +'" />' +
-        '<h3>' + species.name + '</h3>' +
-        '<p>Publié par ' + observation.userFirstname + ' ' + observation.userLastname +
-        ' le ' + observation.observedAt +
-        '</div>';
+    var comment = observation.comment === null ? 'Aucun' : observation.comment;
 
-    var infoWindow = new google.maps.InfoWindow({ content: content });
+    var isDead = observation.deceased === true;
+    var flightDirection = '<li><strong>Direction du vol : </strong>'+ observation.flightDirection +'</li>';
+    var deathCause = '<li><strong>Cause de la mort : </strong>' + observation.deathCause + '</li>';
+    var correctContent = null;
+
+    if (isDead) {
+        correctContent = deathCause;
+    } else {
+        correctContent = flightDirection;
+    }
+
+    var content = '<div style="padding:0; margin:0;">' +
+        '<img class="search-obs-img" src="images/' + observation.image.id + '.' + observation.image.url +'" />' +
+        '<h3>' + species.name + '</h3>' +
+        '<p>par ' + observation.userFirstname + ' ' + observation.userLastname +
+        ' le ' + observation.observedAt +
+        '</div>' +
+        '<div>' +
+        '<ul class="infoWindow-list">' +
+        '<li><strong>Famille : </strong>'+ species.family +'</li>' +
+        '<li><strong>Ordre : </strong>'+ species.order +'</li>' +
+        '<li><strong>Sexe : </strong>'+ observation.sex +'</li>' +
+        '<li><strong>Code Atlas : </strong>'+ observation.atlasCode +'</li>' +
+        correctContent +
+        '<li><strong>Commentaire : </strong>'+ comment + '</li>' +
+        '</ul>' +
+        '</div>'
+        console.log(observation)
+    ;
+
+    var infoWindow = new google.maps.InfoWindow({ content: content, maxWidth: 200 });
     infoWindow.open(map, marker);
 }
 

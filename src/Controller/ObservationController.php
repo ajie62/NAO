@@ -266,7 +266,7 @@ class ObservationController extends AbstractController
                     'id' => $result->getId(),
                     'name' => $result->getName(),
                     'family' => $result->getFamily(),
-                    'order' => $result->getOrder()
+                    'order' => $result->getOrder(),
                 ];
             }
             $output = ['count' => count($output), 'items' => $output];

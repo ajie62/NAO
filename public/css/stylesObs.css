@@ -20,6 +20,12 @@
     top: 0;
     left: 0 }
 
+.infoWindow-list {
+    font-size: 1.2em;
+    list-style: none;
+    padding: 0;
+}
+
 /* Links to next step */
 a[class^='step-link'] {
     border-radius: 50%;
