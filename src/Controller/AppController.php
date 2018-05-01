@@ -57,14 +57,6 @@ class AppController extends AbstractController
     }
 
     /**
-     * Logout
-     * @Route("/logout", name="app.logout")
-     */
-    public function logout()
-    {
-    }
-
-    /**
      * Contact page
      * @Route("/contact", name="app.contact")
      *
