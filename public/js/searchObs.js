@@ -108,6 +108,8 @@ var Species = {
     order: ''
 };
 
+var infoWindow = null;
+
 function createAndHydrateSpecies(ajaxResponse, iterator) {
     var species = Object.create(Species);
     species.id = ajaxResponse.items[iterator].id;
@@ -130,6 +132,12 @@ function searchMap() {
             position: google.maps.ControlPosition.LEFT_BOTTOM
         }
     });
+
+    google.maps.event.addListener(map, 'click', function() {
+        if (infoWindow){
+            infoWindow.close();
+        }
+    });
 }
 
 // Adds a marker to the map and push to the array
@@ -141,11 +149,16 @@ function addMarker(location, observation, species) {
     });
 
     marker.addListener('click', function() {
+        if (infoWindow){
+            infoWindow.close();
+        }
         createInfoWindow(marker, observation, species)
     });
 
     markers.push(marker);
 }
+
+
 
 function setMapOnAll(map) {
     for (var i=0; i<markers.length; ++i)
@@ -164,13 +177,13 @@ function deleteMarkers() {
 // Creates all info windows for the markers
 function createInfoWindow(marker, observation, species) {
     var content = '<div style="padding:0; margin:0;">' +
-        '<img src="images/' + observation.image.id + '.' + observation.image.url +'" />' +
+        '<img src="'+observation.image+'" />' +
         '<h3>' + species.name + '</h3>' +
         '<p>Publié par ' + observation.userFirstname + ' ' + observation.userLastname +
         ' le ' + observation.observedAt +
         '</div>';
 
-    var infoWindow = new google.maps.InfoWindow({ content: content });
+    infoWindow = new google.maps.InfoWindow({ content: content });
     infoWindow.open(map, marker);
 }
 

@@ -21,7 +21,10 @@ class ImageType extends AbstractType
     {
         $builder
             ->add('file', FileType::class, [
-                'error_bubbling' => true
+                'error_bubbling' => false,
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\Image()
+                ]
             ])
         ;
     }
