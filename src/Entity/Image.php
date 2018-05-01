@@ -92,7 +92,7 @@ class Image
 
         if (null !== $this->url){
             $this->tempFilename = $this->url;
-            $this->url = null;
+//            $this->url = null;
             $this->alt = null;
         }
     }

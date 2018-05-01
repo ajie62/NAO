@@ -33,6 +33,8 @@ services:
         arguments:
             $entityManager: '@doctrine.orm.entity_manager'
             $choices:  '%choices%'
+            $liipImagine: '@liip_imagine.controller'
+            $cacheManager: '@liip_imagine.cache.manager'
 
     App\Controller\BlogController:
             arguments:

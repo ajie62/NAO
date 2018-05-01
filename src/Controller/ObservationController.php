@@ -13,6 +13,12 @@ use App\Entity\Species;
 use App\Entity\User;
 use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
+use function dump;
+use Liip\ImagineBundle\Controller\ImagineController;
+use Liip\ImagineBundle\Imagine\Cache\CacheManager;
+use Liip\ImagineBundle\Imagine\Data\DataManager;
+use Liip\ImagineBundle\Imagine\Filter\FilterManager;
+use Liip\ImagineBundle\LiipImagineBundle;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -29,15 +35,19 @@ class ObservationController extends AbstractController
     /** @var array Choices to build the observation form */
     private $choices;
 
+    private $liipImagine;
+    private $cacheManager;
     /**
      * ObservationController constructor.
      * @param EntityManagerInterface $entityManager
      * @param array $choices
      */
-    public function __construct(EntityManagerInterface $entityManager, array $choices)
+    public function __construct(EntityManagerInterface $entityManager, array $choices, ImagineController $liipImagine, CacheManager $cacheManager)
     {
         $this->em = $entityManager;
         $this->choices = $choices;
+        $this->liipImagine = $liipImagine;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -221,10 +231,17 @@ class ObservationController extends AbstractController
             // $observedAt = $observation->getObservedAt()->format($dateFormat);
             $observedAt = date_format($observation->getObservedAt(), $dateFormat);
             $updatedAt = null;
+//            $processedImage = $this->dataManager->find('min_infoWindow_picture', $observation->getImage()->getWebPath());
+//
+//            dump($this->liipImagineBundle->applyFilter($processedImage, 'min_infoWindow_picture')->getContent());die;
+            $imageManagerResponse = $this->liipImagine->filterAction($request, $observation->getImage()->getWebPath(),'min_infoWindow_picture');
+            $sourcePath = $this->cacheManager->getBrowserPath($observation->getImage()->getWebPath(), 'min_infoWindow_picture');
+//            dump($imageManagerResponse);
+//            dump($sourcePath);
+//            die;
 
             if ($observation->getUpdatedAt())
                 $updatedAt = date_format($observation->getUpdatedAt(), $dateFormat);
-
             if ($observation->isValidated()) {
                 $observations[] = [
                     'id' => $observation->getId(),
@@ -238,7 +255,7 @@ class ObservationController extends AbstractController
                     'comment' => $observation->getComment(),
                     'observedAt' => $observedAt,
                     'updatedAt' => $updatedAt,
-                    'image' => $observation->getImage(),
+                    'image' => $sourcePath,
                     'userFirstname' => $userFirstname,
                     'userLastname' => $userLastname
                 ];
