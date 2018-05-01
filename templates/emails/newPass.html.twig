@@ -1,14 +1,11 @@
 <h3>Bonjour {{ user.firstname|capitalize }} !</h3>
 
-<p>Nous vous avons générer un nouveau mot de passe : </p>
+<p>
+    Nous vous avons générer un nouveau mot de passe temporaire : <strong>{{ pass }}</strong>.<br>
+    Par sécurité, nous vous suggérons de le modifier via le lien <em>modifier</em> de votre
+    profil immédiatement après avoir lu cet e-mail.
+</p>
 
-<ul>
-    <li><strong>Prénom :</strong> {{ user.firstname }}</li>
-    <li><strong>Nom :</strong> {{ user.lastname }}</li>
-    <li><strong>E-mail :</strong> {{ user.mail }}</li>
-    <li><strong>Mot de passe : </strong> *******</li>
-</ul>
-
-<p>Vous pouvez <a href="{{ url('observation.add') }}">poster votre première observation</a> dès maintenant.</p>
+<p>Cordialement,</p>
 
 <p>L'équipe</p>

@@ -70,9 +70,17 @@ class EmailManager
         $this->mailer->send($message);
     }
 
+    /**
+     * New temporary password sent by admin
+     * @param User $user
+     * @param $password
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
     public function sendNewPassword(User $user, $password)
     {
-        $body = $this->twig->render('emails/newPass.html.twig', ['pass' => $password]);
+        $body = $this->twig->render('emails/newPass.html.twig', ['user' => $user, 'pass' => $password]);
         $title = "Nouveau mot de passe.";
 
         $message = (new \Swift_Message($title))

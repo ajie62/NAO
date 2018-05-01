@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Form\ContactType;
 use App\Form\LoginType;
 use App\Form\RegistrationType;
+use App\Service\EmailManager;
 use App\Service\SecurityInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use ReCaptcha\ReCaptcha;
@@ -25,11 +26,15 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class AppController extends AbstractController
 {
+    /** @var EntityManagerInterface $em */
     private $em;
+    /** @var EmailManager $emailManager */
+    private $emailManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, EmailManager $emailManager)
     {
         $this->em = $entityManager;
+        $this->emailManager = $emailManager;
     }
 
     /**
@@ -62,6 +67,9 @@ class AppController extends AbstractController
      *
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function contact(Request $request)
     {
@@ -78,7 +86,13 @@ class AppController extends AbstractController
             if (!$response->isSuccess()) {
                 $message = "Le reCAPTCHA n'a pas été correctement entré. Veuillez réessayer.";
             } else {
-                dump($form->getData()); die;
+                $this->emailManager->sendContactMail($contact);
+                $this->em->persist($contact);
+                $this->em->flush();
+
+                $this->addFlash('mail_sent', 'Votre message a bien été envoyé !');
+
+                return $this->redirectToRoute('app.contact');
             }
         }
 

@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\EditProfilType;
+use App\Service\EmailManager;
 use Doctrine\ORM\EntityManagerInterface;
 use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -93,8 +94,15 @@ class AdminController extends Controller
 
     /**
      * @Route("/users/generatePassword/{id}", name="admin.users_generatePassword")
+     * @param User $user
+     * @param EmailManager $emailManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function generatePasswordUser(User $user){
+    public function generatePasswordUser(User $user, EmailManager $emailManager)
+    {
         $date = new \DateTime('now');
         $newPass =
             $user->getId().
@@ -110,14 +118,16 @@ class AdminController extends Controller
         $user->setPassword($this->passwordEncoder->encodePassword($user, $newPass));
         $this->em->persist($user);
         $this->em->flush();
-//        $mailer = $this->get('App\Service\EmailManager');
-//        $mailer->sendNewPassword($user, $newPass);
-//        dump($newPass);die;
+
+        $emailManager->sendNewPassword($user, $newPass);
+
         return $this->redirectToRoute('admin.users_edit', ['id' => $user->getId()]);
     }
 
     /**
      * @Route("/users/passusertonaturaliste/{id}", name="admin.users_passNaturalist")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function passUserToNaturalisteRole(User $user){
         if ($user->getRoles() == [$user::NATURALISTE]){

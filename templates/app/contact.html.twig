@@ -3,6 +3,9 @@
 {% block title %}Contact{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('mail_sent') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
     <div class="contact-container main-layout">
         <h1>Besoin de nous contacter ?</h1>
 

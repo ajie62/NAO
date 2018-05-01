@@ -35,6 +35,10 @@ class Security implements SecurityInterface
      * @var TokenStorageInterface
      */
     private $storage;
+    /**
+     * @var EmailManager
+     */
+    private $emailManager;
 
     /**
      * Security constructor.
@@ -42,22 +46,28 @@ class Security implements SecurityInterface
      * @param UserPasswordEncoderInterface $passwordEncoder
      * @param UrlGeneratorInterface $urlGenerator
      * @param TokenStorageInterface $storage
+     * @param EmailManager $emailManager
      */
     public function __construct(
         EntityManagerInterface $entityManager,
         UserPasswordEncoderInterface $passwordEncoder,
         UrlGeneratorInterface $urlGenerator,
-        TokenStorageInterface $storage)
+        TokenStorageInterface $storage,
+        EmailManager $emailManager)
     {
         $this->entityManager = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
         $this->urlGenerator = $urlGenerator;
         $this->storage = $storage;
+        $this->emailManager = $emailManager;
     }
 
     /**
      * @param FormInterface $form
      * @return RedirectResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function handleSubmittedRegistrationForm(FormInterface $form): RedirectResponse
     {
@@ -67,6 +77,8 @@ class Security implements SecurityInterface
         $user->setPassword($password);
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        $this->emailManager->sendWelcomeMail($user);
 
         $providerKey = 'db';
         $token = new UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
