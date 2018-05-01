@@ -55,7 +55,7 @@ $(function() {
         }
     });
 
-    var speciesId;
+    var speciesId = null;
 
     $(document).on('click', '.species', function(){
 
@@ -69,12 +69,8 @@ $(function() {
     });
 
     $("#search-ok-button").on('click', function() {
-        if (speciesId === undefined) {
-            return;
-        }
 
         if (markers.length > 0) deleteMarkers();
-
         if(speciesId !== null){
             $.ajax({type: "POST", url: SEARCH_URL, data: { id: speciesId }, dataType: 'json', timeout: 3000,
                 success: function(response) {
