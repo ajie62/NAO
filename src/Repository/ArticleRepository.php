@@ -46,6 +46,7 @@ class ArticleRepository extends EntityRepository
             ->andWhere('article.id < :articleId')
             ->setParameter('articleId', $article->getId())
             ->andWhere('article.published = true')
+            ->orderBy('article.id', 'DESC')
             ->setFirstResult(0)
             ->setMaxResults(1)
             ->getQuery()

@@ -41,18 +41,8 @@ $(function () {
 
             }
         }).done(function () {
-            var date = new Date();
-            var month = date.getMonth() < 10 ? '0'+ (date.getMonth()+1) : (date.getMonth()+1);
-            var formatedDate = date.getDate() +
-                '/'+
-                month +
-                '/'+
-                date.getFullYear();
-            var formatedHour = date.getHours()+'h'+date.getMinutes();
             var $containerComments = $('#comments');
             var template = $containerComments.attr('comment-prototype')
-                .replace(/__date__/g, formatedDate)
-                .replace(/__hour__/g, formatedHour)
                 .replace(/__comment__/g, content.val())
                 .replace(/__id__/g, idnewComment);
             $containerComments.append(template);

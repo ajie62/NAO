@@ -90,7 +90,7 @@
 
                             <div class="article-comment-info">
                                 <h4 class="nameUser">{{ user.firstname }} {{ user.lastname }}</h4>
-                                <span class="date">Le __date__ à __hour__</span>
+                                <span class="date">{{ 'now'|date|ago }}</span>
                             </div>
                             </div>
 
@@ -123,7 +123,7 @@
 
                                 <p class="contentComment">{{ comment.content }}</p>
                             </article>
-                            {% if is_granted('ROLE_NATURALISTE') or (app.user.id is not null and app.user.id == comment.user.id) %}
+                            {% if is_granted('ROLE_NATURALISTE') or (app.user and app.user.id == comment.user.id) %}
                                 <div class="article-comment-admin">
                                     <button type="button" class="deleteButton" data-url="{{ path('blog.delete_Comment', {'id' : comment.id }) }}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Supprimer</button>
                                 </div>
