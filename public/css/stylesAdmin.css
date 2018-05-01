@@ -21,9 +21,15 @@ div[class^="stats"] p { font-size: 38px }
 .progress {
     border-radius: 10px;
     height: 25px;
-    margin-bottom: 5px }
+    margin-bottom: 5px;
+    position: relative }
 
 .progress h5 { padding: 5px }
+
+.progress > h5 {
+    padding: 5px;
+    position: absolute;
+    right: 0 }
 
 .registered-users,
 .submitted-observations {
@@ -76,7 +82,7 @@ div[class^="stats"] p { font-size: 38px }
     padding: 10px;
     border-radius: 10px }
 
-.admin-users, .admin-obs {
+.admin-users {
     display: flex;
     flex-direction: column }
 
@@ -91,10 +97,15 @@ div[class^="stats"] p { font-size: 38px }
     flex: 1;
     margin-top: 20px }
 
+.list-users-container table th {
+    border-bottom: none!important;
+    text-align: center;
+}
 
 .list-users-container table td {
     border-top: 1px solid #8CC63F!important;
     padding: 10px!important;
+    text-align: center;
     vertical-align: middle!important }
 
 .to-index span,

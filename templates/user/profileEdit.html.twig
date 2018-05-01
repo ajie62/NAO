@@ -71,9 +71,11 @@
                 {{ form_end(newPasswordForm) }}
             </div>
 
+            {% if not is_granted('ROLE_NATURALISTE') %}
             <div class="text-center">
                 <a class="naturaliste-pro txt-green" href="{{ url('app.contact') }}">Demander à passer Naturaliste professionnel</a>
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
