@@ -176,11 +176,14 @@ function deleteMarkers() {
 
 // Creates all info windows for the markers
 function createInfoWindow(marker, observation, species) {
-    var comment = observation.comment === null ? 'Aucun' : observation.comment;
-
+    var commentVal = observation.comment === null ? 'Aucun' : observation.comment;
+    var sexVal = observation.sex === null ? 'Indéfini' : observation.sex;
+    var flightDirectionVal = observation.flightDirection === null ? 'Indéfinie' : observation.flightDirection;
+    var deathCauseVal = observation.deathCause === null ? 'Indéfinie' : observation.deathCause;
     var isDead = observation.deceased === true;
-    var flightDirection = '<li><strong>Direction du vol : </strong>'+ observation.flightDirection +'</li>';
-    var deathCause = '<li><strong>Cause de la mort : </strong>' + observation.deathCause + '</li>';
+
+    var flightDirection = '<li><strong>Direction du vol : </strong>'+ flightDirectionVal +'</li>';
+    var deathCause = '<li><strong>Cause de la mort : </strong>' + deathCauseVal + '</li>';
     var correctContent = null;
 
     if (isDead) {
@@ -199,15 +202,15 @@ function createInfoWindow(marker, observation, species) {
         '<ul class="infoWindow-list">' +
         '<li><strong>Famille : </strong>'+ species.family +'</li>' +
         '<li><strong>Ordre : </strong>'+ species.order +'</li>' +
-        '<li><strong>Sexe : </strong>'+ observation.sex +'</li>' +
+        '<li><strong>Sexe : </strong>'+ sexVal +'</li>' +
         '<li><strong>Code Atlas : </strong>'+ observation.atlasCode +'</li>' +
         correctContent +
-        '<li><strong>Commentaire : </strong>'+ comment + '</li>' +
+        '<li><strong>Commentaire : </strong>'+ commentVal + '</li>' +
         '</ul>' +
         '</div>'
     ;
 
-    infoWindow = new google.maps.InfoWindow({ content: content });
+    infoWindow = new google.maps.InfoWindow({ content: content, maxWidth: 200 });
     infoWindow.open(map, marker);
 }
 

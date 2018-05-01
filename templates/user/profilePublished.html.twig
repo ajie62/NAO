@@ -1,7 +1,12 @@
 {% extends 'base.html.twig' %}
-{% block title %}
-    Mes articles
+
+{% block title %}Mes articles - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
+
 {% block body %}
     <div class="published-container main-layout">
         <h2>Mes publications</h2>
@@ -23,13 +28,15 @@
                             <td>{{ article.content|length > 40 ? article.content|striptags|slice(0, 40) ~ '...' : article.content|striptags }}</td>
                             <td>{{ article.createdAt | date('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="txt-orange"><span class="glyphicon glyphicon-pencil"></span></a>
-                                <a href="#" class="txt-orange"><span class="glyphicon glyphicon-trash"></span></a>
+                                <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="txt-orange published-update"><span class="glyphicon glyphicon-pencil"></span></a>
+                                <a href="{{ url('blog.delete_article', {'id' : article.id }) }}" class="txt-red published-delete"><span class="glyphicon glyphicon-trash"></span></a>
                             </td>
                         </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+
+        <a href="{{ url('user.profile') }}" class="profile-action txt-orange">Retour au profil</a>
     </div>
 {% endblock %}
