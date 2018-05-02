@@ -8,11 +8,8 @@
 
 namespace App\Controller;
 
-
-use App\Entity\Article;
 use App\Entity\Comment;
 use function count;
-use function dump;
 use function json_encode;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

@@ -5,7 +5,17 @@
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
 
+{% block title %}Édition de profil - {{ parent() }}{% endblock %}
+
 {% block body %}
+    {% for message in app.flashes('new_password_ok') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('user_profile_edited') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
         <div class="profile-header text-center">
             {% set role = user.roles[0] %}

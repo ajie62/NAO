@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
 
-{% block title %} Mes brouillons - {{ parent() }}{% endblock %}
+{% block title %}Mes brouillons - {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="draft-container main-layout">
@@ -27,8 +27,8 @@
                             <td>{{ article.content|length > 40 ? article.content|striptags|slice(0, 40) ~ '...' : article.content|striptags }}</td>
                             <td>{{ article.createdAt | date('d/m/Y') }}</td>
                             <td>
-                                <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="content-link draft-update"><i class="fas fa-edit"></i></a>
-                                <a href="{{ url('blog.delete_article', {'id' : article.id }) }}" class="content-link txt-red draft-delete"><i class="fas fa-trash-alt"></i></a>
+                                <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="txt-orange draft-update"><i class="fas fa-edit"></i></a>
+                                <a href="{{ url('blog.delete_article', {'id' : article.id }) }}" class="txt-red draft-delete"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                 {% endfor %}

@@ -1,10 +1,14 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
 {% endblock %}
+
+{% block title %}Observations en attente - {{ parent() }}{% endblock %}
+
 {% block body %}
-    {% for message in app.flashes('notice') %}
+    {% for message in app.flashes('observation_deleted') %}
         <div class="alert alert-success">{{ message }}</div>
     {% endfor %}
 

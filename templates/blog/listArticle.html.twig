@@ -5,7 +5,17 @@
     <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
 {% endblock %}
 
+{% block title %}Blog - {{ parent() }}{% endblock %}
+
 {% block body %}
+    {% for message in app.flashes('article_deleted') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('article_set') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <div class="blog-list-container main-layout {% if articles|length == 0 %}flex-centered-all{% endif %}">
         <h1 class="text-center">Le blog NAO</h1>
         {% if is_granted('ROLE_NATURALISTE') %}

@@ -37,12 +37,20 @@ class ObservationController extends AbstractController
 
     private $liipImagine;
     private $cacheManager;
+
     /**
      * ObservationController constructor.
      * @param EntityManagerInterface $entityManager
      * @param array $choices
+     * @param ImagineController $liipImagine
+     * @param CacheManager $cacheManager
      */
-    public function __construct(EntityManagerInterface $entityManager, array $choices, ImagineController $liipImagine, CacheManager $cacheManager)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        array $choices,
+        ImagineController $liipImagine,
+        CacheManager $cacheManager
+    )
     {
         $this->em = $entityManager;
         $this->choices = $choices;
@@ -59,9 +67,7 @@ class ObservationController extends AbstractController
     {
         $observationList = $this->em->getRepository(Observation::class)->findAll();
 
-        return $this->render('observation/search.html.twig', [
-            'observationList' => $observationList,
-        ]);
+        return $this->render('observation/search.html.twig', ['observationList' => $observationList,]);
     }
 
     /**
@@ -108,14 +114,12 @@ class ObservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid() && $request->isMethod('DELETE')) {
             $this->em->remove($observation);
             $this->em->flush();
-            $this->addFlash('notice', 'L\'observation a bien été supprimée !');
+            $this->addFlash('observation_deleted', 'L\'observation a bien été supprimée !');
 
             return $this->redirectToRoute('observation.awaiting');
         }
 
-        return $this->render('observation/delete.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('observation/delete.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -127,9 +131,7 @@ class ObservationController extends AbstractController
     {
         $obsAwaiting = $this->em->getRepository('App:Observation')->findAwaitingObservationsOrderedByMoreOlder();
 
-        return $this->render('observation/awaiting.html.twig', [
-           'obsAwaiting' => $obsAwaiting
-        ]);
+        return $this->render('observation/awaiting.html.twig', ['obsAwaiting' => $obsAwaiting]);
     }
 
     /**
@@ -159,22 +161,23 @@ class ObservationController extends AbstractController
         $isNewObservation = $observation->getId() === null;
         $speciesList = $this->em->getRepository(Species::class)->findBy([], ['id' => 'desc']);
         $speciesId = 0;
+
         if (!$isNewObservation){
             $speciesId = $observation->getSpecies()->getId();
         }
+
         $form = $this->createForm(ObservationType::class, $observation, ['choices_data' => $this->choices]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if (!$validation){
+            if (!$validation)
                 $observation->setUser($user);
-            }
 
-            if (!$isNewObservation) {
+            if (!$isNewObservation)
                 $observation->setUpdatedAt(new \DateTime());
-            }
 
-            if (in_array(User::ADMIN, $user->getRoles()) || in_array(User::NATURALISTE, $user->getRoles())) {
+            if (in_array(User::ADMIN, $user->getRoles()) ||
+                in_array(User::NATURALISTE, $user->getRoles())) {
                 $observation->setValidated(true);
             }
 
@@ -182,9 +185,9 @@ class ObservationController extends AbstractController
             $this->em->flush();
 
             $notice = sprintf("L'observation a bien été %s", $isNewObservation ? 'ajoutée !' : 'mise à jour !');
-            $this->addFlash('notice', $notice);
+            $this->addFlash('observation_set', $notice);
 
-            return $this->redirectToRoute('observation.search');
+            return $this->redirectToRoute('user.profile');
         }
 
         return $this->render('observation/set.html.twig', [
@@ -227,21 +230,14 @@ class ObservationController extends AbstractController
             $userFirstname = ucfirst($user->getFirstname());
             $userLastname = ucfirst($user->getLastname());
             $dateFormat = 'd/m/Y';
-            // TODO : Check whether working
-            // $observedAt = $observation->getObservedAt()->format($dateFormat);
             $observedAt = date_format($observation->getObservedAt(), $dateFormat);
             $updatedAt = null;
-//            $processedImage = $this->dataManager->find('min_infoWindow_picture', $observation->getImage()->getWebPath());
-//
-//            dump($this->liipImagineBundle->applyFilter($processedImage, 'min_infoWindow_picture')->getContent());die;
             $imageManagerResponse = $this->liipImagine->filterAction($request, $observation->getImage()->getWebPath(),'min_infoWindow_picture');
             $sourcePath = $this->cacheManager->getBrowserPath($observation->getImage()->getWebPath(), 'min_infoWindow_picture');
-//            dump($imageManagerResponse);
-//            dump($sourcePath);
-//            die;
 
             if ($observation->getUpdatedAt())
                 $updatedAt = date_format($observation->getUpdatedAt(), $dateFormat);
+
             if ($observation->isValidated()) {
                 $observations[] = [
                     'id' => $observation->getId(),

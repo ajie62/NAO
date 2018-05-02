@@ -20,6 +20,7 @@ use ReCaptcha\ReCaptcha;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -43,9 +44,14 @@ class AppController extends AbstractController
      *
      * @param SecurityInterface $securityHandler
      * @param Request $request
+     * @param FlashBagInterface $flashBag
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function homepage(SecurityInterface $securityHandler, Request $request)
+    public function homepage(
+        SecurityInterface $securityHandler,
+        Request $request,
+        FlashBagInterface $flashBag
+    )
     {
         if ($this->getUser())
             return $this->redirectToRoute('user.profile');
@@ -54,7 +60,7 @@ class AppController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
-            return $securityHandler->handleSubmittedRegistrationForm($form);
+            return $securityHandler->handleSubmittedRegistrationForm($form, $flashBag);
 
         return $this->render('app/index.html.twig', [
             'registration_form' => $form->createView()

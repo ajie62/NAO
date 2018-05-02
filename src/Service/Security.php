@@ -12,6 +12,7 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -64,12 +65,13 @@ class Security implements SecurityInterface
 
     /**
      * @param FormInterface $form
+     * @param FlashBagInterface $flashBag
      * @return RedirectResponse
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function handleSubmittedRegistrationForm(FormInterface $form): RedirectResponse
+    public function handleSubmittedRegistrationForm(FormInterface $form, FlashBagInterface $flashBag): RedirectResponse
     {
         /** @var User $user */
         $user = $form->getData();
@@ -83,6 +85,11 @@ class Security implements SecurityInterface
         $providerKey = 'db';
         $token = new UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
         $this->storage->setToken($token);
+
+        $flashBag->add(
+            'registration_success',
+            'Votre inscription a été réalisée avec succès. Bienvenue parmi nous !'
+        );
 
         return new RedirectResponse( $this->urlGenerator->generate('user.profile') );
     }

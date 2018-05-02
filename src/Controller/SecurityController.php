@@ -16,6 +16,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -42,9 +43,14 @@ class SecurityController extends AbstractController
      *
      * @param Request $request
      * @param SecurityInterface $securityHandler
+     * @param FlashBagInterface $flashBag
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function register(Request $request, SecurityInterface $securityHandler)
+    public function register(
+        Request $request,
+        SecurityInterface $securityHandler,
+        FlashBagInterface $flashBag
+    )
     {
         if ($this->getUser())
             return $this->redirectToRoute('app.homepage');
@@ -53,12 +59,10 @@ class SecurityController extends AbstractController
 
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            return $securityHandler->handleSubmittedRegistrationForm($form);
+            return $securityHandler->handleSubmittedRegistrationForm($form, $flashBag);
         }
 
-        return $this->render('security/registration.html.twig', [
-            'registration_form' => $form->createView(),
-        ]);
+        return $this->render('security/registration.html.twig', ['registration_form' => $form->createView()]);
     }
 
     /**
@@ -70,9 +74,8 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $utils)
     {
-        if ($this->getUser()) {
+        if ($this->getUser())
             return $this->redirectToRoute('app.homepage');
-        }
 
         $lastUsername = $utils->getLastUsername();
         $lastError = $utils->getLastAuthenticationError();

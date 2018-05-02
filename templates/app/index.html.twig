@@ -1,12 +1,16 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/stylesLandingPage.css') }}">
 {% endblock %}
 
-{% block title %}Nos Amis les Oiseaux{% endblock %}
+{% block title %}Accueil - {{ parent() }}{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('user_edited') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
     <div class="header-home">
         <video class="hidden-xs" id="bgvid" playsinline autoplay loop muted>
             <source src="{{ asset('videos/introNao.mp4') }}">

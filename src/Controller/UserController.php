@@ -12,14 +12,11 @@ use App\Entity\Article;
 use App\Entity\Observation;
 use App\Form\EditProfilType;
 use App\Form\NewPasswordType;
-use App\Form\ObservationType;
 use Doctrine\ORM\EntityManagerInterface;
-use function dump;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
@@ -30,7 +27,10 @@ class UserController extends AbstractController
     private $em;
     private $passwordEncoder;
 
-    public function __construct(EntityManagerInterface $entityManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        UserPasswordEncoderInterface $passwordEncoder
+    )
     {
         $this->em = $entityManager;
         $this->passwordEncoder = $passwordEncoder;
@@ -40,15 +40,18 @@ class UserController extends AbstractController
      * User profile
      * @Route("/profile", name="user.profile")
      * @Security("is_granted('IS_AUTHENTICATED_REMEMBERED')")
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     public function profile()
     {
         $user = $this->getUser();
+
         $listOfObservations = $this->em->getRepository(Observation::class)->findByUser($user);
         $numberArticlesPublished = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, true);
         $numberArticlesDrafts = $this->em->getRepository(Article::class)->totalDraftsOrPublishedArticles($user, false);
         $numberOfAwaitingObservations = $this->em->getRepository(Observation::class)->findNumberOfAwaitingObservations($user);
         $numberOfPublishedObservations = $this->em->getRepository(Observation::class)->findNumberOfPublishedObservations($user);
+
         return $this->render('user/profile.html.twig', [
             'user' => $this->getUser(),
             'observations' => $listOfObservations,
@@ -66,6 +69,7 @@ class UserController extends AbstractController
     public function userDraftArticles()
     {
         $user = $this->getUser();
+
         $articles = $this->em->getRepository(Article::class)->findBy(['user' => $user, 'published' => false]);
         $hasDraftArticles = count($articles) > 0;
 
@@ -96,7 +100,8 @@ class UserController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editProfil(Request $request){
+    public function editProfile(Request $request)
+    {
         $user = $this->getUser();
         $form = $this->createForm(EditProfilType::class, $user);
         $newPasswordForm = $this->createForm(NewPasswordType::class);
@@ -107,6 +112,11 @@ class UserController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()){
                 $this->em->persist($user);
                 $this->em->flush();
+
+                $this->addFlash(
+                    'user_profile_edited',
+                    'Vos informations ont bien été mises à jour !'
+                );
             }
             if ($newPasswordForm->isSubmitted() && $newPasswordForm->isValid()){
                 $data = $newPasswordForm->getData();
@@ -118,6 +128,12 @@ class UserController extends AbstractController
                         $user->setPassword($this->passwordEncoder->encodePassword($user, $newPass1));
                         $this->em->persist($user);
                         $this->em->flush();
+
+                        $this->addFlash(
+                            'new_password_ok',
+                            'Votre mot de passe a bien été modifié !'
+                        );
+
                         $errors = '';
                     } else {
                         $errors = 'Vous devez indiquer un nouveau mot de passe identique sur les deux champs.';

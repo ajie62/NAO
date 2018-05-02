@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
+
 {% form_theme form 'formThemes/_FormThemes.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -9,6 +11,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
 {% endblock %}
+
+{% block title %}{{ isNewArticle ? 'Ajout' : 'Édition' }} d'un article - {{ parent() }}{% endblock %}
+
 {% block body %}
     <div class="main-layout">
         <h1>{{ isNewArticle ? 'Rédaction' : 'Édition' }} d'un article</h1>

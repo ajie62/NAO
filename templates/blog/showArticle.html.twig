@@ -1,9 +1,13 @@
 {% extends 'base.html.twig' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.7.6/css/froala_style.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
 {% endblock %}
+
+{% block title %}&laquo; {{ article.title }} &raquo; - {{ parent() }}{% endblock %}
+
 {% block body %}
     <div class="container show-art-container common-min-height common-centering beige-bg">
         <div class="row article-heading">

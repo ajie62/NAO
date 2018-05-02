@@ -5,7 +5,13 @@
     <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
 {% endblock %}
 
+{% block title %}Édition de {{ user.firstname }} - {{ parent() }}{% endblock %}
+
 {% block body %}
+    {% for message in app.flashes('user_edited') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
     <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
         <div class="profile-header text-center">
             {% set role = user.roles[0] %}

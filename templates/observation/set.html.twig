@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }}{% endblock %}
+{% block title %}{{ isNewObservation ? "Nouvelle observation" : "Édition d'observation" }} - {{ parent() }}{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}

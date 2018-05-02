@@ -75,6 +75,9 @@ class AdminController extends Controller
 
     /**
      * @Route("/users/{id}", name="admin.users_edit")
+     * @param User $user
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editUser(User $user, Request $request){
         $form = $this->createForm(EditProfilType::class, $user);
@@ -84,6 +87,8 @@ class AdminController extends Controller
                 $user = $form->getData();
                 $this->em->persist($user);
                 $this->em->flush();
+
+                $this->addFlash('user_edited', 'L\'utilisateur a bien été édité.');
             }
         }
         return $this->render('admin/editUser.html.twig', [
@@ -121,6 +126,11 @@ class AdminController extends Controller
 
         $emailManager->sendNewPassword($user, $newPass);
 
+        $this->addFlash(
+            'user_edited',
+            'Un nouveau mot de passe a été généré pour l\'utilisateur.'
+        );
+
         return $this->redirectToRoute('admin.users_edit', ['id' => $user->getId()]);
     }
 
@@ -137,11 +147,16 @@ class AdminController extends Controller
         }
         $this->em->persist($user);
         $this->em->flush();
+
+        $this->addFlash('user_edited', 'Le rôle de l\'utilisateur a bien été modifié.');
+
         return $this->redirectToRoute('admin.users_edit', ['id' => $user->getId()]);
     }
 
     /**
      * @Route("/users/block/{id}", name="admin.users_block")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function blockUser(User $user){
         if ($user->isActive()){
@@ -151,15 +166,24 @@ class AdminController extends Controller
         }
         $this->em->persist($user);
         $this->em->flush();
+
+        $status = $user->isActive() ? 'débloqué' : 'bloqué';
+        $this->addFlash('user_edited', 'L\'utilisateur a bien été '.$status);
+
         return $this->redirectToRoute('admin.users_edit', ['id' => $user->getId()]);
     }
 
     /**
      * @Route("/users/delete/{id}", name="admin.users_delete")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteUser(User $user){
         $this->em->remove($user);
         $this->em->flush();
+
+        $this->addFlash('user_edited', 'L\'utilisateur a bien été supprimé.');
+
         return $this->redirectToRoute('admin.index');
     }
 }

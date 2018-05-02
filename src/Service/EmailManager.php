@@ -13,7 +13,7 @@ use App\Entity\User;
 
 class EmailManager
 {
-    const EMAIL = 'contact@nosamislesoiseaux.ovh';
+    const EMAIL = 'contactnao@sofyann-fahim.fr';
 
     private $mailer;
     private $twig;
