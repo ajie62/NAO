@@ -27,7 +27,7 @@
                     <tr>
                         <td>
                             {% if user.image %}
-                                <img src="{{ user.image.webPath | imagine_filter('min_profile_picture') }}" alt="{{ app.user.image.alt }}">
+                                <img src="{{ user.image.webPath | imagine_filter('min_profile_picture') }}" alt="{{     user.image.alt }}">
                             {% else %}
                                 <img class="admin-no-profile" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
                             {% endif %}

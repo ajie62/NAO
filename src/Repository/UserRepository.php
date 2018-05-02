@@ -56,6 +56,10 @@ class UserRepository extends EntityRepository
     }
 
     private function pourcentage($nombre, $total) {
-        return $nombre * 100 / $total;
+        if ($total == 0){
+            return 0;
+        } else {
+            return $nombre * 100 / $total;
+        }
     }
 }
