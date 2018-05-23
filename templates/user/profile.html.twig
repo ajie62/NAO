@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+
+{% block title %}Mon profil - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('registration_success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('observation_set') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="profile-container beige-bg common-min-height common-centering">
+
+        {# Profile header #}
+        <div class="profile-header text-center">
+            {% set role = user.roles[0] %}
+            {% set particulier = (role == 'ROLE_PARTICULIER') %}
+            {% set naturaliste = (role == 'ROLE_NATURALISTE') %}
+            {% set admin = (role == 'ROLE_ADMIN') %}
+            <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+            {% if user.image %}
+                <img src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ app.user.image.alt }}">
+            {% else %}
+                <img src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+            {% endif %}
+                <p>{{ user.mail }}</p>
+            <span class="user-role">
+                {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
+            </span>
+        </div>
+
+        {# User description #}
+        <div class="profile-intro">
+            <h3>Présentation</h3>
+
+            {% if user.introduction is empty %}
+                <p>Vous n'avez pas encore de description.</p>
+            {% else %}
+                {{ user.introduction }}
+            {% endif %}
+
+            <div class="profile-action text-right">
+                <a href="{{ path('user.edit_profile') }}" class="content-link"><i class="fas fa-edit"></i> Modifier</a>
+            </div>
+        </div>
+
+        {# Articles & observations #}
+        <div class="profile-stats">
+            {% if naturaliste or admin %}
+                <h3>Mes articles</h3>
+                <div class="profile-articles text-center txt-white">
+                    <div class="orange-bg">
+                        {% if numberArticlesDrafts > 0 %}<a class="txt-white" href="{{ url('user.profile_draft_article') }}">{% endif %}
+                            <h4>Brouillons</h4>
+                            <span class="stats-nb">{{ numberArticlesDrafts }}</span>
+                        {% if numberArticlesDrafts > 0 %}</a>{% endif %}
+                    </div>
+                    <div class="green-bg">
+                        {% if numberArticlesPublished > 0 %}<a class="txt-white" href="{{ url('user.profile_published_article') }}">{% endif %}
+                            <h4>Publiés</h4>
+                            <span class="stats-nb">{{ numberArticlesPublished }}</span>
+                        {% if numberArticlesPublished > 0 %}</a>{% endif %}
+                    </div>
+                </div>
+                <div class="profile-action new-article text-right">
+                    <a href="{{ url('blog.add_article') }}" class="content-link"><i class="fas fa-pencil-alt"></i> Rédiger un nouvel article</a>
+                </div>
+            {% endif %}
+
+            <h3>Mes observations</h3>
+            <div class="profile-observations text-center txt-white">
+                {% if particulier %}
+                    <div class="blue-bg awaiting-obs">
+                        <h4>En attente</h4>
+                        <span class="stats-nb">{{ numberOfAwaitingObservations }}</span>
+                    </div>
+                {% endif %}
+                <div class="{{ particulier ? 'green-bg' : 'blue-bg' }}">
+                    <h4>{% if naturaliste or admin %}Observations{% endif %}{% if particulier %}Validées{% endif %}</h4>
+                    <span class="stats-nb">{{ numberOfPublishedObservations }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-obs-list">
+        {# Observation published by user #}
+        {% if observations|length > 0 %}
+            {% for obs in observations %}
+                <div class="personal-obs text-center">
+                    <div class="personal-obs-img">
+                        <img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}" alt="Photo de {{ obs.species.name }}">
+                    </div>
+                    <div class="personal-obs-date">
+                        {{ obs.observedAt|date('d/m/Y') }}
+                    </div>
+                    <div class="personal-obs-name">
+                        {{ obs.species.name }}
+                    </div>
+                    <div class="personal-obs-status">
+                        {% if obs.validated == 1 %}
+                            <span class="glyphicon glyphicon-ok txt-green" aria-hidden="true"></span>
+                        {% else %}
+                            <i class="fas fa-hourglass-half"></i>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">
+                Vous n'avez pas encore ajouté d'observation.
+                <a class="txt-orange" href="{{ url('observation.add') }}">En ajouter une maintenant.</a>
+            </p>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

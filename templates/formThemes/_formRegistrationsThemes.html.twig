@@ -1,0 +1,10 @@
+{% use 'form_div_layout.html.twig' %}
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        {% if form.parent %}<div class="help-block text-danger text-center"><span class="text-danger">{% else %}<div class="alert alert-danger">{% endif %}
+        {%- for error in errors -%}
+                {{ error.message }}
+        {%- endfor -%}
+        {% if form.parent %}</span></div>{% else %}</div>{% endif %}
+    {%- endif %}
+{%- endblock form_errors %}

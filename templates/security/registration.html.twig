@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'un compte - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="register-form common-min-height">
+        <div class="register-form-content">
+            <div class="text-center">
+                <img src="{{ asset('images/nao2.png') }}" alt="Logo de l'association Nos Amis les Oiseaux">
+            </div>
+            <h1 class="text-center no-margin">Inscrivez-vous gratuitement</h1>
+            <div class="register-form-container">
+                {% include 'includes/registration.html.twig' %}
+
+                <p class="text-center">Vous avez déjà un compte ?<br><a href="{{ url('security.login') }}">Identifiez-vous</a></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

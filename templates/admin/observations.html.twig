@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Toutes les observations - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-layout admin-obs">
+        <h1>Liste des observations</h1>
+
+        <div class="list-users-container table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Date d'observation</th>
+                    <th>Espèce</th>
+                    <th>Auteur</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for observation in observations %}
+                    <tr>
+                        <td>
+                            <img src="{{ asset(observation.image.webPath) | imagine_filter('min_observation_picture') }}" alt="{{ observation.image.alt }}">
+                        </td>
+                        <td>{{ observation.observedAt|date('d/m/Y') }} <small>({{ observation.observedAt|ago }})</small></td>
+                        <td>{{ observation.species.name }}</td>
+                        <td>{{ observation.user.firstname ~ ' ' ~ observation.user.lastname }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {{ include('includes/adminNav.html.twig') }}
+    </div>
+{% endblock %}

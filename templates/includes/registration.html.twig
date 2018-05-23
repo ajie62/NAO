@@ -1,0 +1,56 @@
+{% form_theme registration_form 'formThemes/_formRegistrationsThemes.html.twig' %}
+
+{{ form_start(registration_form) }}
+
+<div class="col-md-6">
+    {{ form_widget(registration_form.firstname, {'attr' : {'class' : 'form-control'}}) }}
+    {% if registration_form.firstname.vars.errors | length > 0 %}
+    <div class="errors">
+        {{ form_errors(registration_form.firstname) }}
+    </div>
+    {% endif %}
+</div>
+<div class="col-md-6">
+    {{ form_widget(registration_form.lastname, {'attr' : {'class' : 'form-control'}}) }}
+    {% if registration_form.lastname.vars.errors | length > 0 %}
+    <div class="errors">
+        {{ form_errors(registration_form.lastname) }}
+    </div>
+    {% endif %}
+</div>
+<div>
+    <span class="and-word">et</span>
+</div>
+<div class="col-md-12">
+    {{ form_widget(registration_form.mail, {'attr' : {'class' : ' form-control'}}) }}
+    {% if registration_form.mail.vars.errors | length > 0 %}
+    <div class="errors">
+        {{ form_errors(registration_form.mail) }}
+    </div>
+    {% endif %}
+</div>
+<div class="col-md-12">
+    {{ form_widget(registration_form.password.first) }}
+    <span class="pwd-details">8 caractères minimum dont au moins 1 majuscule et 1 chiffre</span>
+    {{ form_widget(registration_form.password.second) }}
+
+    {% if registration_form.password.first.vars.errors | length > 0 %}
+        <div class="errors">
+            {{ form_errors(registration_form.password.first) }}
+        </div>
+    {% endif %}
+
+    <p class="terms-and-conditions">
+        {{ form_widget(registration_form.termsAccepted) }}
+        J'accepte les <a href="{{ url('app.terms_of_use') }}">Conditions Générales d'Utilisations</a>
+        et la <a href="{{ url('app.terms_of_use')~"#privacy-policy" }}">politique de confidentialité</a>.<br>
+        {{ form_errors(registration_form.termsAccepted) }}
+
+        <span class="text-danger">* Champs obligatoires</span>
+    </p>
+</div>
+
+<div class="text-center">
+    <button type="submit" class="no-border">S'inscrire gratuitement</button>
+</div>
+{{ form_end(registration_form) }}

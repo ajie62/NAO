@@ -1,0 +1,191 @@
+/*************** ADD OBS *************/
+/* Main container */
+.add-obs-container { padding: 0 }
+
+.add-obs-container .step-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    width: 100% }
+
+/* Map */
+.map-container { position: relative; }
+
+#map {
+    min-height: calc(100vh - 126px);
+    width: 100% }
+
+#error {
+    position: absolute;
+    top: 0;
+    left: 0 }
+
+.infoWindow-list {
+    font-size: 1.2em;
+    list-style: none;
+    padding: 0;
+}
+
+/* Links to next step */
+a[class^='step-link'] {
+    border-radius: 50%;
+    outline: none;
+    padding: 12px 14px;
+    text-decoration: none; }
+
+a[class^='step-link']:hover,
+a[class^='step-link']:focus { color: #fff; }
+
+.step-link-map {
+    position: absolute;
+    bottom: 30px;
+    right: 20px }
+
+.flex-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px;
+    min-height: calc(100vh - 140px)
+}
+
+#menu2 .step-buttons {
+    position: absolute;
+    bottom: 22px;
+    padding: 0 30px }
+
+#menu3 .flex-step {
+    justify-content: space-between;
+    padding-top: 20px }
+
+/* Add an image */
+#observation_image label { display: none; }
+
+.upload-btn-wrapper {
+    overflow: hidden;
+    position: relative }
+
+.upload-btn-wrapper .btn { font-weight: bold }
+
+.upload-btn-wrapper .btn:hover {
+    color: #ffffff;
+    cursor: pointer;
+    opacity: .8 }
+
+.upload-btn-wrapper .btn span { font-size: 100px }
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    left: 0; top: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: -1 }
+
+.species-match {
+    border: 1px solid #d8d8d8;
+    display: none;
+    max-height: 100px;
+    overflow: scroll;
+    z-index: 1 }
+
+.species-match ul { list-style: none }
+.species-match li { padding: 6px 12px }
+
+.species-match li:hover {
+    background: #8cc63f;
+    color: #ffffff }
+
+#observation_comment {
+    min-height: 100px;
+    max-width: 100%;
+    min-width: 100% }
+
+/*************** SEARCH OBS *************/
+.map-container { position: relative }
+.search-map { width: 100% }
+
+.search-species {
+    background: rgba(0,0,0,.5);
+    display: none;
+    font-size: 1.1em;
+    position: absolute;
+    top: 0; left: 0; right: 0 }
+
+.search-species button,
+.search-species button:hover,
+.search-species button:focus {
+    border: 1px solid #FBB03B;
+    color: #ffffff!important;
+    outline: 0!important }
+
+#search-species-results {
+    list-style: none;
+    padding: 0 }
+
+.obs-search-results {
+    border: 1px solid #d8d8d8;
+    display: none;
+    position: absolute;
+    max-height: 100px;
+    overflow: scroll }
+
+#search-ok-button:hover,
+#search-ok-button:focus { background: #fbb03b }
+
+.obs-search-results li { padding: 6px 12px }
+
+.obs-search-results li:hover {
+    background: #8cc63f;
+    color: #ffffff }
+
+.obs-buttons {
+    bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 300px }
+
+/*************************************\
+            MEDIA QUERIES
+\*************************************/
+@media screen and (min-width: 768px) {
+    /*************** ADD OBS *************/
+    .add-obs-container { padding: 15px }
+    #map { min-height: 500px }
+
+    .add-obs-container .step-buttons {
+        display: block;
+        padding: 10px 0 }
+
+    #menu2 .step-buttons { display: none }
+
+    .flex-step {
+        display: block;
+        margin-bottom: 25px;
+        min-height: auto;
+        padding: 0; }
+
+    .fields { padding: 0; }
+
+    /*************** SEARCH OBS *************/
+    .search-species {
+        background: #FFF9F1;
+        border-radius: 10px;
+        box-shadow: 1px 1px 4px #3b3b3b;
+        color: #3b3b3b;
+        padding: 15px;
+        max-width: 400px;
+        position: absolute;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%) }
+
+    .obs-search-results {
+        position: absolute;
+        display: none;
+        background: #ffffff;
+        border: 1px solid #d8d8d8;
+        max-height: 100px;
+        overflow: scroll }
+}

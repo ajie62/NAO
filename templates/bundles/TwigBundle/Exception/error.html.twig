@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ status_code }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="global-error-container common-min-height">
+        <div class="the-error text-center">
+            <h1>Vous êtes tombé du nid !</h1>
+            <p>
+                {{ status_code }} - La page que vous cherchez n'existe pas ou plus. <br>
+                {% if app.user %}
+                    <a href="{{ url('user.profile') }}" class="content-link">Retour au profil</a>
+                {% else %}
+                    <a href="{{ url('app.homepage') }}" class="content-link">Retour à l'accueil</a>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+{% endblock %}

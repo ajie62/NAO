@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche d'observation - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="map-container">
+        <div id="js-search-map" class="search-map common-min-height"></div>
+        <div class="search-species beige-bg txt-white common-padding">
+            <p>Rechercher une espèce :</p>
+            <div class="search-field" id="input-container" data-get-url="{{ url('observation.get_species') }}" data-search-url="{{ url('observation.ajax.search_observation') }}">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" id="input">
+                    <span class="input-group-btn">
+                        <button id="search-ok-button" class="btn btn-default orange-bg" type="button">OK</button>
+                    </span>
+                </div>
+
+                <div id="js-search-match" class="obs-search-results white-bg">
+                    <ul id="search-species-results" class="txt-black"></ul>
+                </div>
+                {#<span class="loader">Chargement...</span>#}
+                <span class="no-result"></span>
+            </div>
+        </div>
+
+        <div class="obs-buttons">
+            <a class="step-link orange-bg txt-white" href="#" id="js-start-search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+            <a class="step-link orange-bg txt-white" href="{{ url('observation.add') }}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAbgOWLTL1GMSI-RPxxrkuaWr9McbLv3WU&callback=searchMap"></script>
+    <script src="{{ asset('js/searchObs.js') }}"></script>
+{% endblock %}

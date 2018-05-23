@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+
+{% block title %}Mes brouillons - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="draft-container main-layout">
+        <h2>Mes brouillons</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                <tr>
+                    <th class="text-center">Titre</th>
+                    <th class="text-center">Contenu</th>
+                    <th class="text-center">Date de création</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                        <tr class="text-center">
+                            <td>{{ article.title }}</td>
+                            <td>{{ article.content|length > 40 ? article.content|striptags|slice(0, 40) ~ '...' : article.content|striptags }}</td>
+                            <td>{{ article.createdAt | date('d/m/Y') }}</td>
+                            <td>
+                                <a href="{{ path('blog.edit_article', {'id' : article.id }) }}" class="txt-orange draft-update"><i class="fas fa-edit"></i></a>
+                                <a href="{{ url('blog.delete_article', {'id' : article.id }) }}" class="txt-red draft-delete"><i class="fas fa-trash-alt"></i></a>
+                            </td>
+                        </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <a href="{{ url('user.profile') }}" class="profile-action txt-orange">Retour au profil</a>
+    </div>
+{% endblock %}

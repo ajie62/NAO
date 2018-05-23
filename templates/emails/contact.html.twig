@@ -1,0 +1,7 @@
+{# templates/emails/contact.html.twig #}
+<h2>Nouveau message de {{ contact.mail }}</h2>
+<h3>Envoyé le : {{ contact.sendAt|date('d/m/Y à H:i') }}</h3>
+
+<h4>Objet : {{ contact.subject }}</h4>
+
+<p>{{ contact.message }}</p>

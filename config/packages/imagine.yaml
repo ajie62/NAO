@@ -1,0 +1,39 @@
+liip_imagine :
+    resolvers :
+        default :
+            web_path : ~
+
+    filter_sets :
+        cache : ~
+        card_image :
+            quality : 100
+            filters :
+                thumbnail  : { size : [295, 180], mode : outbound }
+        gerard :
+            quality: 100
+            filters:
+                thumbnail: { size : [150, 150], mode : outbound }
+        image_obs_admin :
+            quality: 100
+            filters:
+                thumbnail: { size : [150, 150], mode : outbound }
+        profile_personal_obs_image:
+            quality: 100
+            filters:
+                thumbnail: { size: [50, 50], mode : outbound }
+        profile_picture:
+            quality: 100
+            filters:
+                thumbnail: { size: [200, 200], mode : outbound }
+        min_profile_picture:
+            quality: 100
+            filters:
+                thumbnail: { size: [30, 30], mode : outbound }
+        min_observation_picture:
+            quality: 100
+            filters:
+                thumbnail: { size: [30, 30], mode : outbound }
+        min_infoWindow_picture:
+            quality: 100
+            filters:
+                thumbnail: { size: [200,200], mode: outbound }

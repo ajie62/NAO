@@ -1,0 +1,28 @@
+<div class="admin-nav light-green-bg">
+    <div>
+        <a href="{{ url('admin.index') }}">
+            <div class="to-index txt-white text-center {% if app.request.get('_route') == 'admin.index' %}green-bg{% else %}orange-bg{% endif %}">
+                <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                <h5 class="no-margin">Statistiques</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="{{ url('admin.users') }}">
+            <div class="to-users txt-white text-center {% if app.request.get('_route') == 'admin.users' %}green-bg{% else %}orange-bg{% endif %}">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <h5 class="no-margin">Utilisateurs</h5>
+            </div>
+        </a>
+    </div>
+
+    <div>
+        <a href="{{ url('admin.observations') }}">
+            <div class="to-observations txt-white text-center {% if app.request.get('_route') == 'admin.observations' %}green-bg{% else %}orange-bg{% endif %}">
+                <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                <h5 class="no-margin">Observations</h5>
+            </div>
+        </a>
+    </div>
+</div>

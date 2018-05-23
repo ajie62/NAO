@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-layout admin-users">
+        <h1>Liste des utilisateurs</h1>
+
+        <div class="list-users-container table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Photo de profil</th>
+                    <th>Nom, prénom</th>
+                    <th>Rôle</th>
+                    <th>Inscrit le</th>
+                    <th>Édition</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {% if user.image %}
+                                <img src="{{ user.image.webPath | imagine_filter('min_profile_picture') }}" alt="{{     user.image.alt }}">
+                            {% else %}
+                                <img class="admin-no-profile" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+                            {% endif %}
+                        </td>
+                        <td>{{ user.lastname ~ ', ' ~ user.firstname }}</td>
+                        <td>
+                            {% set admin = 'ROLE_ADMIN' == user.roles[0] %}
+                            {% set naturaliste = 'ROLE_NATURALISTE' == user.roles[0] %}
+                            {% set particulier = 'ROLE_PARTICULIER' == user.roles[0] %}
+                            {% if admin %}Admin{% elseif naturaliste %}Naturaliste{% else %}Particulier{% endif %}
+                        </td>
+                        <td>{{ user.subscribedAt|date('d/m/Y') }} <small>({{ user.subscribedAt|ago }})</small></td>
+                        <td><a class="txt-orange" href="{{ url('admin.users_edit', {id: user.id}) }}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {{ include('includes/adminNav.html.twig') }}
+    </div>
+{% endblock %}

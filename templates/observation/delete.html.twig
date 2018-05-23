@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suppression d'observation - {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesObs.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="main-layout flex-centered-all">
+        <h1 class="text-center">Confirmation de suppression</h1>
+
+        <br>
+
+        <p>Souhaitez-vous vraiment supprimer l'observation ?</p>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <div class="btn-container">
+            <button class="red-bg no-border" type="submit">Supprimer</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,145 @@
+/* Stats */
+.stats-container { padding-top: 10px }
+
+.admin-stats {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    justify-content: center;
+    grid-auto-rows: 150px;
+    padding: 20px 0 }
+
+div[class^="stats"] {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center }
+
+div[class^="stats"] h4 { font-size: 20px }
+div[class^="stats"] p { font-size: 38px }
+
+.progress {
+    border-radius: 10px;
+    height: 25px;
+    margin-bottom: 5px;
+    position: relative }
+
+.progress h5 { padding: 5px }
+
+.progress > h5 {
+    padding: 5px;
+    position: absolute;
+    right: 0 }
+
+.registered-users,
+.submitted-observations {
+    margin-top: 20px }
+
+.registered-users .numbers,
+.submitted-observations .numbers {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px }
+
+.registered-users h4,
+.submitted-observations h4 { margin: 2px 0 0 0 }
+
+.numbers .number {
+    font-family: 'FranklinDC', sans-serif;
+    font-size: 17px }
+
+.legend {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 5px }
+
+.admin-nav {
+    display: flex;
+    margin: 0 auto;
+    max-width: 375px;
+    justify-content: space-between;
+    padding: 10px }
+
+.admin-nav a { width: 100% }
+
+.admin-nav a,
+.admin-nav a:hover,
+.admin-nav a:focus {
+    color: #ffffff;
+    text-decoration: none }
+
+.admin-nav > div {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px }
+
+.admin-nav > div h5 { font-size: 13px }
+
+.to-index, .to-users, .to-observations {
+    padding: 10px;
+    border-radius: 10px }
+
+.admin-users, .admin-obs {
+    display: flex;
+    flex-direction: column }
+
+.admin-no-profile {
+    height: 30px;
+    width: 30px }
+
+.list-users-container a:hover, .list-users-container a:focus { color: #FBB03B }
+
+.list-users-container {
+    border: none;
+    flex: 1;
+    margin-top: 20px }
+
+.list-users-container table th {
+    border-bottom: none!important;
+    text-align: center;
+}
+
+.list-users-container table td {
+    border-top: 1px solid #8CC63F!important;
+    padding: 10px!important;
+    text-align: center;
+    vertical-align: middle!important }
+
+.to-index span,
+.to-users span,
+.to-observations span { font-size: 24px }
+
+.admin-actions-for-user a:first-child { margin-top: 15px }
+.admin-actions-for-user a:not(:first-child) { margin: 8px 0 10px 0 }
+
+.generate-new-pwd:hover, .generate-new-pwd:focus { color: #fbb03b }
+.pass-naturaliste:hover, .pass-naturaliste:focus { color: #8cc63f }
+.block-user:hover, .block-user:focus { color: #fbb03b }
+.delete-user:hover, .delete-user:focus { color: #ff6d6d }
+
+@media screen and (min-width: 480px) {
+    .admin-stats { grid-template-columns: repeat(3, 1fr) }
+    .admin-nav > div h5 { font-size: 16px }
+}
+
+@media screen and (min-width: 768px) {
+    .stats-container { padding: 10px }
+
+    .admin-stats-container h1 {
+        padding-left: 85px;
+        text-align: left }
+
+    .admin-stats {
+        grid-template-columns: repeat(3, 1fr);
+        margin: 0 auto;
+        max-width: calc(100% - 170px) }
+
+    .admin-stats-two {
+        margin: 0 auto;
+        max-width: calc(100% - 170px) }
+
+    .admin-nav { margin: 0 auto 20px auto }
+}

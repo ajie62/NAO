@@ -1,0 +1,402 @@
+/* ------------------------------------------------------------Style champs de saisie simple */
+    input[type=text] {
+        width:100%;
+        height: 44px;}
+
+.border-green, .fr-box, input[type=text], .fr-toolbar {
+    border : solid 1px #8CC63F;
+    border-radius : 9px;
+}
+
+.delete-article {
+    display: flex;
+    flex-direction: column;
+    justify-content: center }
+
+.delete-article-content h1 { margin-bottom: 15px }
+.delete-article-content p { margin-bottom: 20px!important }
+
+/* --------------------------------------------------------------------Style Liste d'article */
+.hr { display : none }
+
+.articles-list-container {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) }
+
+.add-article {
+    border-radius: 50%;
+    font-size: 28px;
+    height: 40px;
+    padding-left: 2px;
+    padding-top: 2px;
+    position: fixed;
+    text-align: center;
+    right: 24px;
+    bottom: 24px;
+    width: 40px }
+
+.add-article:hover, .add-article:focus { color: #ffffff }
+
+/* ------------------------------------------------------------Style UICard */
+    .uiCard {
+        position: relative;
+        width: 300px;
+        height : 360px;
+        background-color: #fff;
+        margin: 0 auto 20px auto;
+        box-shadow: 0 3px 20px rgba(0,0,0,0.3);
+        overflow: hidden }
+
+    .uiCard a {
+        color: #3b3b3b;
+        text-decoration: none }
+
+    .uiCard__body {
+        font-size : 18px;
+        line-height : 26px;
+        width: 275px;
+        margin: 0 auto }
+
+    .uiCard__title h3{
+        font-size : 30px;
+        font-weight: 700;
+        height: 68px;
+        margin: 9px 0 0 0 }
+
+        /* ----------------------------------------------------Style image */
+        .uiCard__thumb {
+            width : 315px;
+            height: 180px;
+            overflow: hidden;
+            background-color: black;
+            transition : 0.3s;}
+
+        .uiCard__thumb img {
+            width : 100%;
+            opacity: 1;
+            transition : 0.3s;}
+
+    .uiCard__description p {
+        width: 275px;
+        height: 56px;
+        margin : 0 auto;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow : hidden;
+        transition : 0.3s;}
+
+    .uiCard__date span {
+        display: block;
+        text-align: center;
+        font-size: 13px;}
+
+    .uiCard__date {
+        position : absolute;
+        top : 24px;
+        right: 24px;
+        background-color: #8CC63F;
+        width : 40px;
+        height: 40px;
+        border-radius: 50%;
+        color: #fff }
+
+    .uiCard__month { text-transform: uppercase }
+
+    .uiCard__footer {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px }
+
+    .uiCard__meta > div { display: inline-block }
+
+    .uiCard__footer span { margin-right: 5px }
+
+    .uiCard__icon-green {
+        color : #8CC63F;
+        margin-right : 5px;
+        font-size: 18px;
+        top: 4px;}
+
+    .uiCard__trash {
+        color : #FF6D6D;
+        top: 5px;
+        right: 5px }
+
+        /* ----------------------------------------------------Style UI Card tablet & Desktop */
+        @media (min-width : 768px) and (max-width : 1199px){
+            .uiCard {
+                width: 295px;}
+
+            .uiCard__footer {
+                width: 275px;}
+        }
+        /* ----------------------------------------------------Animation UI Card*/
+
+        .uiCard:hover .uiCard__thumb{
+            height : 80px;
+            transform: scale(1.2);}
+
+        .uiCard:hover .uiCard__description p {
+            height: 157px;}
+
+        .uiCard:hover .uiCard__thumb img {
+            opacity: 0.5;}
+/* --------------------------------------------------------------------Fin de style pour UICard */
+/* --------------------------------------------------------------------Fin de style pour Liste d'article */
+
+/* --------------------------------------------------------------------Style pour Insertion d'article */
+.fr-box { margin: 0 auto; }
+
+#article_form_title {
+    font: 16px 'Roboto', sans-serif;
+    padding-left: 10px }
+
+.insert-image input[type=file] { display: none }
+
+.fr-toolbar {
+    border-top: none!important;
+    border-radius: 10px!important }
+
+.set-article-form label { font-size: 1.3em }
+
+#article_form_image label { display: none }
+
+.article-write { padding-top: 20px }
+
+.upload-btn-wrapper {
+    overflow: hidden;
+    position: relative }
+
+.upload-btn-wrapper .btn { font-weight: bold }
+
+.upload-btn-wrapper .btn:hover {
+    color: #ffffff;
+    cursor: pointer;
+    opacity: .8 }
+
+.upload-btn-wrapper input[type="file"] {
+    font-size: 100px;
+    left: 0; top: 0;
+    opacity: 0;
+    position: absolute;
+    z-index: -1 }
+
+/* --------------------------------------------------------------------Style pour Affichage d'un article */
+.show-art-container { padding-bottom: 20px }
+
+.article-title {
+    background-color: rgba(0,0,0,0.5);
+    font-family : 'FranklinDC', sans-serif;
+    position: absolute;
+    bottom:0;
+    margin: 0;
+    padding-left: 10px;
+    width: 100%;
+    color : #fff;
+}
+
+.article-image img {
+    width: 100%;
+    min-height: 250px;
+}
+
+.article-image {
+    height: 250px;
+    overflow: hidden;
+}
+
+.article-heading>div {
+    padding:0;
+}
+
+.article-heading {
+    position: relative;
+}
+
+.article-content {
+    font-size: 16px;
+    margin: 5px 10px 0 10px }
+
+.article-meta {
+    display:flex;
+    justify-content: space-between;
+    margin: 0 10px;
+    align-items: baseline }
+
+.article-meta h4 {
+    text-align: right;
+    margin: 0;
+    font-style: italic;
+    font-weight : 500;
+    font-size: 20px }
+
+.article-date { font-size: 16px }
+
+.new-article-buttons {
+    display: flex;
+    justify-content: flex-end }
+
+.new-article-buttons button {
+    border: none;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px }
+
+.new-article-buttons .article-draft,
+.new-article-buttons .article-validate { margin-left: 20px }
+
+/* ----------------------------------------------------Style Pagination */
+.article-pagination {
+    display:flex;
+    justify-content: space-between;
+    margin-top : 35px }
+
+.article-pagination a,
+.article-pagination a:hover,
+.article-pagination a:focus {
+    color: #3b3b3b;
+    text-decoration: none }
+
+.button-article-pagination {
+    text-align: center;
+    width: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center }
+
+.button-article-pagination > div {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: #fff;
+    background-color : #FBB03B;
+    border-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center }
+
+/* ---------------------------------------------------- Style boutons admin */
+.art-meta-first a { text-decoration: none }
+.article-edit { color: #FBB03B; }
+.article-remove, .deleteButton { color: #FF6D6D; }
+.article-edit:hover, .article-edit:focus { color: #FBB03B }
+.article-remove:hover, .article-remove:focus { color: #FF6D6D }
+
+/* ----------------------------------------------------Style Commentaires */
+.article-comment h2 span {
+    margin-right : 5px;
+    font-size : 24px;
+}
+
+.article-comment h2 {
+    font-size: 24px;
+}
+.article-comment-heading {
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+}
+.article-comment-profile {
+    height:28px;
+    width:28px;
+    overflow: hidden;
+    border-radius: 50%;
+    position: relative;
+    top: -3px;
+}
+.article-comment-profile-picture {
+    height:28px; 
+}
+
+.article-comment-info {
+    margin-left: 5px;
+}
+.article-comment-info h4 {
+    margin:0;
+    font-size: 18px;
+}
+
+.article-comment-info span {
+    font-size: 14px;
+    font-style: italic;
+}
+.deleteButton, .article-write-comment .submitButton {
+    background: rgba(0,0,0,0);
+    border: none;
+    text-align: right;
+}
+
+.article-comment-admin {
+    text-align: right;
+}
+
+.comment {
+    width: 85%;
+    margin-left: 10%;
+    margin-top: 10px;
+    background-color: #E5E5E5;
+    padding: 5px 12px 9px 12px;
+    border-radius: 10px;
+}
+
+/* ----------------------------------------------------Style pour Insertion de commentaires */
+.icon-write {
+    display: inline-block;
+    background-color: #8CC63F;
+    color :#fff;
+    border-radius: 50%;
+    padding:5px;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+.article-write-comment h2 {
+    font-size: 24px;
+}
+
+.article-write-comment label {
+    display:none;
+}
+
+.article-write-comment textarea {
+    width: 85%;
+    height: 115px;
+    border: 1px solid #8CC63F;
+    border-radius : 10px;
+    padding: 10px;
+    margin-left: 10%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.article-write-comment .submitButton {
+    font-size: 18px;
+    font-family:'Roboto', sans-serif;
+    font-weight: 700;
+    color: #8CC63F;
+}
+
+.article-comment-button-container {
+    padding-top: 10px;
+    width: 95% }
+
+/* ----------------------------------------------------Style version desktop */
+@media (min-width : 768px) {
+    .article-title {
+        font-size: 70px;
+        text-align: right;
+        padding-right:10px;
+    }
+
+    .article-image { height:320px; }
+    .article-image img { min-height: 320px; }
+}
+
+@media (min-width : 990px) {
+    .article-image { height: 420px }
+    .article-image img { min-height: 420px }
+}

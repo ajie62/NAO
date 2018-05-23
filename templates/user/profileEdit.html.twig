@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+
+{% block title %}Édition de profil - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('new_password_ok') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    {% for message in app.flashes('user_profile_edited') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
+        <div class="profile-header text-center">
+            {% set role = user.roles[0] %}
+            {% set particulier = ('ROLE_PARTICULIER' == role) %}
+            {% set naturaliste = ('ROLE_NATURALISTE' == role) %}
+            {% set admin = ('ROLE_ADMIN' == role) %}
+            <figure>
+                {% if user.image %}
+                    <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+                {% else %}
+                    <img id="profile-picture" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+                {% endif %}
+                <div class="overlay">
+                    <div>Modifier</div>
+                </div>
+            </figure>
+
+            {{ form_start(form) }}
+
+            {{ form_errors(form.image) }}
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image) }}
+            <div class="js-chosen-picture"></div>
+
+            <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+            <span class="user-role">
+                {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
+            </span>
+
+            <div class="mail-change-form">
+                {{ form_widget(form.mail) }}
+                {{ form_errors(form.mail) }}
+            </div>
+
+            {{ form_widget(form.introduction) }}
+            {{ form_errors(form.introduction) }}
+            <div class="btn-container">
+                <button class="green-bg txt-white no-border" type="submit">Valider</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+
+        <div class="change-password">
+            {% if errors is not empty %}
+                <div class="alert alert-danger">{{ errors }}</div>
+            {% endif %}
+            <div class="text-center new-pwd">
+                <a class="content-link" id="js-pwd-change" href="#">Changer de mot de passe</a>
+            </div>
+            <div class="pwd-change-form">
+                {{ form_start(newPasswordForm) }}
+                {{ form_label(newPasswordForm.oldPassword) }}
+                {{ form_widget(newPasswordForm.oldPassword) }}
+                {{ form_label(newPasswordForm.newPasswordFirst) }}
+                {{ form_widget(newPasswordForm.newPasswordFirst) }}
+                {{ form_label(newPasswordForm.newPasswordSecond) }}
+                {{ form_widget(newPasswordForm.newPasswordSecond) }}
+
+                <div class="btn-container">
+                    <button class="no-border green-bg txt-white" type="submit">Enregistrer</button>
+                    <button id="js-cancel-pwd-change" class="no-border orange-bg txt-white" type="button">Annuler</button>
+                </div>
+                {{ form_end(newPasswordForm) }}
+            </div>
+
+            {% if not is_granted('ROLE_NATURALISTE') %}
+            <div class="text-center">
+                <a class="naturaliste-pro txt-green" href="{{ url('app.contact') }}">Demander à passer Naturaliste professionnel</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/profileUpdate.js') }}"></script>
+{% endblock %}

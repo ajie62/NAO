@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesAdmin.css') }}">
+{% endblock %}
+
+{% block title %}Édition de {{ user.firstname }} - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('user_edited') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="edit-profile-container common-padding beige-bg common-min-height common-centering">
+        <div class="profile-header text-center">
+            {% set role = user.roles[0] %}
+            {% set particulier = ('ROLE_PARTICULIER' == role) %}
+            {% set naturaliste = ('ROLE_NATURALISTE' == role) %}
+            {% set admin = ('ROLE_ADMIN' == role) %}
+                <figure>
+                    {% if user.image %}
+                        <img id="profile-picture" src="{{ user.image.webPath | imagine_filter('profile_picture') }}" alt="{{ user.image.alt }}">
+                    {% else %}
+                        <img id="profile-picture" src="{{ asset('images/no-profile.png') }}" alt="pas d'image de profil.">
+                    {% endif %}
+                    <div class="overlay">
+                        <div>Modifier</div>
+                    </div>
+                </figure>
+
+            {{ form_start(form) }}
+
+            {{ form_errors(form.image) }}
+            {{ form_label(form.image) }}
+            {{ form_widget(form.image) }}
+            <div class="js-chosen-picture"></div>
+
+            <h2>{{ user.firstname ~ ' ' ~ user.lastname }}</h2>
+            <span class="user-role">
+                {% if naturaliste %}Naturaliste{% elseif admin %}Administrateur{% else %}Particulier{% endif %}
+            </span>
+
+            <div class="mail-change-form">
+                {{ form_widget(form.mail) }}
+                {{ form_errors(form.mail) }}
+            </div>
+
+            {{ form_widget(form.introduction) }}
+            {{ form_errors(form.introduction) }}
+        </div>
+        <div class="btn-container">
+            <button class="green-bg txt-white no-border" type="submit">Valider</button>
+        </div>
+        {{ form_end(form) }}
+
+        <div class="admin-actions-for-user flex-centered-all">
+            <a class="generate-new-pwd txt-orange" href="{{ path('admin.users_generatePassword', {'id': user.id}) }}">Générer un nouveau mot de passe</a><br>
+            <a class="pass-naturaliste txt-green" href="{{ path('admin.users_passNaturalist',{'id': user.id }) }}"><span class="glyphicon glyphicon-ok"></span>
+                {% if particulier %}
+                Naturaliste professionnel(le)
+                {% elseif naturaliste %}
+                Particulier
+                {% endif %}
+            </a>
+
+            <a class="block-user txt-orange" href="{{ path('admin.users_block', {'id' : user.id }) }}"><span class="glyphicon glyphicon-remove"></span>
+                {% if user.active %}
+                Bloquer cet utilisateur
+                {% else %}
+                Débloquer cet utilisateur
+                {% endif %}
+            </a>
+            <a class="delete-user txt-red" href="{{ path('admin.users_delete', {'id': user.id }) }}"><span class="glyphicon glyphicon-trash"></span> Supprimer cet utilisateur</a>
+        </div>
+
+        <br>
+
+        {% include "includes/adminNav.html.twig" %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/profileUpdate.js') }}"></script>
+{% endblock %}

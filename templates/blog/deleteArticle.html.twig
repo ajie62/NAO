@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesBlog.css') }}">
+{% endblock %}
+
+{% block title %}Suppression d'un article - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <div class="delete-article common-centering common-min-height beige-bg">
+        <div class="delete-article-content text-center">
+            <h1>Suppression de l'article &laquo; {{ article.title }} &raquo; ?</h1>
+            <p>Êtes-vous sur de vouloir supprimer cet article ?</p>
+
+            <form action="{{ path('blog.delete_article', {'id': article.id}) }}" method="post">
+                <a class="back-button" href="{{ path('blog.list_article') }}">Retour</a>
+                <input class="confirm-button" type="submit" value="Supprimer">
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+{% endblock%}

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des observations - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>Liste d'observations</h1>
+
+    {% for observation in observationList %}
+       <div class="observation-obs{{ loop.index }}">
+           {# Style temporarily added in view #}
+           <img height="200" width="330" src="{{ asset(observation.image.webPath) }}" alt="{{ observation.species.name }}" />
+
+           <ul class="info">
+               {# Name has to be changed when users will be available #}
+               <li>Ajoutée par FIRSTNAME LASTNAME le {{ observation.observedAt|date('d/m/Y') }}</li>
+               <li>Famille : {{ observation.species.family }}</li>
+               <li>Ordre : {{ observation.species.order }}</li>
+               <li>Sexe : {{ observation.sex|default('Inconnu') }}</li>
+               <li>Code Atlas : {{ observation.atlasCode|default('Inconnu') }}</li>
+               {% if not observation.deceased %}
+                   <li>Direction du vol : {{ observation.flightDirection|default('Inconnue') }}</li>
+               {% endif %}
+               {% if observation.deceased %}
+                   <li>Cause de la mort : {{ observation.deceased ? observation.deathCause|default('Inconnue') : '-' }}</li>
+               {% endif %}
+               <li>Commentaire : {{ observation.comment|default('Pas de commentaire') }}</li>
+               <li>Actions : <a href="{{ url('observation.update', {id: observation.id}) }}">éditer</a> | <a href="{{ url('observation.delete', {id: observation.id}) }}">supprimer</a></li>
+           </ul>
+       </div>
+    {% else %}
+        <p>Il n'y a pas encore d'observation</p>
+    {% endfor %}
+
+    <a href="{{ url('observation.add') }}">Ajouter une observation</a>
+
+{% endblock %}

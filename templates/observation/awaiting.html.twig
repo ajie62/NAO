@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/stylesProfile.css') }}">
+{% endblock %}
+
+{% block title %}Observations en attente - {{ parent() }}{% endblock %}
+
+{% block body %}
+    {% for message in app.flashes('observation_deleted') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="beige-bg common-min-height common-centering common-padding {% if obsAwaiting|length == 0 %}flex-centered-all{% endif %}">
+    <h1 class="text-center">Observations en attente de validation</h1>
+
+    {% if obsAwaiting|length > 0 %}
+        <div class="awaiting-table table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                <tr>
+                    <th class="text-center">Photo</th>
+                    <th class="text-center">Observée le</th>
+                    <th class="text-center">Nom</th>
+                    <th class="text-center">Commentaire</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody class="text-center">
+                {% for obs in obsAwaiting %}
+                    <tr>
+                        <td><img src="{{ asset(obs.image.webPath) | imagine_filter('profile_personal_obs_image') }}"
+                                 alt="Photo de {{ obs.species.name }}"></td>
+                        <td>{{ obs.observedAt|date('d/m/Y') ~ ' (' ~ obs.observedAt|ago ~ ')' }}</td>
+                        <td>{{ obs.species.name }}</td>
+                        <td>{{ obs.comment|default('Pas de commentaire') }}</td>
+                        <td>
+                            <a class="check-obs-link"
+                               href="{{ url('observation.validation', {id: obs.id}) }}">Vérifier</a> ou
+                            <a class="delete-obs-link" href="{{ url('observation.delete', {id: obs.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    {% else %}
+        <p>Aucune observation n'est en attente de validation.</p>
+    {% endif %}
+{% endblock %}
